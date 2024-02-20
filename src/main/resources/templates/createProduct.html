@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin Home</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <div class="navigation">
+        <ul>
+            <li>
+                <a href="#">
+                        <span class="icon">
+                            <ion-icon class="fa-solid fa-user-tie"></ion-icon>
+                        </span>
+                    <span class="title">Admin</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/admin">
+                        <span class="icon">
+                            <ion-icon class="fa-solid fa-house"></ion-icon>
+                        </span>
+                    <span class="title">Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/manageProduct">
+                        <span class="icon">
+                            <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
+                        </span>
+                    <span class="title">Manage Product</span>
+                </a>
+            </li>
+            <li>
+                <a href="/create">
+                        <span class="icon">
+                            <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
+                        </span>
+                    <span class="title">Create Product</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="main">
+        <div class="topbar">
+            <div class="toggle">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </div>
+        <div>
+            <h2>Add New Product</h2>
+            <form method="post" enctype="multipart/form-data" th:object="${productDto}">
+                <div>
+                    <label>Name</label>
+                    <input th:field="${productDto.name}">
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="${productDto.name}"></p>
+                </div>
+                <div>
+                    <label>Brand</label>
+                    <select th:field="${productDto.brand}">
+                        <option value="Asus">Asus</option>
+                        <option value="Acer">Acer</option>
+                        <option value="Dell">Dell</option>
+                        <option value="ROG">ROG</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('brand')}" th:errors="${productDto.brand}"></p>
+                </div>
+                <div>
+                    <label>Type</label>
+                    <select th:field="${productDto.type}">
+                        <option value="Mouse">Mouse</option>
+                        <option value="Screen">Screen</option>
+                        <option value="Keyboard">Keyboard</option>
+                        <option value="CPU">CPU</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('type')}" th:errors="${productDto.type}"></p>
+                </div>
+                <div>
+                    <label>Price</label>
+                    <input type="number" step="0.1" min="0" th:field="${productDto.price}">
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="${productDto.price}"></p>
+                </div>
+                <div>
+                    <label>Description</label>
+                    <textarea th:field="${productDto.detail}"></textarea>
+                    <p th:if="${#fields.hasErrors('detail')}" th:errors="${productDto.detail}"></p>
+                </div>
+                <div>
+                    <label>Image</label>
+                    <input type="file" th:field="${productDto.images}">
+                    <p th:if="${#fields.hasErrors('images')}" th:errors="${productDto.images}"></p>
+                </div>
+                <div>
+                    <div>
+                        <button type="submit">Add</button>
+                    </div>
+                    <div>
+                        <a href="/admin" role="button">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let list = document.querySelectorAll(".navigation li");
+
+    function activeLink() {
+        list.forEach((item) => {
+            item.classList.remove("hovered");
+        });
+        this.classList.add("hovered");
+    }
+
+    list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+    // Menu Toggle
+    let toggle = document.querySelector(".toggle");
+    let navigation = document.querySelector(".navigation");
+    let main = document.querySelector(".main");
+
+    toggle.onclick = function () {
+        navigation.classList.toggle("active");
+        main.classList.toggle("active");
+    };
+</script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
