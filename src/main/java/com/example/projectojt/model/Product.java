@@ -24,13 +24,9 @@ public class Product {
     private String brand;
     private int quantity;
     private float rating;
-    private String image;
+    private String images;
     private String detail;
-    private String type;
-<<<<<<< HEAD
-=======
 
->>>>>>> 35f61f6e39e890f978ef08e4d2fb3fc9bb106df1
     @JsonManagedReference(value = "orderDetail_product")
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<OrderDetail> orderDetailList;
