@@ -65,17 +65,21 @@
             <th>Brand</th>
             <th>Type</th>
             <th>Quantity</th>
-            <th></th>
+            <th>Image</th>
           </tr>
         </thead>
         <tbody>
           <tr  th:each="product : ${listProducts}">
-            <td>[[${product.product_id}]]</td>
-            <td>[[${product.product_name}]]</td>
-            <td>[[${product.productPrice}]]</td>
-            <td>[[${product.productBrand}]]</td>
-            <td>[[${product.productType}]]</td>
-            <td>[[${product.product_quantity}]]</td>
+            <td th:text="${product.productID}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="@{${product.price} + 'vnd'}"></td>
+            <td th:text="${product.type}"></td>
+            <td th:text="${product.brand}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td>
+              <img th:src="@{'images' + ${product.images}}"
+                alt="..." width="100">
+            </td>
             <td>
               <a class="h4" href="#">Edit</a>
               <a class="h4" href="#">Delete</a>
