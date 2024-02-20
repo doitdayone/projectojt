@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>[[${PageTittle}]]</title>
+    <title>Admin Home</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/styles.css">
@@ -57,8 +57,12 @@
             </div>
         </div>
         <div>
-            <h2>[[${PageTittle}]]</h2>
-            <form th:action="@{/create/add}" method="post" enctype="multipart/form-data" th:oject="${productDto}">
+            <h2>Add New Product</h2>
+            <form method="post" enctype="multipart/form-data" th:oject="${product}">
+                <div>
+                    <label>ID</label>
+                    <input readonly th:value="${product.productID}">
+                </div>
                 <div>
                     <label>Name</label>
                     <input th:field="${productDto.name}">
@@ -92,6 +96,9 @@
                 <div>
                     <label>Description</label>
                     <textarea th:field="${productDto.detail}"></textarea>
+                </div>
+                <div>
+                    <img th:src="@{'/images/' + ${product.images}}" alt="" width="100">
                 </div>
                 <div>
                     <label>Image</label>

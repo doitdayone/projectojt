@@ -20,16 +20,17 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int productID;
     private String name;
-    private long price;
+    private int price;
     private String brand;
     private int quantity;
     private float rating;
     private String images;
     private String detail;
-
+    private String type;
     @JsonManagedReference(value = "orderDetail_product")
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<OrderDetail> orderDetailList;
+
 
 //    @JsonManagedReference(value = "cart_product")
 //    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)

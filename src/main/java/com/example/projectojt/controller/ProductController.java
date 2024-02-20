@@ -1,25 +1,30 @@
 package com.example.projectojt.controller;
 import com.example.projectojt.dto.ProductDTO;
 import com.example.projectojt.model.Product;
+import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.service.ProductService;
 import org.hibernate.query.SortDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.validation.Valid;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.InputStream;
+import java.nio.file.*;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class ProductController {
     @Autowired private ProductService service;
+    @Autowired private ProductRepository repo;
 
     @GetMapping("/manageProduct")
     public String showProductList(Model model){
@@ -31,23 +36,74 @@ public class ProductController {
 
     @GetMapping("/create")
     public String showCreateProduct(Model Model){
-        ProductDTO productDto = new ProductDTO();
-        Model.addAttribute("productDto", productDto);
+        Model.addAttribute("productDto", new ProductDTO());
         return "createProduct";
     }
-    @PostMapping("/create")
-    public String createProduct(
-            @Valid @ModelAttribute ProductDTO productDto,
-            BindingResult result
-    ){
+
+    @PostMapping("/create/add")
+    public String addProduct(@Valid @ModelAttribute ProductDTO productDto, BindingResult result){
+
         if (productDto.getImages().isEmpty()){
-            result.addError(new FieldError("productDto", "images", "The image file is required"));
+            result.addError(new FieldError("productDto", "image", "The image file is required"));
         }
 
         if (result.hasErrors()){
             return "createProduct";
         }
 
-        return "manageProduct";
+        MultipartFile image = productDto.getImages();
+        Date createAt = new Date();
+        String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
+        try {
+            String uploadDir = "public/images/";
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (!Files.exists(uploadPath)){
+                Files.createDirectories(uploadPath);
+            }
+
+            try(InputStream inputStream = image.getInputStream()){
+                Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Exception" + ex.getMessage());
+        }
+
+        Product product = new Product();
+        product.setName(productDto.getName());
+        product.setBrand(productDto.getBrand());
+        product.setType(productDto.getType());
+        product.setPrice(productDto.getPrice());
+        product.setDetail(productDto.getDetail());
+        product.setImages(storageFileName);
+        product.setQuantity(productDto.getQuantity());
+
+        service.save(product);
+
+
+        return "redirect:/manageProduct";
+    }
+    @GetMapping("/edit")
+    public String showEditPage(Model Model, @RequestParam int id){
+
+        try {
+            Product product = repo.findById(id).get();
+            Model.addAttribute("product", product);
+
+            ProductDTO productDto = new ProductDTO();
+            productDto.setName(product.getName());
+            productDto.setBrand(product.getBrand());
+            productDto.setType(product.getType());
+            productDto.setPrice(product.getPrice());
+            productDto.setQuantity(product.getQuantity());
+            productDto.setDetail(product.getDetail());
+        }
+        catch (Exception ex){
+            System.out.println("Exception: " + ex.getMessage());
+            return "redirect:/manageProduct";
+        }
+
+        return "editProduct";
     }
 }
