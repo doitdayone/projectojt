@@ -1,5 +1,9 @@
 <!doctype html>
+<<<<<<< HEAD
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+=======
 <html lang="en">
+>>>>>>> origin/tuan
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -40,7 +44,11 @@
                 </a>
             </li>
             <li>
+<<<<<<< HEAD
+                <a href="/create">
+=======
                 <a href="/manageProduct">
+>>>>>>> origin/tuan
                         <span class="icon">
                             <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
                         </span>
@@ -56,7 +64,61 @@
             </div>
         </div>
         <div>
+<<<<<<< HEAD
+            <h2>Add New Product</h2>
+            <form method="post" enctype="multipart/form-data" th:object="${productDto}">
+                <div>
+                    <label>Name</label>
+                    <input th:field="${productDto.name}">
+                    <p th:if="${#fields.hasErrors('name')}" th:errors="${productDto.name}"></p>
+                </div>
+                <div>
+                    <label>Brand</label>
+                    <select th:field="${productDto.brand}">
+                        <option value="Asus">Asus</option>
+                        <option value="Acer">Acer</option>
+                        <option value="Dell">Dell</option>
+                        <option value="ROG">ROG</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('brand')}" th:errors="${productDto.brand}"></p>
+                </div>
+                <div>
+                    <label>Type</label>
+                    <select th:field="${productDto.type}">
+                        <option value="Mouse">Mouse</option>
+                        <option value="Screen">Screen</option>
+                        <option value="Keyboard">Keyboard</option>
+                        <option value="CPU">CPU</option>
+                    </select>
+                    <p th:if="${#fields.hasErrors('type')}" th:errors="${productDto.type}"></p>
+                </div>
+                <div>
+                    <label>Price</label>
+                    <input type="number" step="0.1" min="0" th:field="${productDto.price}">
+                    <p th:if="${#fields.hasErrors('price')}" th:errors="${productDto.price}"></p>
+                </div>
+                <div>
+                    <label>Description</label>
+                    <textarea th:field="${productDto.detail}"></textarea>
+                    <p th:if="${#fields.hasErrors('detail')}" th:errors="${productDto.detail}"></p>
+                </div>
+                <div>
+                    <label>Image</label>
+                    <input type="file" th:field="${productDto.images}">
+                    <p th:if="${#fields.hasErrors('images')}" th:errors="${productDto.images}"></p>
+                </div>
+                <div>
+                    <div>
+                        <button type="submit">Add</button>
+                    </div>
+                    <div>
+                        <a href="/admin" role="button">Cancel</a>
+                    </div>
+                </div>
+            </form>
+=======
 
+>>>>>>> origin/tuan
         </div>
     </div>
 </div>
