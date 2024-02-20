@@ -1,6 +1,4 @@
 package com.example.projectojt.controller;
-
-
 import com.example.projectojt.dto.ProductDTO;
 import com.example.projectojt.model.Product;
 import com.example.projectojt.repository.ProductRepository;
@@ -15,15 +13,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.validation.Valid;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.InputStream;
 import java.nio.file.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -39,6 +33,7 @@ public class ProductController {
 
         return "manageProduct";
     }
+
     @GetMapping("/create")
     public String showCreateProduct(Model Model){
         Model.addAttribute("productDto", new ProductDTO());
@@ -89,7 +84,6 @@ public class ProductController {
 
         return "redirect:/manageProduct";
     }
-
     @GetMapping("/edit")
     public String showEditPage(Model Model, @RequestParam int id){
 
