@@ -7,7 +7,9 @@ import com.example.projectojt.dto.ProductDTO;
 >>>>>>> origin/tuan
 import com.example.projectojt.model.Product;
 import com.example.projectojt.service.ProductService;
+import org.hibernate.query.SortDirection;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
