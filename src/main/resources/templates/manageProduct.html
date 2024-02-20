@@ -59,7 +59,7 @@
       <table>
         <thead>
           <tr>
-            <th>Image</th>
+            <th>ID</th>
             <th>Name</th>
             <th>Price</th>
             <th>Brand</th>
@@ -69,36 +69,21 @@
           </tr>
         </thead>
         <tbody>
-<<<<<<<<< Temporary merge branch 1
           <tr  th:each="product : ${listProducts}">
-            <td th:text="${product.productID}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="@{${product.price} + 'vnd'}"></td>
             <td th:text="${product.type}"></td>
             <td th:text="${product.brand}"></td>
             <td th:text="${product.quantity}"></td>
             <td>
-              <img th:src="@{'images' + ${product.images}}"
+              <img th:src="@{'/images/' + ${product.image}}"
                 alt="..." width="100">
             </td>
-=========
-          <th:block th:each="product : ${listProducts}">
-          <tr>
->>>>>>>>> Temporary merge branch 2
             <td>
-              <img th:src="@{'/images/' + ${product.images}}" alt="" width="100">
-            </td>
-            <td th:text="${product.name}"></td>
-            <td th:text="${product.price}"></td>
-            <td th:text="${product.brand}"></td>
-            <td th:text="${product.type}"></td>
-            <td th:text="${product.quantity}"></td>
-            <td>
-              <a class="h4" href="/edit">Edit</a>
-              <a class="h4" href="#">Delete</a>
+              <a class="h4" th:href="@{/edit(id=${product.productID})}">Edit</a>
+              <a class="h4" th:href="@{/delete(id=${product.productID})}" onclick="return confirm('Are you sure')">Delete</a>
             </td>
           </tr>
-          </th:block>
         </tbody>
       </table>
     </div>
