@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+
+
 import java.io.InputStream;
 import java.nio.file.*;
 import java.util.Date;
@@ -76,7 +81,7 @@ public class ProductController {
         product.setType(productDto.getType());
         product.setPrice(productDto.getPrice());
         product.setDetail(productDto.getDetail());
-        product.setImages(storageFileName);
+        product.setImage(storageFileName);
         product.setQuantity(productDto.getQuantity());
 
         service.save(product);
@@ -98,6 +103,8 @@ public class ProductController {
             productDto.setPrice(product.getPrice());
             productDto.setQuantity(product.getQuantity());
             productDto.setDetail(product.getDetail());
+
+            Model.addAttribute("productDto", productDto);
         }
         catch (Exception ex){
             System.out.println("Exception: " + ex.getMessage());
@@ -105,5 +112,79 @@ public class ProductController {
         }
 
         return "editProduct";
+    }
+
+    @PostMapping("/edit/save")
+    public String updateProduct(
+            Model Model,
+            @RequestParam int id,
+            @Valid @ModelAttribute ProductDTO productDto,
+            BindingResult result
+    ){
+        try {
+            Product product = repo.findById(id).get();
+            Model.addAttribute("product", product);
+
+            if (result.hasErrors()){
+                return "editProduct";
+            }
+
+            if (!productDto.getImages().isEmpty()){
+                String uploadDir = "public/images/";
+                Path oldImagePath = Paths.get(uploadDir + product.getImage());
+
+                try {
+                    Files.delete(oldImagePath);
+                }
+                catch (Exception ex){
+                    System.out.println("Exception: " + ex.getMessage());
+                }
+
+                MultipartFile image = productDto.getImages();
+                Date createAt = new Date();
+                String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
+                try(InputStream inputStream = image.getInputStream()){
+                    Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+                }
+                product.setImage(storageFileName);
+            }
+
+            product.setName(productDto.getName());
+            product.setBrand(productDto.getBrand());
+            product.setType(productDto.getType());
+            product.setPrice(productDto.getPrice());
+            product.setDetail(productDto.getDetail());
+            product.setQuantity(productDto.getQuantity());
+
+            repo.save(product);
+        }
+        catch (Exception ex){
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return "redirect:/manageProduct";
+    }
+
+    @GetMapping("/delete")
+    public String deleteProduct(
+            @RequestParam int id
+    ){
+        try {
+
+            Product product = repo.findById(id).get();
+
+            Path imagePath = Paths.get("public/images/" + product.getImage());
+
+            try {
+                Files.delete(imagePath);
+            } catch (Exception ex) {
+                System.out.println("Exception: " + ex.getMessage());
+            }
+
+            repo.delete(product);
+        }catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+
+        return "manageProduct";
     }
 }

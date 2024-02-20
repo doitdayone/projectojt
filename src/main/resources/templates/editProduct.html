@@ -58,7 +58,7 @@
         </div>
         <div>
             <h2>Add New Product</h2>
-            <form method="post" enctype="multipart/form-data" th:oject="${product}">
+            <form th:action="@{/edit/save}" method="post" enctype="multipart/form-data" th:oject="${productDto}">
                 <div>
                     <label>ID</label>
                     <input readonly th:value="${product.productID}">
@@ -98,7 +98,7 @@
                     <textarea th:field="${productDto.detail}"></textarea>
                 </div>
                 <div>
-                    <img th:src="@{'/images/' + ${product.images}}" alt="" width="100">
+                    <img th:src="@{'/images/' + ${product.image}}" alt="" width="100">
                 </div>
                 <div>
                     <label>Image</label>
@@ -106,10 +106,10 @@
                 </div>
                 <div>
                     <div>
-                        <button type="submit">Add</button>
+                        <button type="submit">Save</button>
                     </div>
                     <div>
-                        <a href="/admin" role="button">Cancel</a>
+                        <a href="/manageProduct" role="button">Cancel</a>
                     </div>
                 </div>
             </form>

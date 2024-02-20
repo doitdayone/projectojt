@@ -22,10 +22,17 @@ public class ProductService {
         repo.save(product);
     }
 
-    public Product get(Integer id) throws UserNotFoundException {
+    public Product get(int id) throws UserNotFoundException {
         Optional<Product> result = repo.findById(id);
         if (result.isPresent()){
             return result.get();
+        }
+        throw new UserNotFoundException("Could not find any product with ID" + id);
+    }
+    public void delete(int id) throws UserNotFoundException {
+        Optional<Product> result = repo.findById(id);
+        if (result.isPresent()){
+            repo.deleteById(id);
         }
         throw new UserNotFoundException("Could not find any product with ID" + id);
     }
