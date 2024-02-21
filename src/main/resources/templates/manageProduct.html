@@ -70,13 +70,14 @@
         </thead>
         <tbody>
           <tr  th:each="product : ${listProducts}">
+            <td th:text="${product.productID}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="@{${product.price} + 'vnd'}"></td>
             <td th:text="${product.type}"></td>
             <td th:text="${product.brand}"></td>
             <td th:text="${product.quantity}"></td>
             <td>
-              <img th:src="@{'/images/' + ${product.image}}"
+              <img th:src="@{'/images/' + ${product.images}}"
                 alt="..." width="100">
             </td>
             <td>

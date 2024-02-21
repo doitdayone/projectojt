@@ -60,9 +60,13 @@ public class StaffController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteStaff(@PathVariable int id) throws UserNotFoundException {
-        // Logic to delete staff from the list
-        service.delete(id); // Assuming the list is indexed by ID
+    public String deleteStaff(@PathVariable int id){
+        try{
+            service.delete(id);
+        }
+        catch (UserNotFoundException e){
+            e.printStackTrace();
+        }
         return "redirect:/staff";
     }
 }
