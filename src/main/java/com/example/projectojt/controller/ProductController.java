@@ -186,10 +186,8 @@ public class ProductController {
             }
 
             service.delete(id);
-        }catch (Exception ex) {
+        }catch (UserNotFoundException ex) {
             System.out.println("Exception: " + ex.getMessage());
-        } catch (UserNotFoundException e) {
-            throw new RuntimeException(e);
         }
 
         return "redirect:/manageProduct";
