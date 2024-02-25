@@ -10,6 +10,65 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/styles.css">
+    <style>
+        .main{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .main-content{
+            width: 400px;
+        }
+        .content{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0 10px 0;
+            align-items: center;
+            border-bottom: 1px solid #dddddd;
+        }
+        .content label{
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .content input{
+            width: 250px;
+            height: 30px;
+            text-align: center;
+        }
+        .action{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding-top: 10px;
+        }
+        .update button{
+            border-radius: 5px;
+            background-color: #0298cf;
+            color: #f6f9fc;
+            border: none;
+            height: 40px;
+            width: 100px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .cancel{
+            border-radius: 5px;
+            background-color: #f80000;
+            border: none;
+            height: 40px;
+            width: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cancel a{
+            color: #f6f9fc;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -18,7 +77,7 @@
             <li>
                 <a href="#">
                         <span class="icon">
-                            <ion-icon class="fa-solid fa-user-tie"></ion-icon>
+                            <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
                     <span class="title">Admin</span>
                 </a>
@@ -27,7 +86,7 @@
             <li>
                 <a href="/admin">
                         <span class="icon">
-                            <ion-icon class="fa-solid fa-house"></ion-icon>
+                            <ion-icon name="home-outline"></ion-icon>
                         </span>
                     <span class="title">Dashboard</span>
                 </a>
@@ -43,9 +102,25 @@
             <li>
                 <a href="/create">
                         <span class="icon">
-                            <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
+                            <ion-icon name="add-outline"></ion-icon>
                         </span>
                     <span class="title">Create Product</span>
+                </a>
+            </li>
+            <li>
+                <a href="/staff">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                    <span class="title">Manage Staff</span>
+                </a>
+            </li>
+            <li>
+                <a href="/add">
+                        <span class="icon">
+                            <ion-icon name="person-add-outline"></ion-icon>
+                        </span>
+                    <span class="title">Add Staff</span>
                 </a>
             </li>
         </ul>
@@ -56,36 +131,43 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
-        <div>
+        <div class="main-content">
             <h2>Add Staff</h2>
             <form th:action="@{/add/new}" th:object="${staff}" method="post">
                 <input type="hidden" th:field="*{ID}" />
-                <div>
+                <div class="content">
                     <label>Name:</label>
                     <input type="text" th:field="*{name}">
                     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                 </div>
-                <div>
+                <div class="content">
                     <label>Address:</label>
                     <input type="text" th:field="*{address}">
                     <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
                 </div>
-                <div>
+                <div class="content">
                     <label>Phone:</label>
                     <input type="text" th:field="*{phone}">
                     <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
                 </div>
-                <div>
+                <div class="content">
                     <label>Birthday:</label>
                     <input type="date" th:field="*{birthday}">
                     <span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></span>
                 </div>
-                <div>
+                <div class="content">
                     <label>Password:</label>
                     <input type="password" th:field="*{password}">
                     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                 </div>
-                <button type="submit">Add Staff</button>
+                <div class="action">
+                    <div class="update">
+                        <button type="submit">Add</button>
+                    </div>
+                    <div class="cancel">
+                        <a href="/admin" role="button">Cancel</a>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
