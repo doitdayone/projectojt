@@ -56,9 +56,9 @@
                 <i class="fa-solid fa-bars"></i>
             </div>
         </div>
-        <div>
+        <div class="main-content">
             <h2>Add New Product</h2>
-            <form th:action="@{/edit/save}" method="post" enctype="multipart/form-data" th:oject="${productDto}">
+            <form th:action="@{/update}" method="post" enctype="multipart/form-data" th:oject="${productDto}">
                 <div>
                     <label>ID</label>
                     <input readonly th:value="${product.productID}">

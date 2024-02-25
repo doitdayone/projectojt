@@ -117,7 +117,7 @@ public class ProductController {
         return "editProduct";
     }
 
-    @PostMapping("/edit/save")
+    @PostMapping("/update")
     public String updateProduct(
             Model Model,
             @RequestParam int id,
