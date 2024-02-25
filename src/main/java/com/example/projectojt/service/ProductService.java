@@ -5,6 +5,7 @@ import com.example.projectojt.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ProductService {
         }
         throw new UserNotFoundException("Could not find any product with ID" + id);
     }
+    @Transactional
     public void delete(int id) throws UserNotFoundException {
         Optional<Product> result = repo.findById(id);
         if (result.isPresent()){

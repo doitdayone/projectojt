@@ -137,33 +137,25 @@
           <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Price</th>
-            <th>Brand</th>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>Image</th>
-            <th>Detail</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Birthday</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr  th:each="product : ${listProducts}">
-            <td th:text="${product.productID}"></td>
-            <td th:text="${product.name}"></td>
-            <td th:text="@{${product.price} + 'vnd'}"></td>
-            <td th:text="${product.brand}"></td>
-            <td th:text="${product.type}"></td>
-            <td th:text="${product.quantity}"></td>
-            <td>
-              <img th:src="@{'/images/' + ${product.images}}"
-                alt="..." >
-            </td>
-            <td th:text="${product.detail}"></td>
-            <td>
-              <a class="edit button" th:href="@{/edit(id=${product.productID})}"><ion-icon name="create-outline"></ion-icon></a>
-              <a class="delete button" th:href="@{/delete(id=${product.productID})}" onclick="return confirm('Are you sure')"><ion-icon name="trash-outline"></ion-icon></a>
-            </td>
-          </tr>
+        <tr th:each="staff : ${staffList}">
+          <td th:text="${staff.ID}"></td>
+          <td th:text="${staff.name}"></td>
+          <td th:text="${staff.address}"></td>
+          <td th:text="${staff.phone}"></td>
+          <td th:text="${staff.birthday}"></td>
+          <td>
+            <a class="edit button" th:href="@{'/edit/' + ${staff.ID}}"><ion-icon name="create-outline"></ion-icon></a>
+            <a class="delete button" th:href="@{'/delete/' + ${staff.ID}}"><ion-icon name="trash-outline"></ion-icon></a>
+          </td>
+        </tr>
+          </th:block>
         </tbody>
       </table>
     </div>

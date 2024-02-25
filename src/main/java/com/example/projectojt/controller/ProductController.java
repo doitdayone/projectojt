@@ -1,31 +1,30 @@
 package com.example.projectojt.controller;
-
-
 import com.example.projectojt.dto.ProductDTO;
 import com.example.projectojt.model.Product;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.service.ProductService;
+import com.example.projectojt.service.UserNotFoundException;
 import org.hibernate.query.SortDirection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.validation.Valid;
-
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+
+
 import java.io.InputStream;
 import java.nio.file.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +40,7 @@ public class ProductController {
 
         return "manageProduct";
     }
+
     @GetMapping("/create")
     public String showCreateProduct(Model Model){
         Model.addAttribute("productDto", new ProductDTO());
@@ -83,7 +83,7 @@ public class ProductController {
         product.setType(productDto.getType());
         product.setPrice(productDto.getPrice());
         product.setDetail(productDto.getDetail());
-        product.setImage(storageFileName);
+        product.setImages(storageFileName);
         product.setQuantity(productDto.getQuantity());
 
         service.save(product);
@@ -91,7 +91,6 @@ public class ProductController {
 
         return "redirect:/manageProduct";
     }
-
     @GetMapping("/edit")
     public String showEditPage(Model Model, @RequestParam int id){
 
@@ -117,7 +116,7 @@ public class ProductController {
         return "editProduct";
     }
 
-    @PostMapping("/update")
+    @PostMapping("/edit")
     public String updateProduct(
             Model Model,
             @RequestParam int id,
@@ -125,7 +124,7 @@ public class ProductController {
             BindingResult result
     ){
         try {
-            Product product = repo.findById(id).get();
+            Product product = service.get(id);
             Model.addAttribute("product", product);
 
             if (result.hasErrors()){
@@ -134,7 +133,7 @@ public class ProductController {
 
             if (!productDto.getImages().isEmpty()){
                 String uploadDir = "public/images/";
-                Path oldImagePath = Paths.get(uploadDir + product.getImage());
+                Path oldImagePath = Paths.get(uploadDir + product.getImages());
 
                 try {
                     Files.delete(oldImagePath);
@@ -149,7 +148,7 @@ public class ProductController {
                 try(InputStream inputStream = image.getInputStream()){
                     Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
                 }
-                product.setImage(storageFileName);
+                product.setImages(storageFileName);
             }
 
             product.setName(productDto.getName());
@@ -159,23 +158,26 @@ public class ProductController {
             product.setDetail(productDto.getDetail());
             product.setQuantity(productDto.getQuantity());
 
-            repo.save(product);
+            service.save(product);
         }
         catch (Exception ex){
             System.out.println("Exception: " + ex.getMessage());
+        } catch (UserNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return "redirect:/manageProduct";
     }
 
+    @Transactional
     @GetMapping("/delete")
     public String deleteProduct(
             @RequestParam int id
     ){
         try {
 
-            Product product = repo.findById(id).get();
+            Product product = service.get(id);
 
-            Path imagePath = Paths.get("public/images/" + product.getImage());
+            Path imagePath = Paths.get("public/images/" + product.getImages());
 
             try {
                 Files.delete(imagePath);
@@ -183,11 +185,11 @@ public class ProductController {
                 System.out.println("Exception: " + ex.getMessage());
             }
 
-            repo.delete(product);
-        }catch (Exception ex) {
+            service.delete(id);
+        }catch (UserNotFoundException ex) {
             System.out.println("Exception: " + ex.getMessage());
         }
 
-        return "manageProduct";
+        return "redirect:/manageProduct";
     }
 }
