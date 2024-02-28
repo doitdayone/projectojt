@@ -1,0 +1,499 @@
+:root {
+    --one-color-bg: rgb(50, 120, 246);
+    --two-color-bg: rgb(41, 50, 78);
+    --page-top-height: 30px;
+    --header-top-heght: 30px;
+    --header-bottom-heght: 70px;
+    --main-text-color: whitesmoke;
+    --line-space-color: rgb(243, 243, 243, 0.5);
+  }
+  * {
+    marign: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .container {
+    max-width: 1424px;
+    margin: auto;
+  }
+  body {
+    background-color: rgb(243, 243, 243);
+    margin: 0;
+  }
+  a {
+    text-decoration: none;
+    color: unset;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  input {
+    outline: none;
+  }
+  .row-grid {
+    display: grid;
+    justify-content: space-between;
+  }
+  .row-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+  .page-top {
+    background-color: var(--one-color-bg);
+  }
+  .page-top i {
+    margin-right: 6px;
+  }
+  .page-top .row-grid {
+    justify-content: end;
+    height: var(--page-top-height);
+  } 
+  .page-top ul li:first-child {
+    position: relative;
+    padding-right: 12px;
+    margin-right: 12px;
+  }
+  .page-top ul li:first-child::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 2px;
+    height: 70%;
+    background-color: var(--line-space-color);
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  /* header-top */
+  header {
+    background-color: var(--two-color-bg);
+    padding-top: 10px;
+  }
+  .header-top .row-grid {
+    height: var(--header-top-heght);
+    grid-template-columns: 20% 60% 20%;
+    align-items: center;
+    color: var(--main-text-color);
+  }
+  .header-top-search.row-grid {
+    grid-template-columns: 80% 20%;
+  }
+  .header-top-search input {
+    height: 40px;
+    padding-left: 12px;
+  }
+  .header-top-search button {
+    height: 40px;
+    background-color: var(--one-color-bg);
+    border: none;
+    cursor: pointer;
+  }
+  .header-top-search button i {
+    margin-left: 6px;
+  }
+  .header-top-user_cart .row-flex {
+    justify-content: end;
+  }
+  .header-top-user_cart ul li:first-child {
+    position: relative;
+    padding-right: 12px;
+    margin-right: 12px;
+  }
+  .header-top-user_cart ul li:first-child::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 2px;
+    height: 70%;
+    background-color: var(--line-space-color);
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .header-top-user_cart ul li:last-child span {
+    padding: 6px;
+    background-color: red;
+  }
+  .header-top-user_cart {
+    margin-right: 6px;
+  }
+  /* header bottom */
+  .header-bottom .row-grid {
+    grid-template-columns: 20% 80%;
+    height: var(--header-bottom-heght);
+    align-items: center;
+    margin-top: 20px;
+    
+  }
+  .header-bottom-menubar {
+    cursor: pointer;
+  }
+  .header-bottom-menubar span {
+    margin: 2px 6px;
+    color: var(--main-text-color);
+  }
+  .header-bottom-menulist .row-flex {
+    justify-self: flex-start;
+    color: var(--main-text-color);
+  }
+  .header-bottom-menulist ul li {
+    padding: 6px 12px;
+    position: relative;
+  }
+  .header-bottom-menulist ul li::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 2px;
+    height: 50%;
+    background-color: var(--line-space-color);
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .header-bottom-menulist ul li a {
+    position: relative;
+    font-weight: bold;
+    font-size: small;
+  }
+  .header-bottom-menulist ul li a::after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--line-space-color);
+    bottom: -3px;
+  }
+  .header-bottom-menulist ul li a:hover::after {
+    width: 100%;
+    transition: all 0.5s ease;
+  }
+  .swiper-slide img {
+    width: 100%;
+    cursor: pointer;
+  }
+  .page-top,
+  .header {
+    color: whitesmoke;
+  }
+  body {
+    background-color: rgb(243, 243, 243);
+  }
+
+  /* Gaming Gear */
+  .gear-product {
+    margin: 30px 0;
+  }
+  .gear-product-title row-grid {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 3px solid var(--blue, #3278f6);
+    display: inline-block;
+  }
+  .gear-product .container {
+    background-color: white;
+    padding: 10px 0;
+    content: var(--main-text-color);
+  }
+  .row-grid,
+  .row-flex {
+    padding: 0 12px;
+  }
+  .gear-product-main.row-grid {
+    grid-template-columns: 20% 80%;
+  }
+  .gear-product-main-items.row-grid {
+    grid-template-columns: repeat(4, 24%);
+  }
+  
+  .gear-product-item-price .price {
+    text-decoration: line-through;
+  }
+  .gear-product-item-price .sellprice {
+    color: red;
+  }
+  
+  /* hover */
+  .header-top-search button {
+    position: relative;
+    overflow: hidden;
+  }
+  .header-top-search button::after {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 90%;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgb(41, 50, 78, 0.5);
+    left: -100%;
+    transition: all 0.3s ease;
+    clip-path: polygon(75% 0%, 100% 51%, 75% 100%, 0% 100%, 14% 50%, 0% 0%);
+  }
+  .header-top-search button:hover::after {
+    left: 0;
+    clip-path: polygon(100% 0, 100% 51%, 100% 100%, 0% 100%, 0 50%, 0% 0%);
+  }
+  .header-top-search button:hover {
+    color: whitesmoke;
+  }
+  .header-top-search button a {
+    display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    top: 0;
+    line-height: 40px;
+    z-index: 3;
+  }
+  /* hover cart */
+  .header-top-user_cart li:last-child {
+    position: relative;
+    cursor: pointer;
+    padding: 2px 12px;
+    background-color: rgb(41, 50, 78, 0.5);
+  }
+  .header-top-user_cart li:last-child ul {
+    position: absolute;
+    width: 350px;
+    background: whitesmoke;
+    right: 0;
+    padding: 50px 12px;
+    text-align: center;
+    color: black;
+    z-index: 10;
+    top: calc(100% + 30px);
+    transition: all 0.3s ease;
+    visibility: hidden;
+  }
+  .header-top-user_cart ul li{
+    line-height: 40px;
+  }
+  .header-top-user_cart ul li:last-child:hover ul{
+    top: 100%;
+    visibility: visible;
+  }
+  /* product-list */
+  /* left */
+  .left {
+    float: left;
+    width: 290px;
+  }
+  
+  .background-white {
+    background-color: #fff;
+    padding: 20px;
+    margin-right: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title-filter {
+    font-size: 20px;
+    color: #333;
+  }
+ .itle-filter-type{
+
+ }
+  
+  .box-filter {
+    margin-top: 20px;
+  }
+  
+  .item-filter {
+    margin-bottom: 20px;
+  }
+  
+  .title-filter span {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--grey-bold);
+    text-transform: uppercase;
+
+  }
+  
+  .content-filter {
+    margin-top: 10px;
+  }
+  .box-filter .icon-check {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+    border: 1px solid #29324e;
+    position: relative;
+    z-index: 9;
+  }
+  .item-attr {
+    margin-bottom: 5px;
+    display: flex;
+  }
+  
+  .form-filter-price {
+    margin-top: 20px;
+  }
+  
+  .vertical-price-filter {
+    display: flex;
+    align-items: center;
+  }
+  
+  .vertical-price-filter-child {
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  #slider-range {
+    margin-top: 10px;
+  }
+  .box-filter .form-filter-price {
+    margin-top: 16px;
+    width: 100%;
+}
+.box-filter .vertical-price-filter {
+    margin-bottom: 16px;
+}
+.space-between {
+    justify-content: space-between!important;
+}
+.align-items {
+    align-items: center!important;
+}
+.d-flex {
+    display: flex!important;
+}
+.box-filter .vertical-price-filter-child {
+    width: 46%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: 1.5px solid #ccc;
+    padding: 8px;
+}
+.box-filter .vertical-price-filter-child {
+    width: 46%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    border: 1.5px solid #ccc;
+    padding: 8px;
+}
+.box-filter #slider-range {
+    border-radius: 4px;
+    height: 4px;
+    background: #ededed;
+    border: 0;
+    margin-left: 9px;
+    width: 93%;
+}
+  
+  
+  
+  /* right */
+  .right {
+    width: 1278px;
+    background-color: rgba(255, 255, 255, 0.197);
+  }
+  .gear-product-main-item {
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+
+  }
+  
+  .gear-product-main-item:hover {
+    box-shadow: 0 0 10px rgba(2, 0, 128, 0.8); /* Change the color to your desired green shade */
+  }
+  
+  /* Add this if you want to smooth out the transition on hover */
+  .gear-product-main-item img {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .gear-product-main-item:hover img {
+    transform: scale(1.1); /* Change the scale factor to your preference */
+  }
+  /* footer */
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 30px 0;
+  }
+  
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  
+  .footer-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .footer-column {
+    width: 30%;
+    margin-bottom: 20px;
+  }
+  
+  .footer-column h3 {
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .footer-column ul li {
+    margin-bottom: 10px;
+  }
+  
+  .footer-column ul li i {
+    margin-right: 10px;
+  }
+  
+  .footer-column ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .footer-column ul li a:hover {
+    color: #f39c12;
+  }
+  
+  .social-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+  }
+  
+  .social-icons li {
+    margin-right: 10px;
+  }
+  
+  .social-icons a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 24px;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icons a:hover {
+    color: #f39c12;
+  }
