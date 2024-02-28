@@ -150,7 +150,7 @@
           <tr  th:each="product : ${listProducts}">
             <td th:text="${product.productID}"></td>
             <td th:text="${product.name}"></td>
-            <td th:text="@{${product.price} + 'vnd'}"></td>
+            <td th:text="@{${product.price} + ' VND'}"></td>
             <td th:text="${product.brand}"></td>
             <td th:text="${product.type}"></td>
             <td th:text="${product.quantity}"></td>
