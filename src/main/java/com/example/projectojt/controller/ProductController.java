@@ -1,195 +1,175 @@
 package com.example.projectojt.controller;
-import com.example.projectojt.dto.ProductDTO;
+
 import com.example.projectojt.model.Product;
+import com.example.projectojt.model.User;
 import com.example.projectojt.repository.ProductRepository;
+import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.service.ProductService;
-import com.example.projectojt.service.UserNotFoundException;
-import org.hibernate.query.SortDirection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-
-
-import java.io.InputStream;
-import java.nio.file.*;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
+@RequestMapping("/EcommerceStore")
 @Controller
 public class ProductController {
-    @Autowired private ProductService service;
-    @Autowired private ProductRepository repo;
 
-    @GetMapping("/manageProduct")
-    public String showProductList(Model model){
-        List<Product> listProducts = service.listAll();
-        model.addAttribute("listProducts", listProducts);
+  @Autowired
+  private ProductRepository productRepository;
+  @Autowired
+  private UserRepository userRepository;
+  //  @Autowired
+//  private ProductService productService;
+  @Autowired
+  private ProductService productService;
 
-        return "manageProduct";
+  @GetMapping("/product")
+  public String getProduct(Authentication authentication, Model model,
+      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
+    if (authentication != null && authentication.isAuthenticated()) {
+      Object principal = authentication.getPrincipal();
+
+      if (principal instanceof UserDetails userDetails) {
+        // Standard UserDetails case
+        String email = userDetails.getUsername();
+        model.addAttribute("user_email", email);
+        User user = userRepository.findByEmail(email);
+        model.addAttribute("userRepository", userRepository);
+        int user_id = user.getUserID();
+        model.addAttribute("user_id", user_id);
+      } else if (principal instanceof OAuth2User oAuth2User) {
+        // get user_email when sign in with google or facebook
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        model.addAttribute("user_email",
+            attributes.get("email"));
+
+        model.addAttribute("userRepository", userRepository);
+
+
+      } else {
+        return "error";
+      }
+    }
+//    List<Product> productList = productRepository.findAll();
+//    model.addAttribute("productList", productList);
+//    List<Product> productList = productRepository.findAll();
+//    if (keyword != null) {
+//      productList = productRepository.searchProduct(keyword);
+//    }
+//    model.addAttribute("keyword", keyword);
+
+//    Page<Product> productList = this.productService.getAll(pageNo);
+    List<Product> productList = productService.getInitialProducts();
+    model.addAttribute("productList", productList);
+
+    List<Product> listPhone = productRepository.findProductsByType("Phone");
+    model.addAttribute("listPhone", listPhone);
+    List<Product> listLaptop = productRepository.findProductsByType("Laptop");
+    model.addAttribute("listLaptop", listLaptop);
+    List<Product> listEarPhone = productRepository.findProductsByType("Ear Phone");
+    model.addAttribute("listEarPhone", listEarPhone);
+    return "homepage";
+  }
+
+  @GetMapping("/products/more")
+  public String getMoreProduct(Model model, @RequestParam int page, @RequestParam int size) {
+    List<Product> moreProducts = productService.getMoreProducts(page, size);
+    model.addAttribute("productListMore", moreProducts);
+    return "homepage"; // Trả về một fragment chứa danh sách sản phẩm mới
+  }
+
+  @GetMapping("/productDetails/{productId}")
+  public String getProductDetails(@PathVariable("productId") Integer productId,
+      Authentication authentication, Model model) {
+    if (authentication != null && authentication.isAuthenticated()) {
+      Object principal = authentication.getPrincipal();
+
+      if (principal instanceof UserDetails userDetails) {
+        // Standard UserDetails case
+        String email = userDetails.getUsername();
+        model.addAttribute("user_email", email);
+        User user = userRepository.findByEmail(email);
+        model.addAttribute("userRepository", userRepository);
+        int user_id = user.getUserID();
+        model.addAttribute("user_id", user_id);
+      } else if (principal instanceof OAuth2User oAuth2User) {
+        // get user_email when sign in with google or facebook
+        Map<String, Object> attributes = oAuth2User.getAttributes();
+        model.addAttribute("user_email",
+            attributes.get("email"));
+        model.addAttribute("userRepository", userRepository);
+
+
+      } else {
+        return "error";
+      }
+
+    } else {
+      model.addAttribute("user_email", " ");
+      model.addAttribute("user_id", -1);
+      model.addAttribute("userRepository", userRepository);
+
+    }
+    Optional<Product> optionalProduct = productRepository.findById(productId);
+    if (optionalProduct.isPresent()) {
+      model.addAttribute("productRepository", productRepository);
+      model.addAttribute("product", optionalProduct.get());
+      return "productDetails";
     }
 
-    @GetMapping("/create")
-    public String showCreateProduct(Model Model){
-        Model.addAttribute("productDto", new ProductDTO());
-        return "createProduct";
-    }
+    return "error";
+  }
 
-    @PostMapping("/create/add")
-    public String addProduct(@Valid @ModelAttribute ProductDTO productDto, BindingResult result){
+  @GetMapping("/productFilter/{product_type}")
+  public String productFilter(@PathVariable("product_type") String product_type, Model model) {
+    List<Product> listProduct = productRepository.findProductsByType(product_type);
+    model.addAttribute("listProduct", listProduct);
+    model.addAttribute("productType", product_type);
+    return "productFilter";
+  }
 
-        if (productDto.getImages().isEmpty()){
-            result.addError(new FieldError("productDto", "image", "The image file is required"));
-        }
+  @GetMapping("/productBrandFilter/{product_brand}")
+  public String findByProductBrand(@PathVariable("product_brand") String product_brand,
+      Model model) {
+    List<Product> listProduct = productRepository.findProductsByBrand(product_brand);
+    model.addAttribute("listProduct", listProduct);
+    model.addAttribute("productType", "Laptop");
+    return "productFilter";
+  }
 
-        if (result.hasErrors()){
-            return "createProduct";
-        }
+  @GetMapping("/productFilter")
+  public String findProductByPrice(@RequestParam("start_price") int start_price,
+      @RequestParam("end_price") int end_price, @RequestParam("productType") String productType,
+      Model model) {
+    List<Product> listProduct = productRepository.findProductsByPriceBetweenAndType(
+        start_price,
+        end_price, productType);
+    model.addAttribute("listProduct", listProduct);
+    model.addAttribute("productType", productType);
+    return "productFilter";
+  }
 
-        MultipartFile image = productDto.getImages();
-        Date createAt = new Date();
-        String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
-        try {
-            String uploadDir = "public/images/";
-            Path uploadPath = Paths.get(uploadDir);
+  @GetMapping("/search")
+  public String searchProduct(@RequestParam String keyword,
+      @RequestParam int page, @RequestParam int size,
+      Model model) {
 
-            if (!Files.exists(uploadPath)){
-                Files.createDirectories(uploadPath);
-            }
+    List<Product> productList = productService.searchProduct(keyword);
+    List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
+    model.addAttribute("productList", productList);
+    model.addAttribute("productListMore", pList);
+    model.addAttribute("keyword", keyword);
+    return "homepage";
+  }
 
-            try(InputStream inputStream = image.getInputStream()){
-                Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
-            }
-        }
-        catch (Exception ex){
-            System.out.println("Exception" + ex.getMessage());
-        }
-
-        Product product = new Product();
-        product.setName(productDto.getName());
-        product.setBrand(productDto.getBrand());
-        product.setType(productDto.getType());
-        product.setPrice(productDto.getPrice());
-        product.setDetail(productDto.getDetail());
-        product.setImages(storageFileName);
-        product.setQuantity(productDto.getQuantity());
-
-        service.save(product);
-
-
-        return "redirect:/manageProduct";
-    }
-    @GetMapping("/edit")
-    public String showEditPage(Model Model, @RequestParam int id){
-
-        try {
-            Product product = repo.findById(id).get();
-            Model.addAttribute("product", product);
-
-            ProductDTO productDto = new ProductDTO();
-            productDto.setName(product.getName());
-            productDto.setBrand(product.getBrand());
-            productDto.setType(product.getType());
-            productDto.setPrice(product.getPrice());
-            productDto.setQuantity(product.getQuantity());
-            productDto.setDetail(product.getDetail());
-
-            Model.addAttribute("productDto", productDto);
-        }
-        catch (Exception ex){
-            System.out.println("Exception: " + ex.getMessage());
-            return "redirect:/manageProduct";
-        }
-
-        return "editProduct";
-    }
-
-    @PostMapping("/edit")
-    public String updateProduct(
-            Model Model,
-            @RequestParam int id,
-            @Valid @ModelAttribute ProductDTO productDto,
-            BindingResult result
-    ){
-        try {
-            Product product = service.get(id);
-            Model.addAttribute("product", product);
-
-            if (result.hasErrors()){
-                return "editProduct";
-            }
-
-            if (!productDto.getImages().isEmpty()){
-                String uploadDir = "public/images/";
-                Path oldImagePath = Paths.get(uploadDir + product.getImages());
-
-                try {
-                    Files.delete(oldImagePath);
-                }
-                catch (Exception ex){
-                    System.out.println("Exception: " + ex.getMessage());
-                }
-
-                MultipartFile image = productDto.getImages();
-                Date createAt = new Date();
-                String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
-                try(InputStream inputStream = image.getInputStream()){
-                    Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
-                }
-                product.setImages(storageFileName);
-            }
-
-            product.setName(productDto.getName());
-            product.setBrand(productDto.getBrand());
-            product.setType(productDto.getType());
-            product.setPrice(productDto.getPrice());
-            product.setDetail(productDto.getDetail());
-            product.setQuantity(productDto.getQuantity());
-
-            service.save(product);
-        }
-        catch (Exception ex){
-            System.out.println("Exception: " + ex.getMessage());
-        } catch (UserNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return "redirect:/manageProduct";
-    }
-
-    @Transactional
-    @GetMapping("/delete")
-    public String deleteProduct(
-            @RequestParam int id
-    ){
-        try {
-
-            Product product = service.get(id);
-
-            Path imagePath = Paths.get("public/images/" + product.getImages());
-
-            try {
-                Files.delete(imagePath);
-            } catch (Exception ex) {
-                System.out.println("Exception: " + ex.getMessage());
-            }
-
-            service.delete(id);
-        }catch (UserNotFoundException ex) {
-            System.out.println("Exception: " + ex.getMessage());
-        }
-
-        return "redirect:/manageProduct";
-    }
 }
