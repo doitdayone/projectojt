@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile</title>
+</head>
+<body>
+<a th:href="@{/EcommerceStore/product}">Back</a>
+<h1>This is your profile</h1>
+<form action="/EcommerceStore/profile/edit" method="post">
+  <!-- Other form fields -->
+
+  <!-- Null check for user_id -->
+  <input type="hidden" name="user_id" th:if="${user != null}" th:value="${user.userId}" class="d-none form-control">
+
+  <!-- Null check for user_name -->
+  <input type="text" name="user_name" th:if="${user != null}" th:value="${user.user_name}" class="d-none form-control">
+  <br>
+  <input type="text" name="user_email" th:if="${user != null}" th:value="${user.userEmail}" class="d-none form-control">
+  <br>
+  <input type="text" name="user_phoneNumber" th:if="${user != null}" th:value="${user.user_phoneNumber}" class="d-none form-control">
+  <br>
+  <input type="text" name="birthday" th:if="${user != null}" th:value="${user.birthday}" class="d-none form-control">
+  <br>
+  <input type="password" name="password" th:if="${user != null}" th:value="${user.password}" class="d-none form-control">
+
+  <button type="submit">Submit</button>
+</form>
+<form th:action="@{/EcommerceStore/orderTracking}" method="get">
+  <input type="hidden" name="user_id" th:value="${user.userId}">
+  <input type="hidden" name="status" value="PENDING">
+
+  <button type="submit">Pending order</button>
+</form>
+</body>
+</html>
