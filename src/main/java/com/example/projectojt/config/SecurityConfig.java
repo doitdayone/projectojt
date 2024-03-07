@@ -57,7 +57,7 @@ public class SecurityConfig {
         )
         .oauth2Login(oauth2 -> oauth2
             .loginPage("/login/oauth2/authorization/google")
-            .defaultSuccessUrl("/EcommerceStore/product", true)
+            .defaultSuccessUrl("/EcommerceStore/signingoogle", true)
             .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
             logout -> logout
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

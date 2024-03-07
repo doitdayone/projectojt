@@ -45,12 +45,14 @@ public class LoginController {
   }
 
 
-  @GetMapping("/signingoogle")
+  @PostMapping("/signingoogle")
   public String currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) {
     Map<String, Object> attributes = oAuth2AuthenticationToken.getPrincipal().getAttributes();
 
     // Convert attributes to User object
     User user = toUser(attributes);
+    System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+    System.out.println(!userRepository.existsByEmail(user.getEmail()));
     if (!userRepository.existsByEmail(user.getEmail())) {
       userRepository.save(user);
     }
@@ -63,7 +65,7 @@ public class LoginController {
     }
     User user = new User();
     user.setEmail((String) map.get("email"));
-    user.setUserName((String) map.get("name"));
+    user.setUserName("newuser");
     user.setRoles("USER");
     user.setPassword("");
     user.setPhone("");
