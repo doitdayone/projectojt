@@ -19,7 +19,8 @@ public class UserService {
 
  @Autowired
  UserRepository userRepository;
-  private final EmailService emailService;
+ @Autowired
+  private EmailService emailService;
   @Autowired
   PasswordEncoder passwordEncoder;
   public boolean register(RegisterRequest registerRequest) {
@@ -27,7 +28,11 @@ public class UserService {
     if (existingUser != null) {
       if (existingUser.isVerified()) {
         return false;
+      } else {
+          sendVerificationEmail(existingUser.getEmail(), existingUser.getOtp());
+          return true;
       }
+
     } else {
 
 

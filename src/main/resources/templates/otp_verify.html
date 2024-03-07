@@ -14,6 +14,7 @@
 <form action="/EcommerceStore/verify" method="post">
 
   <label for="otp">Enter OTP:</label>
+  <input type="email" name="email" th:value="${email}">
   <input type="text" id="otp" name="otp" required>
 
   <button type="submit">Verify</button>

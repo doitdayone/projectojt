@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User,Integer> {
     User findByEmail(String email);
-    @Query(value = "select * from [dbo].[User] where user_email = :user_email", nativeQuery = true)
+    @Query(value = "select * from user where email = :user_email", nativeQuery = true)
     Optional<User> findByEmail2(@Param("user_email") String user_email);
 
     boolean existsByEmail(String email);
