@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" th:href="@{/asset/css/style.css}"/>
+  <link rel="stylesheet"
+        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css}"/>
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css}"/>
+  <script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
+
+  <title>Home</title>
+</head>
+<body>
+<section class="page-top">
+  <div class="container">
+    <div class="row row-grid">
+      <div class="page-top-contact">
+        <ul class="row-flex">
+          <li>
+            <i class="fa-solid fa-phone-volume"> </i
+            ><a href="tel: 0935708235"> 0935.708.235</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="contact"> thai06314@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<header>
+  <div class="header-top">
+    <div class="container">
+      <div class="row row-grid">
+        <div class="header-top-logo">
+          <img width="150px" src="" alt=""/>
+        </div>
+        <form th:action="@{/EcommerceStore/search}" method="get">
+          <div class="header-top-search row-grid">
+            <input type="text" name="keyword" id="keyword"
+                   placeholder="Nhập sản phẩm cần tìm..."
+                   th:value="${keyword}"
+            />
+            <input type="hidden" name="page" id="page"
+
+                   th:value="${10}"
+            />
+            <input type="hidden" name="size" id="size"
+
+                   value="4"
+            />
+
+            <button type="submit">
+              Tìm kiếm <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </form>
+
+        <div class="header-top-user_cart">
+          <ul class="row-flex">
+
+            <li>
+              <a th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}">
+                <i class="fa-solid fa-user"></i> <p th:text="${user_email}"></p>
+              </a>
+            </li>
+
+
+            <li>
+              <i class="fa-solid fa-cart-shopping">
+                <a th:if="${userRepository != null and userRepository.findByEmail(user_email) != null}"
+                   th:href="@{/EcommerceStore/cart/{user_id}(user_id=${userRepository.findByEmail(user_email).userID})}">
+                  Cart
+                </a>
+              </i> <span>0</span>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="container">
+      <div class="row row-grid">
+        <div class="header-bottom-menubar">
+              <span
+              ><i class="fa-solid fa-bars"></i> Danh Muc San Pham
+                <i class="fa-solid fa-arrow-down"></i
+                ></span>
+        </div>
+        <div class="header-bottom-menulist">
+          <ul class="row-flex">
+            <li><a href="">Xay Dung Cau Hinh Pc</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/PC}">Pc Gaming</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Man Hinh}">Man Hinh</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop Van Phong</a></li>
+            <li>
+              <a href="">Khuyen Mai<i class="fa-solid fa-fire"></i></a>
+            </li>
+            <li><a th:href="@{/EcommerceStore/productBrandFilter/MSI}">Laptop MSI</a></li>
+            <li><a href="">Gioi thieu</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<section class="section slider">
+  <div class="container">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img
+              src="https://www.tncstore.vn/media/banner/02_01-48c85431c4da819f1867167b580ab446.jpg"
+              alt=""
+          />
+        </div>
+        <div class="swiper-slide">
+          <img
+              src="https://www.tncstore.vn/media/banner/12_01-9a56b7944cf35197672daa3100abd57d.jpg"
+              alt=""
+          />
+        </div>
+        <div class="swiper-slide">
+          <img
+              src="https://www.tncstore.vn/media/banner/11_01-5f1504ec71026aeb7108511836c0717c.jpg"
+              alt=""
+          />
+        </div>
+        <div class="swiper-slide">
+          <img
+              src="https://www.tncstore.vn/media/banner/19_10-e60de9789b6089d515b0b46597198dbd.jpg"
+              alt=""
+          />
+        </div>
+        <div class="swiper-slide">
+          <img
+              src="https://www.tncstore.vn/media/banner/21_11-a46ae217116f125826e5ef60c36da4da.jpg"
+              alt=""
+          />
+        </div>
+      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+<!-- hot product -->
+<style>
+  .page-top,
+  .header {
+    color: whitesmoke;
+  }
+
+  body {
+    background-color: rgb(243, 243, 243);
+  }
+
+  .hot-product {
+    margin: 30px 0;
+  }
+
+  .hot-product .container {
+    background-color: white;
+    padding: 10px 0;
+  }
+
+  .row-grid,
+  .row-flex {
+    padding: 0 12px;
+  }
+
+  .hot-product-main.row-grid {
+    grid-template-columns: 20% 80%;
+  }
+
+  .hot-product-main-items.row-grid {
+    grid-template-columns: repeat(4, 24%);
+  }
+</style>
+<section class="hot-product">
+  <div class="container">
+    <div class="">
+
+
+      <div class="hot-product-title row-grid">
+        <p>PC GAMING NOI BAT</p>
+      </div>
+      <div class="hot-product-main row-grid">
+        <div class="hot-product-main-category">
+          <img width="100%" , height="466px"
+               src="https://www.tncstore.vn/media/category/cat_big_82_1697613958.jpg"
+               alt=""
+          />
+        </div>
+        <div class="hot-product-main-items row-grid">
+          <tr th:each="product : ${productList}">
+            <div class="hot-product-main-item">
+              <img
+                  width="100%"
+                  th:src="@{'/images/' + ${product.images}}"
+                  alt=""
+              />
+              <div class="hot-product-main-item-content">
+                <h1>
+                  <a th:text="${product.name}"
+                     th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productID})}"></a>
+                </h1>
+
+              </div>
+              <div class="hot-product-item-review">
+                <div class="hot-product-item-review-star">
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                </div>
+                <p><span> 0 </span>Danh gia</p>
+                <div class="hot-product-item-price">
+                  <div class="price" th:text="${product.price}"></div>
+                  <div class="sellprice" th:text="${product.price} ">22.990.000 d
+                    <span>-19%</span></div>
+                </div>
+              </div>
+            </div>
+          </tr>
+
+        </div>
+
+      </div>
+      <!--  more product-->
+      <div id="product-container" class="hot-product-main row-grid">
+        <div class="hot-product-main-category">
+
+        </div>
+        <div class="hot-product-main-items row-grid">
+          <tr th:each="product : ${productListMore}">
+            <div class="hot-product-main-item">
+              <img
+                  width="100%"
+                  th:src="@{'/images/' + ${product.images}}"
+                  alt=""
+              />
+              <div class="hot-product-main-item-content">
+                <h1>
+                  <a th:text="${product.name}"
+                     th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productID})}"></a>
+                </h1>
+
+              </div>
+              <div class="hot-product-item-review">
+                <div class="hot-product-item-review-star">
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                </div>
+                <p><span> 0 </span>Danh gia</p>
+                <div class="hot-product-item-price">
+                  <div class="price" th:text="${product.price}"></div>
+                  <div class="sellprice" th:text="${product.price} ">22.990.000 d
+                    <span>-19%</span></div>
+                </div>
+              </div>
+            </div>
+          </tr>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <button type="button" id="show-more-btn">Show More</button>
+
+</section>
+
+</body>
+
+
+<script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    cssMode: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    autoplay: {
+      delay: 5000,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    mousewheel: true,
+    keyboard: true,
+  });
+  // show more product
+  const keyword = document.getElementById('keyword').value;
+  let page = 0;
+  let size = 4; // Số sản phẩm muốn hiển thị mỗi lần
+  document.addEventListener('DOMContentLoaded', function () {
+
+    if (keyword === '') {
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+        page++;
+        fetch('/EcommerceStore/products/more?page=' + page + '&size=' + size)
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          console.log("Response HTML:", html);
+          var tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          var productContainer = document.getElementById('product-container');
+          var newProducts = tempContainer.querySelectorAll('#product-container > div');
+          newProducts.forEach(function (product) {
+            productContainer.appendChild(product);
+          });
+        });
+      });
+    } else {
+
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+
+        page++;
+        fetch('/EcommerceStore/search?keyword=' + encodeURIComponent(keyword) + '&page=' + page
+            + '&size=' + size)
+
+        .then(function (response) {
+          return response.text();
+        })
+        .then(function (html) {
+          var tempContainer = document.createElement('div');
+          tempContainer.innerHTML = html;
+          var productContainer = document.getElementById('product-container');
+          var newProducts = tempContainer.querySelectorAll('#product-container > div');
+          newProducts.forEach(function (product) {
+            productContainer.appendChild(product);
+          });
+        });
+      });
+
+    }
+
+  });
+  // show more search product
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</html>

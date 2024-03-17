@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Enter OTP</title>
+</head>
+<body>
+<h2>Enter OTP</h2>
+
+<!-- Display any error message if present -->
+<p th:if="${error}" th:text="${error}" style="color: red;"></p>
+
+<!-- OTP entry form -->
+<form action="/EcommerceStore/verify" method="post">
+
+  <label for="otp">Enter OTP:</label>
+  <input type="email" name="email" th:value="${email}">
+  <input type="text" id="otp" name="otp" required>
+
+  <button type="submit">Verify</button>
+</form>
+</body>
+</html>

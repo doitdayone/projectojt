@@ -2,12 +2,11 @@ package com.example.projectojt.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -15,15 +14,18 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userID;
+    @Column(unique = true)
     private String userName;
-    private Date birthday;
+    private Timestamp birthday;
     private String email;
     private String password;
+    private String phone;
 //    @JsonManagedReference(value = "cart_user")
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 //    private List<Cart> cartList;
@@ -34,5 +36,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Schedule> scheduleList;
 
+    private String roles;
+    private String otp;
+    private LocalDateTime otpGeneratedTime;
+    @Column(name = "is_active", columnDefinition = "BIT")
+    private boolean verified;
 
 }

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Admin Home</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .main{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .main-content{
+      overflow: auto;
+    }
+    h1{
+      text-align: center;
+      padding-bottom: 30px;
+    }
+    table{
+      width: 100%;
+      table-layout: fixed;
+      min-width: 100px;
+      border-collapse: collapse;
+    }
+    thead th{
+      position: sticky;
+      top: 0;
+      background: #f6f9fc;
+      color: #8493a5;
+      font-size: 15px;
+    }
+    th,td{
+      border-bottom: 1px solid #dddddd;
+      padding: 10px 20px;
+      word-break: break-all;
+      text-align: center;
+    }
+    td img{
+      height: 80px;
+      width: 80px;
+      object-fit: cover;
+      border-radius: 15px;
+      border: 5px solid #ced0d2;
+    }
+    .button{
+      outline: none;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 10px;
+      color: #ffffff;
+    }
+    .edit{
+      background-color: #0298cf;
+    }
+    .delete{
+      background-color: #f80000;
+    }
+    tr:hover td{
+      color: #0298cf;
+      cursor: pointer;
+      background-color: #f6f9fc;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="navigation">
+    <ul>
+      <li>
+        <a href="#">
+                        <span class="icon">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                        </span>
+          <span class="title">Admin</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="/admin">
+                        <span class="icon">
+                            <ion-icon name="home-outline"></ion-icon>
+                        </span>
+          <span class="title">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/manageProduct">
+                        <span class="icon">
+                            <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
+                        </span>
+          <span class="title">Manage Product</span>
+        </a>
+      </li>
+      <li>
+        <a href="/create">
+                        <span class="icon">
+                            <ion-icon name="add-outline"></ion-icon>
+                        </span>
+          <span class="title">Create Product</span>
+        </a>
+      </li>
+      <li>
+        <a href="/staff">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+          <span class="title">Manage Staff</span>
+        </a>
+      </li>
+      <li>
+        <a href="/add">
+                        <span class="icon">
+                            <ion-icon name="person-add-outline"></ion-icon>
+                        </span>
+          <span class="title">Add Staff</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="main">
+    <div class="topbar">
+      <div class="toggle">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+    </div>
+    <div class="main-content">
+      <h1>List Product</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Brand</th>
+            <th>Type</th>
+            <th>Quantity</th>
+            <th>Image</th>
+            <th>Detail</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  th:each="product : ${listProducts}">
+            <td th:text="${product.productID}"></td>
+            <td th:text="${product.name}"></td>
+            <td th:text="@{${product.price} + ' VND'}"></td>
+            <td th:text="${product.brand}"></td>
+            <td th:text="${product.type}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td>
+              <img th:src="@{'/images/' + ${product.images}}"
+                alt="..." >
+            </td>
+            <td th:text="${product.detail}"></td>
+            <td>
+              <a class="edit button" th:href="@{/edit(id=${product.productID})}"><ion-icon name="create-outline"></ion-icon></a>
+              <a class="delete button" th:href="@{/delete(id=${product.productID})}" onclick="return confirm('Are you sure')"><ion-icon name="trash-outline"></ion-icon></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  let list = document.querySelectorAll(".navigation li");
+
+  function activeLink() {
+    list.forEach((item) => {
+      item.classList.remove("hovered");
+    });
+    this.classList.add("hovered");
+  }
+
+  list.forEach((item) => item.addEventListener("mouseover", activeLink));
+
+  // Menu Toggle
+  let toggle = document.querySelector(".toggle");
+  let navigation = document.querySelector(".navigation");
+  let main = document.querySelector(".main");
+
+  toggle.onclick = function () {
+    navigation.classList.toggle("active");
+    main.classList.toggle("active");
+  };
+</script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
