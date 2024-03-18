@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pending Order </title>
+</head>
+<body>
+<a th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}">Back</a>
+<div th:if="${orderList != null && !orderList.isEmpty()}">
+  <table>
+    <tr>
+      <th>Order ID</th>
+      <th>Receiver address</th>
+      <th>Receiver Information</th>
+      <th>Order date</th>
+      <th>Cost</th>
+      <th>Status</th>
+      <th>Payment status</th>
+      <th>Action</th>
+    </tr>
+    <tr th:each="order : ${orderList}">
+      <td th:text="${order.orderId}"></td>
+      <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id)}"></td>
+      <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id).getCusInfo()}"></td>
+
+      <td th:text="${order.order_date}"></td>
+      <td th:text="${#numbers.formatDecimal(order.cost, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+      <td th:text="${order.status}"></td>
+      <td th:text="${order.getPStatus()}"></td>
+
+      <td>
+        <form th:action="@{/EcommerceStore/viewOrderDetail}" method="get">
+          <input type="hidden" name="order_id" th:value="${order.orderId}">
+          <button type="submit">View Detail</button>
+        </form>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div id="order-container" class="hot-product-main row-grid">
+
+  <div class="hot-product-main-items row-grid">
+    <table>
+      <tr th:each="order : ${morePendingOrder}">
+        <div class="hot-product-main-item">
+
+          <td th:text="${order.orderId}"></td>
+          <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id)}"></td>
+          <td th:text="${userAddressRepository.findUserAddressesByAddressId(order.address_id).getCusInfo()}"></td>
+
+          <td th:text="${order.order_date}"></td>
+          <td th:text="${#numbers.formatDecimal(order.cost, 1, 'DEFAULT', 0, 'DEFAULT')}"></td>
+          <td th:text="${order.status}"></td>
+          <td th:text="${order.getPStatus()}"></td>
+
+          <td>
+            <form th:action="@{/EcommerceStore/viewOrderDetail}" method="get">
+              <input type="hidden" name="order_id" th:value="${order.orderId}">
+              <button type="submit">View Detail</button>
+            </form>
+          </td>
+
+        </div>
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+<input type="hidden" id="user_id" name="user_id" th:value="${user_id}">
+<input type="hidden" id="status" name="status" th:value="${status}">
+
+<div th:if="${orderList == null || orderList.isEmpty()}">
+  <p>You do not have any order.</p>
+</div>
+
+<button type="button" id="show-more-btn">Show More</button>
+
+</body>
+<script>
+  let user_id = document.getElementById('user_id').value;
+  let status = document.getElementById('status').value;
+  let page = 0;
+  let size = 4; // so san pham muon hien thi moi lan click
+  document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('show-more-btn').addEventListener('click', function () {
+      page++;
+      fetch('/EcommerceStore/orderTracking/more?page=' + page + '&size=' + size + '&user_id=' + user_id + '&status=' + status)
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(function (html) {
+        console.log("Response HTML:", html);
+        var tempContainer = document.createElement('div');
+        tempContainer.innerHTML = html;
+        var productContainer = document.getElementById('order-container');
+        var newProducts = tempContainer.querySelectorAll('#order-container > div');
+        console.log("Number of new products:", newProducts.length);
+        newProducts.forEach(function (product) {
+          productContainer.appendChild(product);
+        });
+      })
+      .catch(function (error) {
+        console.error("Fetch error:", error);
+      });
+    });
+  });
+</script>
+</html>
