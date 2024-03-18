@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cart</title>
+</head>
+<body>
+<p th:if="${cart == null}" th:text="${error}"></p>
+<a th:href="@{/EcommerceStore/product}">Back</a>
+<p>Your cart</p>
+<table>
+  <tr th:each="cartItem: ${cartItemList}">
+    <td th:text="${productRepository.getProductByProductId(cartItem.productId).product_name}"></td>
+    <td th:text="${productRepository.getProductByProductId(cartItem.productId).productPrice}"></td>
+    <td th:text="${cartItem.quantity}"></td>
+    <td>
+      <!-- Use Thymeleaf form to submit quantity update -->
+      <form th:action="@{/EcommerceStore/cart/updateQuantity}" method="post"
+            th:if="${cartItem.quantity > 0}">
+        <input type="hidden" name="cartItemId" th:value="${cartItem.cartItemId}">
+        <input type="hidden" name="quantity" th:value="${cartItem.quantity}">
+        <input type="hidden" name="user_id" th:value="${user_id}">
+        <input type="hidden" name="action" value="increase">
+        <button type="submit">+</button>
+      </form>
+
+      <form th:action="@{/EcommerceStore/cart/updateQuantity}" method="post">
+        <input type="hidden" name="cartItemId" th:value="${cartItem.cartItemId}">
+        <input type="hidden" name="quantity" th:value="${cartItem.quantity }">
+        <input type="hidden" name="user_id" th:value="${user_id}">
+        <input type="hidden" name="action" value="decrease">
+        <button type="submit">-</button>
+      </form>
+
+      <form th:action="@{/EcommerceStore/cart/removeItem}" method="post">
+        <input type="hidden" name="cartItemId" th:value="${cartItem.cartItemId}">
+        <input type="hidden" name="user_id" th:value="${user_id}">
+        <button type="submit">Remove</button>
+      </form>
+    </td>
+  </tr>
+</table>
+
+<span>Total: </span>
+<p th:text="${total}"></p>
+<form th:action="@{/EcommerceStore/order}" method="get">
+  <input type="hidden" name="user_id" th:value="${user_id}">
+  <input type="hidden" name="total" th:value="${total}">
+
+  <button type="submit">Order</button>
+</form>
+
+</body>
+</html>

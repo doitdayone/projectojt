@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ProductList</title>
+  <link rel="stylesheet" th:href="@{/css/productlist.css}"/>
+  <link rel="stylesheet"
+        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css}"/>
+  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css}"/>
+  <script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
+</head>
+<body>
+<section class="page-top">
+  <div class="container">
+    <div class="row row-grid">
+      <div class="page-top-contact">
+        <ul class="row-flex">
+          <li>
+            <i class="fa-solid fa-phone-volume"> </i
+            ><a href="tel: 0935708235"> 0935.708.235</a>
+          </li>
+          <li>
+            <i class="fa-solid fa-envelope"></i>
+            <a href="contact"> thai06314@gmail.com</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<header>
+  <div class="header-top">
+    <div class="container">
+      <div class="row row-grid">
+        <div class="header-top-logo">
+          <img
+              width="90px"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/800px-FPT_logo_2010.svg.png"
+              alt=""
+          />
+        </div>
+        <div class="header-top-search row-grid">
+          <input type="text" placeholder="Nhập sản phẩm cần tìm..."/>
+          <button>
+            <a href="">
+              Tìm kiếm <i class="fa-solid fa-magnifying-glass"></i
+            ></a>
+          </button>
+        </div>
+        <div class="header-top-user_cart">
+          <ul class="row-flex">
+            <li>
+              <a th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}">
+                ><i class="fa-solid fa-user"></i>Tai Khoan</a
+              >
+            </li>
+
+            <li>
+              <i class="fa-solid fa-cart-shopping"></i> <span>0</span>
+              <ul>
+                <p>Co 0 san pham trong gio hang</p>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="container">
+      <div class="row row-grid">
+        <div class="header-bottom-menubar">
+              <span
+              ><i class="fa-solid fa-bars"></i> Danh Muc San Pham
+                <i class="fa-solid fa-arrow-down"></i
+                ></span>
+        </div>
+        <div class="header-bottom-menulist">
+          <ul class="row-flex">
+            <li><a th:href="@{/EcommerceStore/productFilter/PC}">Pc Gaming</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Man Hinh}">Man Hinh</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop</a></li>
+            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop Van Phong</a></li>
+            <li>
+              <a href="">Khuyen Mai<i class="fa-solid fa-fire"></i></a>
+            </li>
+            <li><a th:href="@{/EcommerceStore/productBrandFilter/MSI}">Laptop MSI</a></li>
+            <li><a href="">Gioi thieu</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="slide-show"></div>
+  <div class="content-category">
+    <div class="left">
+      <div class="background-white">
+        <h2 class="title-filter">Bo Loc San Pham</h2>
+        <h2 th:text="${productType}"></h2>
+        <div class="box-filter">
+          <div class="item-filter hidden">
+            <div class="title-filter d-flex align-items space-between">
+              <span>Khoảng giá (VNĐ)</span>
+              <i class="fa fa-angle-down"></i>
+            </div>
+            <div class="content-filter">
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=0&amp;end_price=8000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=0,
+                end_price=8000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>Dưới 8 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=8000000&amp;end_price=11000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=8000000, end_price=11000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>8 triệu - 11 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=11000000&amp;end_price=15000000\'|'"></div>
+
+                <a th:href="@{/EcommerceStore/productFilter(start_price=11000000,
+                end_price=15000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>11 triệu - 15 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=15000000&amp;end_price=20000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=15000000,
+                end_price=20000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>15 triệu - 20 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+              <div class="item-attr d-flex align-items">
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=20000000&amp;end_price=25000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=20000000,
+                end_price=25000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>20 triệu - 25 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=25000000&amp;end_price=30000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=25000000,
+                end_price=30000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>25 triệu - 30 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=30000000&amp;end_price=50000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=30000000,
+                end_price=50000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>30 triệu - 50 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=50000000&amp;end_price=70000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=50000000,
+                 end_price=70000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>50 triệu - 70 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=70000000&amp;end_price=85000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=70000000,
+                end_price=85000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>70 triệu - 80 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+              <div class="item-attr d-flex align-items">
+
+                <div class="icon-check"
+                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=80000000&amp;end_price=10000000000000000\'|'"></div>
+                <a th:href="@{/EcommerceStore/productFilter(start_price=80000000,
+                end_price=10000000000000000000000000, productType=${productType})}"
+                   class="filter-right d-flex align-items space-between">
+                  <span>Trên 80 triệu</span>
+                  <span class="total-attr"></span>
+                </a>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right">
+      <div class="background-white">
+        <div class="gear-product-main-items row-grid">
+          <tr th:each="product : ${listProduct}">
+            <div class="gear-product-main-item">
+              <img
+                  width="100%"
+                  src="https://www.tncstore.vn/media/product/250-8741-sniper-i3060---wh---01-2000000.jpg"
+                  alt=""
+              />
+              <div class="gear-product-main-item-content">
+                <h1 th:text="${product.product_name}"></h1>
+              </div>
+              <div class="gear-product-item-review">
+                <div class="gear-product-item-review-star">
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                  <i class="fa-regular fa-star"></i>
+                </div>
+                <p><span th:text="${product.rating}">  </span></p>
+                <div class="gear-product-item-price">
+                  <div class="price"><span th:text="${product.productPrice} " d></span></div>
+                  <div class="sellprice"><span th:text="${product.productPrice} " d>-19%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </tr>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+</body>
+<footer>
+  <div class="footer-container">
+    <div class="footer-row">
+      <div class="footer-column">
+        <h3>Liên Hệ</h3>
+        <ul>
+          <li><i class="fa-solid fa-phone-volume"></i> <a href="tel:0935708235">0935.708.235</a>
+          </li>
+          <li><i class="fa-solid fa-envelope"></i> <a href="contact">thai06314@gmail.com</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Đường Dẫn Nhanh</h3>
+        <ul>
+          <li><a href="#">Trang Chủ</a></li>
+          <li><a href="#">Sản Phẩm</a></li>
+          <li><a href="#">Dịch Vụ</a></li>
+          <li><a href="#">Liên Hệ</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3>Theo Dõi Chúng Tôi</h3>
+        <ul class="social-icons">
+          <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+          <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</html>
