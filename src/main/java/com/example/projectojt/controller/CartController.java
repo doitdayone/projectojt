@@ -1,19 +1,19 @@
 package com.example.projectojt.controller;
 
-import com.example.EcommerceStore.entity.Cart;
-import com.example.EcommerceStore.entity.CartItem;
-import com.example.EcommerceStore.entity.Product;
-import com.example.EcommerceStore.entity.User;
-import com.example.EcommerceStore.repository.CartItemRepository;
-import com.example.EcommerceStore.repository.CartRepository;
-import com.example.EcommerceStore.repository.ProductRepository;
-import com.example.EcommerceStore.repository.UserRepository;
+import com.example.projectojt.Key.CartID;
+import com.example.projectojt.model.Cart;
+import com.example.projectojt.model.Product;
+import com.example.projectojt.model.User;
+import com.example.projectojt.repository.CartRepository;
+import com.example.projectojt.repository.ProductRepository;
+import com.example.projectojt.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,221 +21,190 @@ import java.util.Optional;
 @RequestMapping("/EcommerceStore")
 public class CartController {
 
-  @Autowired
-  CartRepository cartRepository;
-  @Autowired
-  CartItemRepository cartItemRepository;
-  @Autowired
-  ProductRepository productRepository;
-  @Autowired
-  UserRepository userRepository;
+    @Autowired
+    CartRepository cartRepository;
+
+    @Autowired
+    ProductRepository productRepository;
+    @Autowired
+    UserRepository userRepository;
 
 
-  @GetMapping("/cart/{user_id}")
-  public String viewCart(@PathVariable("user_id") int user_id, Model model, HttpSession session) {
-    Cart cart = cartRepository.findCartByUserId(user_id);
+    @GetMapping("/cart/{user_id}")
+    public String viewCart(@PathVariable("user_id") int user_id, Model model, HttpSession session) {
+        ArrayList<Cart> cartItemList = cartRepository.findCartsByUserID(user_id);
 
-    if (cart == null) {
-      int total = 0;
-      model.addAttribute("total", total);
-      model.addAttribute("error", "Your cart is empty");
-    } else {
-      List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
-      model.addAttribute("productRepository", productRepository);
-      model.addAttribute("cartItemList", cartItemList);
-      model.addAttribute("user_id", user_id);
-      session.setAttribute("cartItemList", cartItemList);
-      int total = getTotal(cartItemList);
-      if(cartItemList == null)
-      {
-        total = 0;
-        model.addAttribute("total", total);
-      } else
-      {
-        model.addAttribute("total", total);
-      }
-    }
-
-    return "cart";
-  }
-
-  @PostMapping("/cart/add")
-  public String addToCart(@RequestParam("product_id") int product_id,
-      @RequestParam("user_id") int user_id, Model model, HttpSession session) {
-    try {
-      Optional<Product> productOptional = productRepository.findById(product_id);
-
-      if (productOptional.isPresent()) {
-        Product product = productOptional.get();
-
-        // retrieve or create a user based on the user_id
-        User user = userRepository.findUserByUserId(user_id);
-
-        if (user != null) {
-          Cart cart = getCurrentUserCart(user.getUserId());
-          Optional<CartItem> existingItem = cart.getCartItemList().stream()
-              .filter(item -> item.getProductId() == (product.getProductId()))
-              .findFirst();
-          cart.setUserId(user_id);
-          cartRepository.save(cart);
-
-          if (existingItem.isPresent()) {
-
-            existingItem.get().setQuantity(existingItem.get().getQuantity() + 1);
-          } else {
-            // create new cart_item if product have not been in cart yet
-            CartItem cartItem = new CartItem();
-            cartItem.setProductId(product.getProductId());
-            cartItem.setQuantity(1);
-            cartItem.setCart(cart);
-            cartItem.setCartId(cart.getCartId());
-            cart.getCartItemList().add(cartItem);
-
-            cartItemRepository.save(cartItem);
-          }
-
-          List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
-          model.addAttribute("cartItemList", cartItemList);
-          session.setAttribute("cartItemList", cartItemList);
-          int total = getTotal(cartItemList);
-          if(cartItemList == null)
-          {
-            total = 0;
+        if (cartItemList == null) {
+            int total = 0;
             model.addAttribute("total", total);
-          } else
-          {
-            model.addAttribute("total", total);
-          }
-          model.addAttribute("productRepository", productRepository);
-          model.addAttribute("user_id", user_id);
-          // Set the user in the cart
-          model.addAttribute("userRepository", userRepository);
-
-          return "cart";
-        } else {
-
-          return "error";
+            model.addAttribute("error", "Your cart is empty");
+            cartItemList = new ArrayList<Cart>();
         }
-      } else {
-       //handle product not found
-        return "error";
-      }
-    } catch (Exception ex) {
-      model.addAttribute("error", ex);
-      return "error";
-    }
-  }
 
-  // get cart of current user
-  private Cart getCurrentUserCart(int user_id) {
-    Cart c = cartRepository.findCartByUserId(user_id);
-    if (c != null) {
-      return cartRepository.findCartByUserId(user_id);
-    } else {
-      return new Cart();
+        model.addAttribute("productRepository", productRepository);
+        model.addAttribute("cartItemList", cartItemList);
+        model.addAttribute("user_id", user_id);
+        session.setAttribute("cartItemList", cartItemList);
+        int total = getTotal(cartItemList);
+
+        model.addAttribute("total", total);
+
+
+        return "cart";
     }
 
-  }
+    @PostMapping("/cart/add")
+    public String addToCart(@RequestParam("product_id") int product_id,
+                            @RequestParam("user_id") int user_id, Model model, HttpSession session) {
+        try {
+            Optional<Product> productOptional = productRepository.findById(product_id);
 
-  // update quantity of product
-  @PostMapping("/cart/updateQuantity")
-  public String updateQuantity(@RequestParam("cartItemId") int cartItemId,
+            if (productOptional.isPresent()) {
+                Product product = productOptional.get();
 
-      @RequestParam("action") String action,
-      @RequestParam("user_id") int user_id,
-      Model model, HttpSession session) {
-    try {
-      CartItem cartItem = cartItemRepository.findById(cartItemId)
-          .orElseThrow(() -> new IllegalArgumentException("Invalid cart item Id: " + cartItemId));
-      Cart cart = cartRepository.findCartByUserId(user_id);
-      if ("increase".equalsIgnoreCase(action)) {
-        cartItem.setQuantity(cartItem.getQuantity() + 1);
-        cartItemRepository.save(cartItem);
+                // retrieve or create a user based on the user_id
+                User user = userRepository.findByUserID(user_id);
+
+                if (user != null) {
+                    ArrayList<Cart> cartItemList = cartRepository.findCartsByUserID(user_id);
+                    Optional<Cart> existingItem = cartItemList.stream()
+                            .filter(item -> item.getCartID().getProduct().getProductID() == (product.getProductID()))
+                            .findFirst();
+                    if (existingItem.isPresent()) {
+                        existingItem.get().setQuantity(existingItem.get().getQuantity() + 1);
+                        cartRepository.save(existingItem.get());
+                    } else {
+                        // create new cart_item if product have not been in cart yet
+                        Cart cartItem = new Cart();
+                        CartID cartID = new CartID(user,product);
+                        cartItem.setCartID(cartID);
+                        cartItem.setQuantity(1);
+
+                        cartRepository.save(cartItem);
+                    }
+
+                    model.addAttribute("cartItemList", cartItemList);
+                    session.setAttribute("cartItemList", cartItemList);
+                    int total = getTotal(cartItemList);
+                    if (cartItemList == null) {
+                        total = 0;
+                        model.addAttribute("total", total);
+                    } else {
+                        model.addAttribute("total", total);
+                    }
+                    model.addAttribute("productRepository", productRepository);
+                    model.addAttribute("user_id", user_id);
+                    // Set the user in the cart
+                    model.addAttribute("userRepository", userRepository);
+
+                    return "cart";
+                } else {
+
+                    return "error";
+                }
+            } else {
+                //handle product not found
+                return "error";
+            }
+        } catch (Exception ex) {
+            model.addAttribute("error", ex);
+            return "error";
+        }
+    }
+
+    // update quantity of product
+    @PostMapping("/cart/updateQuantity")
+    public String updateQuantity(@RequestParam("cartItemId") int cartItemId,
+
+                                 @RequestParam("action") String action,
+                                 @RequestParam("user_id") int user_id,
+                                 Model model, HttpSession session) {
+        try {
+            CartID cartID = new CartID(userRepository.findByUserID(user_id), productRepository.getProductByProductID(cartItemId));
+            Cart cartItem = cartRepository.findById(cartID)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid cart item Id: " + cartItemId));
+
+            if ("increase".equalsIgnoreCase(action)) {
+                cartItem.setQuantity(cartItem.getQuantity() + 1);
+                cartRepository.save(cartItem);
 //
 //        System.out.println("Product ID: " + cartItem.getProductId());
 //        System.out.println("Quantity: "+ cartItem.getQuantity());
-      } else if ("decrease".equalsIgnoreCase(action)) {
-        if (cartItem.getQuantity() > 1) {
-          cartItem.setQuantity(cartItem.getQuantity() - 1);
-          cartItemRepository.save(cartItem);
+            } else if ("decrease".equalsIgnoreCase(action)) {
+                if (cartItem.getQuantity() > 1) {
+                    cartItem.setQuantity(cartItem.getQuantity() - 1);
+                    cartRepository.save(cartItem);
 //          System.out.println("Product ID: " + cartItem.getProductId());
 //          System.out.println("Quantity: "+ cartItem.getQuantity());
-        } else {
-          removeItem(cartItemId, user_id, model);
-          return "cart";
+                } else {
+                    removeItem(cartItemId, user_id, model);
+                    return "cart";
+                }
+            }
+
+            ArrayList<Cart> cartItemList = cartRepository.findCartsByUserID(user_id);
+            session.setAttribute("cartItemList", cartItemList);
+            model.addAttribute("cartItemList", cartItemList);
+            int total = getTotal(cartItemList);
+            if (cartItemList == null) {
+                total = 0;
+                model.addAttribute("total", total);
+            } else {
+                model.addAttribute("total", total);
+            }
+            model.addAttribute("productRepository", productRepository);
+            model.addAttribute("user_id", user_id);
+            cartRepository.save(cartItem);
+
+            return "cart";
+        } catch (Exception ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "error";
         }
-      }
-
-      List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
-      session.setAttribute("cartItemList", cartItemList);
-      model.addAttribute("cartItemList", cartItemList);
-      int total = getTotal(cartItemList);
-      if(cartItemList == null)
-      {
-        total = 0;
-        model.addAttribute("total", total);
-      } else
-      {
-        model.addAttribute("total", total);
-      }
-      model.addAttribute("productRepository", productRepository);
-      model.addAttribute("user_id", user_id);
-      cartItemRepository.save(cartItem);
-
-      return "cart";
-    } catch (Exception ex) {
-      model.addAttribute("error", ex.getMessage());
-      return "error";
-    }
-  }
-
-  @PostMapping("/cart/removeItem")
-  public String removeItem(@RequestParam("cartItemId") int cartItemId,
-      @RequestParam("user_id") int user_id, Model model) {
-    try {
-      CartItem cartItem = cartItemRepository.findById(cartItemId)
-          .orElseThrow(() -> new IllegalArgumentException("Invalid cart item Id: " + cartItemId));
-      Cart cart = cartRepository.findCartByUserId(user_id);
-      cartItemRepository.delete(cartItem);
-      // You may want to update the cart or related data here if needed
-      List<CartItem> cartItemList = cartItemRepository.findCartItemsByCartId(cart.getCartId());
-      model.addAttribute("cartItemList", cartItemList);
-
-      int total = getTotal(cartItemList);
-      if(cartItemList == null)
-      {
-        total = 0;
-        model.addAttribute("total", total);
-      } else
-      {
-        model.addAttribute("total", total);
-      }
-
-      model.addAttribute("productRepository", productRepository);
-      model.addAttribute("user_id", user_id);
-      return "cart";
-    } catch (Exception ex) {
-      model.addAttribute("error", ex.getMessage());
-      return "error";
     }
 
-  }
-  public int getTotal(List<CartItem> cartItemList)
-  {
-    if(cartItemList == null)
-    {
-      return 0;
-    } else
-    {
-      int total = 0;
-      for (CartItem c : cartItemList) {
-        total += c.getQuantity() * productRepository.getProductByProductId(c.getProductId())
-            .getProductPrice();
-      }
-      return total;
+    @PostMapping("/cart/removeItem")
+    public String removeItem(@RequestParam("cartItemId") int cartItemId,
+                             @RequestParam("user_id") int user_id, Model model) {
+        try {
+            CartID cartID = new CartID(userRepository.findByUserID(user_id), productRepository.getProductByProductID(cartItemId));
+            Cart cartItem = cartRepository.findById(cartID)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid cart item Id: " + cartItemId));
+            cartRepository.delete(cartItem);
+            // You may want to update the cart or related data here if needed
+            ArrayList<Cart> cartItemList = cartRepository.findCartsByUserID(user_id);
+            model.addAttribute("cartItemList", cartItemList);
+
+            int total = getTotal(cartItemList);
+            if (cartItemList == null) {
+                total = 0;
+                model.addAttribute("total", total);
+            } else {
+                model.addAttribute("total", total);
+            }
+
+            model.addAttribute("productRepository", productRepository);
+            model.addAttribute("user_id", user_id);
+            return "cart";
+        } catch (Exception ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "error";
+        }
+
     }
 
+    public int getTotal(List<Cart> cartItemList) {
+        if (cartItemList == null) {
+            return 0;
+        } else {
+            int total = 0;
+            for (Cart c : cartItemList) {
+                total += c.getQuantity() * c.getCartID().getProduct().getPrice();
+            }
+            return total;
+        }
 
-  }
+
+    }
 
 }

@@ -10,14 +10,14 @@
 <p>Your cart</p>
 <table>
   <tr th:each="cartItem: ${cartItemList}">
-    <td th:text="${productRepository.getProductByProductId(cartItem.productId).product_name}"></td>
-    <td th:text="${productRepository.getProductByProductId(cartItem.productId).productPrice}"></td>
+    <td th:text="${cartItem.cartID.getProduct().name}"></td>
+    <td th:text="${cartItem.cartID.getProduct().price}"></td>
     <td th:text="${cartItem.quantity}"></td>
     <td>
       <!-- Use Thymeleaf form to submit quantity update -->
       <form th:action="@{/EcommerceStore/cart/updateQuantity}" method="post"
             th:if="${cartItem.quantity > 0}">
-        <input type="hidden" name="cartItemId" th:value="${cartItem.cartItemId}">
+        <input type="hidden" name="cartItemId" th:value="${cartItem.cartID.getProduct().productID}">
         <input type="hidden" name="quantity" th:value="${cartItem.quantity}">
         <input type="hidden" name="user_id" th:value="${user_id}">
         <input type="hidden" name="action" value="increase">
@@ -25,7 +25,7 @@
       </form>
 
       <form th:action="@{/EcommerceStore/cart/updateQuantity}" method="post">
-        <input type="hidden" name="cartItemId" th:value="${cartItem.cartItemId}">
+        <input type="hidden" name="cartItemId" th:value="${cartItem.cartID.getProduct().productID}">
         <input type="hidden" name="quantity" th:value="${cartItem.quantity }">
         <input type="hidden" name="user_id" th:value="${user_id}">
         <input type="hidden" name="action" value="decrease">
@@ -33,7 +33,7 @@
       </form>
 
       <form th:action="@{/EcommerceStore/cart/removeItem}" method="post">
-        <input type="hidden" name="cartItemId" th:value="${cartItem.cartItemId}">
+        <input type="hidden" name="cartItemId" th:value="${cartItem.cartID.getProduct().productID}">
         <input type="hidden" name="user_id" th:value="${user_id}">
         <button type="submit">Remove</button>
       </form>
