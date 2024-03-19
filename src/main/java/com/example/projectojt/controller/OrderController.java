@@ -44,7 +44,7 @@ public class OrderController {
             model.addAttribute("error", "Your cart is empty");
             return "order_error";
         } else {
-            List<Address> userAddressList = userAddressRepository.findByUser(userRepository.findByUserID(user_id));
+            List<Address> userAddressList = userAddressRepository.findByUser(user_id);
             model.addAttribute("userAddressList", userAddressList);
             model.addAttribute("total", total);
             model.addAttribute("user_id", user_id);
@@ -66,7 +66,7 @@ public class OrderController {
                                @RequestParam("receive_phone") String receive_phone) {
 
         int user_address;
-        if (address == 1) {
+        if (address == 1 && address_id!=-1) {
             user_address = address_id;
         } else {
             Address userAddress = new Address();
