@@ -39,7 +39,7 @@ public class LoginController {
       return "redirect:/EcommerceStore/product";
     } else {
       // auth failed, set error message and return to login page
-      model.addAttribute("errorlogin", "Invalid username or password");
+      model.addAttribute("errorlogin", "zInvalid username or password");
       return "login";
     }
   }

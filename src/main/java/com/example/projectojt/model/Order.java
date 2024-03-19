@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,11 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderID;
     private float cost;
+
+    private String status;
+    private Date order_date;
+    //payment status
+    private String pStatus;
 
     @JsonManagedReference(value = "orderDetail_order")
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
