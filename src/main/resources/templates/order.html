@@ -14,10 +14,13 @@
   <label for="useraddress">Select user address:</label>
   <select name="useraddress" id="useraddress" >
     <option th:each="useraddress: ${userAddressList}"
-            th:value="${useraddress.getAddressID()()}"
+            th:value="${useraddress.getAddressID()}"
             th:text="${useraddress.toString()}"
     ></option>
+    <option th:if="${userAddressList.isEmpty()}" th:value="${-1}" type="hidden">
+    </option>
   </select>
+
   <br>
   <label for="address2">Other Address</label>
   <input type="radio" name="address" id="address2" value="2" >

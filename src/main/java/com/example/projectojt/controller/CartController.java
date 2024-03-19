@@ -82,7 +82,7 @@ public class CartController {
 
                         cartRepository.save(cartItem);
                     }
-
+                    cartItemList = cartRepository.findCartsByUserID(user_id);
                     model.addAttribute("cartItemList", cartItemList);
                     session.setAttribute("cartItemList", cartItemList);
                     int total = getTotal(cartItemList);
