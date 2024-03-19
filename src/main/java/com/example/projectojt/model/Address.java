@@ -23,7 +23,7 @@ public class Address {
     private String receiverName;
     private String receiverPhone;
     private String city;
-    private String Commune;
+    private String commute;
     private String district;
     private String detail;
 
@@ -35,4 +35,9 @@ public class Address {
     @JsonManagedReference(value = "order_address")
     @OneToMany(mappedBy = "address", cascade = CascadeType.REMOVE)
     private List<Order> orderList;
+
+    @Override
+    public String toString() {
+        return district + ", " + commute + ", " + detail + ", " + city ;
+    }
 }

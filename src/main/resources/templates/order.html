@@ -14,7 +14,7 @@
   <label for="useraddress">Select user address:</label>
   <select name="useraddress" id="useraddress" >
     <option th:each="useraddress: ${userAddressList}"
-            th:value="${useraddress.getAddressId()}"
+            th:value="${useraddress.getAddressID()()}"
             th:text="${useraddress.toString()}"
     ></option>
   </select>
