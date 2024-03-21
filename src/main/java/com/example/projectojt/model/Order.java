@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -36,4 +37,16 @@ public class Order {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="addressID")
     private Address address;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Order order)) return false;
+        return getOrderID() == order.getOrderID();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getOrderID());
+    }
 }

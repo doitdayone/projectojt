@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -35,6 +36,18 @@ public class Address {
     @JsonManagedReference(value = "order_address")
     @OneToMany(mappedBy = "address", cascade = CascadeType.REMOVE)
     private List<Order> orderList;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Address address)) return false;
+        return getAddressID() == address.getAddressID();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAddressID());
+    }
 
     @Override
     public String toString() {
