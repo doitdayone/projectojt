@@ -53,4 +53,8 @@ public class Address {
     public String toString() {
         return district + ", " + commute + ", " + detail + ", " + city ;
     }
+    public String getCusInfo()
+    {
+        return receiverName+", "+ receiverPhone;
+    }
 }
