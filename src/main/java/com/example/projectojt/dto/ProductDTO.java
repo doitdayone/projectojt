@@ -21,6 +21,9 @@ public class ProductDTO {
     @Min(0)
     private int price;
 
+    @Min(0)
+    private int sale;
+
     private MultipartFile images;
 
     @Min(0)

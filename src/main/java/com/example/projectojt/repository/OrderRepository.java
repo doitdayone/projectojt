@@ -13,4 +13,5 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     ArrayList<Order> findOrdersByUserIdAndStatus(int user_id, String status);
 
     Order findById(long id);
+    ArrayList<Order> findOrdersByStatus(String status);
 }

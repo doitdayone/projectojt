@@ -27,6 +27,7 @@ public class Product {
     private String images;
     private String detail;
     private String type;
+    private int sale;
 
     @JsonManagedReference(value = "orderDetail_product")
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)

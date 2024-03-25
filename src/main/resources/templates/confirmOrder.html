@@ -17,85 +17,56 @@
             align-items: center;
         }
         .main-content{
-            width: 35%;
-            display: flex;
-            flex-direction: column;
-            border: 5px solid #dddddd;
-            border-radius: 15px;
-            padding: 10px;
-            & h2{
-                text-align: center;
-                padding-bottom: 20px;
-            }
+            overflow: auto;
         }
-        .content{
+        h1{
+            text-align: center;
+            padding-bottom: 30px;
+        }
+        table{
             width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0 10px 0;
-            align-items: center;
+            table-layout: fixed;
+            min-width: 100px;
+            border-collapse: collapse;
+        }
+        thead th{
+            position: sticky;
+            top: 0;
+            background: #f6f9fc;
+            color: #8493a5;
+            font-size: 15px;
+        }
+        th,td{
             border-bottom: 1px solid #dddddd;
-        }
-        .content label{
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .content input{
-            width: 250px;
-            height: 30px;
+            padding: 10px 20px;
+            word-break: break-all;
             text-align: center;
         }
-        .content select{
-            width: 100px;
-            height: 30px;
-            text-align: center;
-        }
-        .content textarea{
-            width: 250px;
-            height: 100px;
-            text-align: center;
-        }
-        .image{
-            text-align: center;
-        }
-        .image img{
+        td img{
             height: 80px;
             width: 80px;
             object-fit: cover;
             border-radius: 15px;
             border: 5px solid #ced0d2;
         }
-        .action{
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding-top: 10px;
+        .button{
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 10px;
+            color: #ffffff;
         }
-        .update button{
-            border-radius: 5px;
+        .edit{
             background-color: #0298cf;
-            color: #f6f9fc;
-            border: none;
-            height: 40px;
-            width: 100px;
-            font-size: 15px;
-            font-weight: bold;
         }
-        .cancel{
-            border-radius: 5px;
+        .delete{
             background-color: #f80000;
-            border: none;
-            height: 40px;
-            width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .cancel a{
-            color: #f6f9fc;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: bold;
+        tr:hover td{
+            color: #0298cf;
+            cursor: pointer;
+            background-color: #f6f9fc;
         }
     </style>
 </head>
@@ -169,55 +140,35 @@
             </div>
         </div>
         <div class="main-content">
-            <h2>Add New Product</h2>
-            <form th:action="@{/create/add}" method="post" enctype="multipart/form-data" th:oject="${productDto}">
-                <div class="content">
-                    <label>Name</label>
-                    <input th:field="${productDto.name}">
-                </div>
-                <div class="content">
-                    <label>Brand</label>
-                    <select th:field="${productDto.brand}">
-                        <option value="Asus">Asus</option>
-                        <option value="Acer">Acer</option>
-                        <option value="Dell">Dell</option>
-                        <option value="ROG">ROG</option>
-                    </select>
-                </div>
-                <div class="content">
-                    <label>Type</label>
-                    <select th:field="${productDto.type}">
-                        <option value="Mouse">Mouse</option>
-                        <option value="Screen">Screen</option>
-                        <option value="Keyboard">Keyboard</option>
-                        <option value="CPU">CPU</option>
-                    </select>
-                </div>
-                <div class="content">
-                    <label>Price</label>
-                    <input type="number" step="0.1" min="0" th:field="${productDto.price}">
-                </div>
-                <div class="content">
-                    <label>Quantity</label>
-                    <input type="number" step="0.1" min="0" th:field="${productDto.quantity}">
-                </div>
-                <div class="content">
-                    <label>Description</label>
-                    <textarea th:field="${productDto.detail}"></textarea>
-                </div>
-                <div class="content">
-                    <label>Image</label>
-                    <input type="file" th:field="${productDto.images}">
-                </div>
-                <div class="action">
-                    <div class="update">
-                        <button type="submit">Add</button>
-                    </div>
-                    <div class="cancel">
-                        <a href="/admin" role="button">Cancel</a>
-                    </div>
-                </div>
-            </form>
+            <h2>Confirm Order</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cost</th>
+                    <th>Order Date</th>
+                    <th>Pending Status</th>
+                    <th>Status</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  th:each="order : ${listOrders}">
+                    <td th:text="${order.orderID}"></td>
+                    <td th:text="${order.cost}"></td>
+                    <td th:text="@{${order.order_date}}"></td>
+                    <td th:text="@{${order.getPStatus()}}"></td>
+                    <td th:text="${order.status}"></td>
+                    <td th:text="${order.address}" style="white-space: pre-line"></td>
+
+                    <td>
+                        <a class="edit button" th:href="@{/orderDetail(id=${order.orderID})}" style="word-wrap: break-word">View Detail</a>
+<!--                        <a class="delete button" th:href="@{/delete(id=${product.productID})}" onclick="return confirm('Are you sure')"><ion-icon name="trash-outline"></ion-icon></a>-->
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
