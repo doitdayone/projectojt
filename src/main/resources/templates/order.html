@@ -39,7 +39,6 @@
   </select>
   <label for="detail_address">Detail Address: </label>
   <input type="text" id="detail_address" name="detail_address" value=""><br>
-
   <label for="receive_name">Receiver Name:</label>
   <input type="text" id="receive_name" name="receive_name" value=""><br>
   <label for="receive_phone">Receiver Phone:</label>
@@ -54,10 +53,11 @@
   <input type="text" name="total" id="total" th:value="${total}" readonly>
   <button type="submit">Confirm Order</button>
 </form>
+<a href="/EcommerceStore/product">Back</a>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
-  var citis = document.getElementById("city");
+  var cities = document.getElementById("city");
   var districts = document.getElementById("district");
   var wards = document.getElementById("commute");
   var Parameter = {
@@ -71,32 +71,36 @@
   });
 
   function renderCity(data) {
-    for (const x of data) {
-      citis.options[citis.options.length] = new Option(x.Name, x.Id);
+    for (const city of data) {
+      cities.options[cities.options.length] = new Option(city.Name, city.Name);
     }
-    citis.onchange = function () {
-      district.length = 1;
-      commute.length = 1;
-      if(this.value != ""){
-        const result = data.filter(n => n.Id === this.value);
-
-        for (const k of result[0].Districts) {
-          district.options[district.options.length] = new Option(k.Name, k.Id);
+    cities.onchange = function () {
+      districts.length = 1;
+      wards.length = 1;
+      if (this.value != "") {
+        const result = data.find((n) => n.Name === this.value);
+        if (result) {
+          for (const district of result.Districts) {
+            districts.options[districts.options.length] = new Option(district.Name, district.Name);
+          }
         }
       }
     };
-    district.onchange = function () {
-      commute.length = 1;
-      const dataCity = data.filter((n) => n.Id === citis.value);
-      if (this.value != "") {
-        const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
 
-        for (const w of dataWards) {
-          wards.options[wards.options.length] = new Option(w.Name, w.Id);
+    districts.onchange = function () {
+      wards.length = 1;
+      const selectedCity = data.find((n) => n.Name === cities.value);
+      if (this.value != "" && selectedCity) {
+        const selectedDistrict = selectedCity.Districts.find((n) => n.Name === this.value);
+        if (selectedDistrict) {
+          for (const ward of selectedDistrict.Wards) {
+            wards.options[wards.options.length] = new Option(ward.Name, ward.Name);
+          }
         }
       }
     };
   }
+
 </script>
 </body>
 

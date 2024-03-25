@@ -224,9 +224,10 @@
                 </div>
                 <p><span> 0 </span>Danh gia</p>
                 <div class="hot-product-item-price">
-                  <div class="price" th:text="${product.price}"></div>
-                  <div class="sellprice" th:text="${product.price} ">22.990.000 d
-                    <span>-19%</span></div>
+                  <div class="price" th:text="${product.price}-${product.sale}*${product.price}/100"></div>
+                  <div style="display: flex; gap: 10px">
+                    <div class="price" th:text="${product.price}"></div><span th:text="'-'+${product.sale} + '%'"></span>
+                  </div>
                 </div>
               </div>
             </div>

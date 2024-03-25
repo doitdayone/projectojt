@@ -17,7 +17,11 @@
 <!--  <p th:text="'Product ID: ' + ${product.productID}"></p>-->
   <p th:text="'Product Name: ' + ${product.name}"></p>
   <p th:text="'Quantity: ' + ${product.quantity}"></p>
-  <p th:text="'Image: ' + ${product.images}"></p>
+  <img
+          width="100px"
+          th:src="@{'/images/' + ${product.images}}"
+          alt=""
+  />
   <p th:text="'Price: ' + ${product.price}"></p>
   <p th:text="'Rating: ' + ${product.rating}"></p>
   <p th:text="'Brand: ' + ${product.brand}"></p>

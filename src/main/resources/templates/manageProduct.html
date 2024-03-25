@@ -122,6 +122,14 @@
           <span class="title">Add Staff</span>
         </a>
       </li>
+      <li>
+        <a href="/confirm">
+                        <span class="icon">
+                            <ion-icon name="person-add-outline"></ion-icon>
+                        </span>
+          <span class="title">Confirm Order</span>
+        </a>
+      </li>
     </ul>
   </div>
   <div class="main">
@@ -138,6 +146,7 @@
             <th>ID</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Sale</th>
             <th>Brand</th>
             <th>Type</th>
             <th>Quantity</th>
@@ -151,6 +160,7 @@
             <td th:text="${product.productID}"></td>
             <td th:text="${product.name}"></td>
             <td th:text="@{${product.price} + ' VND'}"></td>
+            <td th:text="@{${product.sale}}"></td>
             <td th:text="${product.brand}"></td>
             <td th:text="${product.type}"></td>
             <td th:text="${product.quantity}"></td>

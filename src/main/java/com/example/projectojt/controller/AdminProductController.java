@@ -1,6 +1,10 @@
 package com.example.projectojt.controller;
 import com.example.projectojt.dto.ProductDTO;
+import com.example.projectojt.model.Order;
+import com.example.projectojt.model.OrderDetail;
 import com.example.projectojt.model.Product;
+import com.example.projectojt.repository.OrderDetailRepository;
+import com.example.projectojt.repository.OrderRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.service.ProductService;
 import com.example.projectojt.service.UserNotFoundException;
@@ -27,6 +31,8 @@ import java.util.List;
 public class AdminProductController {
     @Autowired private ProductService service;
     @Autowired private ProductRepository repo;
+    @Autowired private OrderRepository repoOrder;
+    @Autowired private OrderDetailRepository repoOrderDetail;
 
     @GetMapping("/manageProduct")
     public String showProductList(Model model){
@@ -40,6 +46,20 @@ public class AdminProductController {
     public String showCreateProduct(Model Model){
         Model.addAttribute("productDto", new ProductDTO());
         return "createProduct";
+    }
+
+    @GetMapping("/confirm")
+    public String showConfirmProduct(Model Model){
+        List<Order> listOrders = repoOrder.findOrdersByStatus("PENDING");
+        Model.addAttribute("listOrders", listOrders);
+        return "confirmOrder";
+    }
+
+    @GetMapping("/orderDetail")
+    public String showOrderDetail(Model Model, @RequestParam long id){
+        List<OrderDetail> orderDetail = repoOrderDetail.findByOrder(repoOrder.findById(id));
+        Model.addAttribute("orderDetail", orderDetail);
+        return "OrderDetail";
     }
 
     @PostMapping("/create/add")
@@ -77,6 +97,7 @@ public class AdminProductController {
         product.setBrand(productDto.getBrand());
         product.setType(productDto.getType());
         product.setPrice(productDto.getPrice());
+        product.setSale(productDto.getSale());
         product.setDetail(productDto.getDetail());
         product.setImages(storageFileName);
         product.setQuantity(productDto.getQuantity());
@@ -98,6 +119,7 @@ public class AdminProductController {
             productDto.setBrand(product.getBrand());
             productDto.setType(product.getType());
             productDto.setPrice(product.getPrice());
+            productDto.setSale(product.getSale());
             productDto.setQuantity(product.getQuantity());
             productDto.setDetail(product.getDetail());
 
@@ -150,6 +172,7 @@ public class AdminProductController {
             product.setBrand(productDto.getBrand());
             product.setType(productDto.getType());
             product.setPrice(productDto.getPrice());
+            product.setSale(productDto.getSale());
             product.setDetail(productDto.getDetail());
             product.setQuantity(productDto.getQuantity());
 
