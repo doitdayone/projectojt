@@ -1,0 +1,248 @@
+body{
+    background-color: #ccc;
+}
+.main{
+    display: flex;
+    padding: 10px 120px;
+    flex-flow: wrap;
+    border-style: none;
+    border-width: 1px;
+    border-color: unset;
+    opacity: 1;
+    margin-top: 1rem;
+}
+.content-1{
+    display: block;
+    flex: 0 0 68%;
+    max-width: 68%;
+    border-style: none;
+    border-width: 1px;
+    border-color: unset;
+    opacity: 1;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    position: relative;
+    max-width: 100%;
+    min-height: 1px;
+}
+.card-1{
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    padding: 1.5rem 1rem;
+    transition: box-shadow 0.2s ease-in-out 0s;
+    margin-bottom: 1rem;
+}
+.card-body{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+}.tittle{
+     flex: 0 0 auto;
+     width: 12.5%;
+     padding-right: 0.5rem;
+     padding-left: 0.5rem;
+     display: flex;
+     -webkit-box-align: center;
+     align-items: center;
+     -webkit-box-pack: center;
+     justify-content: center;
+     flex-direction: column;
+ }
+.tittle div{
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-weight: 500;
+}
+.image{
+    flex: 0 0 auto;
+    width: 12.5%;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.image div{
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+    flex: 1 0 auto;
+    display: flex;
+    cursor: pointer;
+    z-index: 0;
+    margin: auto;
+    border-radius: 8px;
+    padding-bottom: 100%;
+    border: 1px solid rgb(224, 224, 224);
+    width: 100%;
+}
+.image div img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease 0s;
+}
+.name-product{
+    flex: 1 0 0%;
+    min-width: 0px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.choose-btn{
+    flex: 0 0 auto;
+    width: 12.5%;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.choose-btn button{
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+    line-height: 1rem;
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    text-align: center;
+    background-color: rgb(20, 53, 195);
+    border-color: rgb(20, 53, 195);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-style: solid;
+    user-select: none;
+    text-decoration: none;
+    flex-direction: row;
+    position: relative;
+    height: 32px;
+    width: 60px;
+    padding: 0px;
+}
+.content-2{
+    display: block;
+    flex: 0 0 30%;
+    max-width: 30%;
+    position: relative;
+    max-width: 100%;
+    min-height: 1px;
+    border-style: none;
+    border-width: 1px;
+    border-color: unset;
+    opacity: 1;
+}
+.card-2{
+    position: sticky;
+    top: 80px;
+    margin-bottom: 1rem;
+}
+.card-body-2{
+    border-radius: 8px;
+    background-color: rgb(255, 255, 255);
+    position: relative;
+    padding: 1rem 2rem;
+    text-align: center;
+}
+.content{
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+    flex: 1 0 auto;
+    display: flex;
+    cursor: unset;
+    z-index: 0;
+    margin: auto;
+    border-radius: 0px;
+    width: 100%;
+    height: 200px !important;
+}
+.content img{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.5s ease 0s;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 80%;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.modal-header .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal-header .close-button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 10px 15px;
+}
+
+#overlay {
+    position: fixed;
+    opacity: 0;
+    transition: 200ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
+}
+
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
