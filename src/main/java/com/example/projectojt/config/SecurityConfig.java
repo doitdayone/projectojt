@@ -23,78 +23,78 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-  @Autowired
-  private OurUserDetailsService userDetailsService;
+    @Autowired
+    private OurUserDetailsService userDetailsService;
 
 
-  @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-    httpSecurity.authorizeHttpRequests(auth -> auth
-            .requestMatchers("/EcommerceStore/product", "/EcommerceStore/products/more/**","/EcommerceStore/loginpage",
-                "/EcommerceStore/productDetails/{product_id}", "/css/**", "/js/**", "/vendor/**",
-                "/fonts/**", "/images/**", "/static/**", "/asset/**",
-                "/EcommerceStore/register_form", "/EcommerceStore/register",
-                "/EcommerceStore/otp_verify","/EcommerceStore/search","/EcommerceStore/productFilter/**"
-            ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**",
-                "/EcommerceStore/products/more").permitAll()
-            .anyRequest().authenticated())
-        .httpBasic(withDefaults())
-        .formLogin(formLogin ->
-            formLogin
-                .loginPage("/EcommerceStore/loginpage")
-                .permitAll()
-                .loginProcessingUrl("/EcommerceStore/login")
-                .defaultSuccessUrl("/EcommerceStore/product", true)
-                .failureUrl("/EcommerceStore/loginpage?error=true")
-                .failureHandler((request, response, exception) -> {
-                  String errorMessage = "Invalid username or password";
-                  request.getSession().setAttribute("errorMessage", errorMessage);
-                  response.sendRedirect("/EcommerceStore/loginpage?error=true");
-                })).logout(
-            logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll()
-        )
-        .oauth2Login(oauth2 -> oauth2
-            .loginPage("/login/oauth2/authorization/google")
-            .defaultSuccessUrl("/EcommerceStore/signingoogle", true)
-            .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
-            logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll()
-        )
-        .oauth2Login(oauth2 -> oauth2
-            .loginPage("/login/oauth2/authorization/facebook")
-            .defaultSuccessUrl("/EcommerceStore/product", true)
-            .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
-            logout -> logout
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .permitAll()
-        )
-        .csrf(AbstractHttpConfigurer::disable);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/EcommerceStore/product", "/EcommerceStore/products/more/**","/EcommerceStore/loginpage",
+                                "/EcommerceStore/productDetails/{product_id}", "/css/**", "/js/**", "/vendor/**",
+                                "/fonts/**", "/images/**", "/static/**", "/asset/**",
+                                "/EcommerceStore/register_form", "/EcommerceStore/register",
+                                "/EcommerceStore/otp_verify","/EcommerceStore/search","/EcommerceStore/productFilter/**"
+                                ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**",
+                                "/EcommerceStore/products/more").permitAll()
+                        .anyRequest().authenticated())
+                .httpBasic(withDefaults())
+                .formLogin(formLogin ->
+                        formLogin
+                                .loginPage("/EcommerceStore/loginpage")
+                                .permitAll()
+                                .loginProcessingUrl("/EcommerceStore/login")
+                                .defaultSuccessUrl("/EcommerceStore/product", true)
+                                .failureUrl("/EcommerceStore/loginpage?error=true")
+                                .failureHandler((request, response, exception) -> {
+                                    String errorMessage = "Invalid username or password";
+                                    request.getSession().setAttribute("errorMessage", errorMessage);
+                                    response.sendRedirect("/EcommerceStore/loginpage?error=true");
+                                })).logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login/oauth2/authorization/google")
+                        .defaultSuccessUrl("/EcommerceStore/signingoogle", true)
+                        .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
+                )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login/oauth2/authorization/facebook")
+                        .defaultSuccessUrl("/EcommerceStore/product", true)
+                        .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
+                )
+                .csrf(AbstractHttpConfigurer::disable);
 
-    return httpSecurity.build();
+        return httpSecurity.build();
 
 
-  }
+    }
 
-  @Bean
-  public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-    auth.setUserDetailsService(userDetailsService);
-    auth.setPasswordEncoder(passwordEncoder());
-    return auth;
-  }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+        auth.setUserDetailsService(userDetailsService);
+        auth.setPasswordEncoder(passwordEncoder());
+        return auth;
+    }
 
-  public AuthenticationManager authenticationManager(
-      AuthenticationConfiguration authenticationConfiguration) throws Exception {
-    return authenticationConfiguration.getAuthenticationManager();
-  }
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
 }

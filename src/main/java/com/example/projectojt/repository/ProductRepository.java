@@ -21,4 +21,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> searchProducts(String keyword, PageRequest of);
 
     Product getProductByProductID(int id);
+
 }
