@@ -4,195 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body{
-            background-color: #ccc;
-        }
-        .main{
-            display: flex;
-            padding: 10px 120px;
-            flex-flow: wrap;
-            border-style: none;
-            border-width: 1px;
-            border-color: unset;
-            opacity: 1;
-            margin-top: 1rem;
-        }
-        .content-1{
-            display: block;
-            flex: 0 0 68%;
-            max-width: 68%;
-            border-style: none;
-            border-width: 1px;
-            border-color: unset;
-            opacity: 1;
-            padding-right: 0.5rem;
-            padding-left: 0.5rem;
-            position: relative;
-            max-width: 100%;
-            min-height: 1px;
-        }
-        .card-1{
-            border-radius: 8px;
-            background-color: rgb(255, 255, 255);
-            position: relative;
-            padding: 1.5rem 1rem;
-            transition: box-shadow 0.2s ease-in-out 0s;
-            margin-bottom: 1rem;
-        }
-        .card-body{
-            display: flex;
-            flex-wrap: wrap;
-            margin-left: -0.5rem;
-            margin-right: -0.5rem;
-        }.tittle{
-             flex: 0 0 auto;
-             width: 12.5%;
-             padding-right: 0.5rem;
-             padding-left: 0.5rem;
-             display: flex;
-             -webkit-box-align: center;
-             align-items: center;
-             -webkit-box-pack: center;
-             justify-content: center;
-             flex-direction: column;
-         }
-        .tittle div{
-            text-align: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            font-weight: 500;
-        }
-        .image{
-            flex: 0 0 auto;
-            width: 12.5%;
-            padding-right: 0.5rem;
-            padding-left: 0.5rem;
-            display: flex;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .image div{
-            max-width: 100%;
-            position: relative;
-            overflow: hidden;
-            flex: 1 0 auto;
-            display: flex;
-            cursor: pointer;
-            z-index: 0;
-            margin: auto;
-            border-radius: 8px;
-            padding-bottom: 100%;
-            border: 1px solid rgb(224, 224, 224);
-            width: 100%;
-        }
-        .image div img{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.5s ease 0s;
-        }
-        .name-product{
-            flex: 1 0 0%;
-            min-width: 0px;
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-            display: flex;
-            -webkit-box-align: center;
-            align-items: center;
-        }
-        .choose-btn{
-            flex: 0 0 auto;
-            width: 12.5%;
-            padding-right: 0.5rem;
-            padding-left: 0.5rem;
-            display: flex;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-        .choose-btn button{
-            cursor: pointer;
-            border-radius: 4px;
-            overflow: hidden;
-            line-height: 1rem;
-            display: inline-flex;
-            -webkit-box-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            justify-content: center;
-            text-align: center;
-            background-color: rgb(20, 53, 195);
-            border-color: rgb(20, 53, 195);
-            color: rgb(255, 255, 255);
-            border-width: 1px;
-            border-style: solid;
-            user-select: none;
-            text-decoration: none;
-            flex-direction: row;
-            position: relative;
-            height: 32px;
-            width: 60px;
-            padding: 0px;
-        }
-        .content-2{
-            display: block;
-            flex: 0 0 30%;
-            max-width: 30%;
-            position: relative;
-            max-width: 100%;
-            min-height: 1px;
-            border-style: none;
-            border-width: 1px;
-            border-color: unset;
-            opacity: 1;
-        }
-        .card-2{
-            position: sticky;
-            top: 80px;
-            margin-bottom: 1rem;
-        }
-        .card-body-2{
-            border-radius: 8px;
-            background-color: rgb(255, 255, 255);
-            position: relative;
-            padding: 1rem 2rem;
-            text-align: center;
-        }
-        .content{
-            max-width: 100%;
-            position: relative;
-            overflow: hidden;
-            flex: 1 0 auto;
-            display: flex;
-            cursor: unset;
-            z-index: 0;
-            margin: auto;
-            border-radius: 0px;
-            width: 100%;
-            height: 200px !important;
-        }
-        .content img{
-            position: absolute;
-            top: 0px;
-            left: 0px;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.5s ease 0s;
-        }
-    </style>
+    <link rel="stylesheet" href="/buildPCStyles.css">
 </head>
 <body>
 <div class="main">
@@ -204,7 +16,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/cpu.svg" alt="">
+                        <img th:src="@{/images/buildPC/cpu.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -213,7 +25,7 @@
                     </div>
                 </div>
                 <div class="choose-btn">
-                    <button>Choose</button>
+                    <button data-modal-target="#choose-product">Choose</button>
                 </div>
             </div>
         </div>
@@ -224,7 +36,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/mainboard.svg" alt="">
+                        <img th:src="@{/images/buildPC/mainboard.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -244,7 +56,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/ram.svg" alt="">
+                        <img th:src="@{/images/buildPC/ram.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -264,7 +76,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/hdd.svg" alt="">
+                        <img th:src="@{/images/buildPC/hdd.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -284,7 +96,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/ssd.svg" alt="">
+                        <img th:src="@{/images/buildPC/ssd.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -304,7 +116,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/vga-card.svg" alt="">
+                        <img th:src="@{/images/buildPC/vga-card.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -324,7 +136,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/power-supply.svg" alt="">
+                        <img th:src="@{/images/buildPC/power-supply.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -344,7 +156,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/case.svg" alt="">
+                        <img th:src="@{/images/buildPC/case.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -364,7 +176,7 @@
                 </div>
                 <div class="image">
                     <div>
-                        <img src="/images/buildPC/fan.svg" alt="">
+                        <img th:src="@{/images/buildPC/fan.svg}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
@@ -382,13 +194,60 @@
         <div class="card-2">
             <div class="card-body-2">
                 <div class="content" height="200">
-                    <img src="/images/buildPC/box.png" alt="">
+                    <img th:src="@{/images/buildPC/box.png}" alt="">
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal" id="choose-product">
+        <div class="modal-header">
+            <div class="title">Example Modal</div>
+            <button data-close-button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quod alias ut illo doloremque eum ipsum obcaecati distinctio debitis reiciendis quae quia soluta totam doloribus quos nesciunt necessitatibus, consectetur quisquam accusamus ex, dolorum, dicta vel? Nostrum voluptatem totam, molestiae rem at ad autem dolor ex aperiam. Amet assumenda eos architecto, dolor placeat deserunt voluptatibus tenetur sint officiis perferendis atque! Voluptatem maxime eius eum dolorem dolor exercitationem quis iusto totam! Repudiandae nobis nesciunt sequi iure! Eligendi, eius libero. Ex, repellat sapiente!
+        </div>
+    </div>
+    <div id="overlay"></div>
 </div>
+<script>
+    const openModalButtons = document.querySelectorAll('[data-modal-target]')
+    const closeModalButtons = document.querySelectorAll('[data-close-button]')
+    const overlay = document.getElementById('overlay')
 
+    openModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = document.querySelector(button.dataset.modalTarget)
+            openModal(modal)
+        })
+    })
+
+    overlay.addEventListener('click', () => {
+        const modals = document.querySelectorAll('.modal.active')
+        modals.forEach(modal => {
+            closeModal(modal)
+        })
+    })
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal')
+            closeModal(modal)
+        })
+    })
+
+    function openModal(modal) {
+        if (modal == null) return
+        modal.classList.add('active')
+        overlay.classList.add('active')
+    }
+
+    function closeModal(modal) {
+        if (modal == null) return
+        modal.classList.remove('active')
+        overlay.classList.remove('active')
+    }
+</script>
 </body>
 
 </html>
