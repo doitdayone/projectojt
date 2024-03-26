@@ -1,5 +1,6 @@
 package com.example.projectojt.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,4 +33,8 @@ public class Staff {
     private Date birthday;
     @NotEmpty(message = "Password is required")
     private String password;
+
+    @JsonManagedReference(value = "staff_schedule")
+    @OneToMany(mappedBy = "staff", cascade = CascadeType.REMOVE)
+    private List<Schedule> schedules;
 }
