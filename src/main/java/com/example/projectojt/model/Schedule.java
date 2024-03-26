@@ -28,4 +28,12 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="userID")
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "staffID")
+    private Staff staff;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderDetailID")
+    private OrderDetail orderDetail;
 }
