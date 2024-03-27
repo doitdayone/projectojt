@@ -56,7 +56,7 @@ public class ProductController {
             attributes.get("email"));
 
         if(!userRepository.existsByEmail((String) attributes.get("email"))){
-            var user =  User.builder().userName("newuser")
+            var user =  User.builder().userName((String) attributes.get("name"))
                     .email((String) attributes.get("email")).password("").verified(true).roles("USER").build();
             userRepository.save(user);
             ;
