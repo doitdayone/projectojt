@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/buildPCStyles.css">
+    <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <div class="main">
@@ -25,8 +27,7 @@
                     </div>
                 </div>
                 <div class="choose-btn">
-                    <button data-modal-target="#choose-product">Choose</button>
-                    <button>Choose</button>
+                    <button data-modal-target="#choose-product" th:href="@{/EcommerceStore/productFilterCPU/CPU}">Choose</button>
                 </div>
             </div>
         </div>
@@ -201,12 +202,139 @@
         </div>
     </div>
     <div class="modal" id="choose-product">
-        <div class="modal-header">
-            <div class="title">Example Modal</div>
-            <button data-close-button class="close-button">&times;</button>
-        </div>
-        <div class="modal-body">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse quod alias ut illo doloremque eum ipsum obcaecati distinctio debitis reiciendis quae quia soluta totam doloribus quos nesciunt necessitatibus, consectetur quisquam accusamus ex, dolorum, dicta vel? Nostrum voluptatem totam, molestiae rem at ad autem dolor ex aperiam. Amet assumenda eos architecto, dolor placeat deserunt voluptatibus tenetur sint officiis perferendis atque! Voluptatem maxime eius eum dolorem dolor exercitationem quis iusto totam! Repudiandae nobis nesciunt sequi iure! Eligendi, eius libero. Ex, repellat sapiente!
+        <div class="choose-product-content">
+            <div class="choose-product-close" data-close-button="#choose-product">
+                <i class="fa-solid fa-x close"></i>
+            </div>
+            <div class="choose-product-body">
+                <div class="choose-product-body-content">
+                    <div class="choose-product-body-header">
+                        <div class="header-tittle">
+                            <div class="header-tittle-text">
+                                <div class="header-tittle-text-sign">
+
+                                </div>
+                                <div class="header-tittle-text-word">
+                                    Filter
+                                </div>
+                            </div>
+                            <div class="header-tittle-space"></div>
+                        </div>
+                        <div class="header-filter-category">
+                            <div class="category-card">
+                                <div class="category-card-button">
+                                    <span class="category-card-button-text">
+                                        Brand CPU
+                                    </span>
+                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
+                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Intel</a></li>
+                                    <li><a href="">AMD</a></li>
+                                </ul>
+                            </div>
+                            <div class="category-card">
+                                <div class="category-card-button">
+                                <span class="category-card-button-text">
+                                    Series CPU
+                                </span>
+                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
+                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Core i3</a></li>
+                                    <li><a href="">Core i5</a></li>
+                                    <li><a href="">Core i7</a></li>
+                                    <li><a href="">Core i9</a></li>
+                                    <li><a href="">Ryzen 3</a></li>
+                                    <li><a href="">Ryzen 5</a></li>
+                                    <li><a href="">Ryzen 7</a></li>
+                                    <li><a href="">Ryzen 9</a></li>
+                                </ul>
+                            </div>
+                            <div class="category-card">
+                                <div class="category-card-button">
+                                <span class="category-card-button-text">
+                                    Brand
+                                </span>
+                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
+                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Intel</a></li>
+                                    <li><a href="">AMD</a></li>
+                                    <li><a href="">ASUS</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="header-filter-cost">
+                            <div class="header-filter-cost-text">
+                                Sorted by
+                            </div>
+                            <div class="header-filter-cost-button">
+                                <div class="header-filter-cost-button-space">
+
+                                </div>
+                                <div class="header-filter-cost-button-text">
+                                    Price ascending
+                                </div>
+                            </div>
+                            <div class="header-filter-cost-button">
+                                <div class="header-filter-cost-button-space">
+
+                                </div>
+                                <div class="header-filter-cost-button-text">
+                                    Price descending
+                                </div>
+                            </div>
+                            <input class="header-filter-cost-input" placeholder="Find components"/>
+                        </div>
+                    </div>
+                    <div class="choose-product-body-product">
+                        <div class="choose-product-body-product-card">
+                            <div class="choose-product-body-product-card-body">
+                                <div class="choose-product-body-product-card-image">
+                                    <div class="choose-product-body-product-card-image-border">
+                                        <img src="images/product.webp" alt="" class="choose-product-body-product-image">
+                                    </div>
+                                </div>
+                                <div class="choose-product-body-product-card-name">
+                                    <a class="choose-product-body-product-card-name-link">
+                                        <div class="choose-product-body-product-card-name-text">
+                                            <h3>CPU AMD Ryzen R7 1800X (3.6GHz - 4GHz)</h3>
+                                        </div>
+                                    </a>
+                                    <div class="choose-product-body-product-card-name-id">
+                                        SKU: 1
+                                    </div>
+                                </div>
+                                <div class="choose-product-body-product-card-price">
+                                    <div class="choose-product-body-product-card-price-body">
+                                        <div class="choose-product-body-product-card-price-text">
+                                            <div class="choose-product-body-product-card-price-space">
+                                                <div class="choose-product-body-product-card-price-sale">
+                                                <span>
+                                                    6.559.000
+                                                    <span>VND</span>
+                                                </span>
+                                                </div>
+                                                <div class="choose-product-body-product-card-price-real">
+                                                <span class="cost">
+                                                    9.240.000
+                                                    <span>VND</span>
+                                                </span>
+                                                    <span class="sale">-29.02%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="choose-product-body-product-card-button">
+                                    <button>Choose</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div id="overlay"></div>
@@ -243,13 +371,35 @@
         overlay.classList.add('active')
     }
 
+
+
+    overlay.addEventListener('click', () => {
+        const modals = document.querySelectorAll('.modal.active')
+        modals.forEach(modal => {
+            closeModal(modal)
+        })
+    })
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal')
+            closeModal(modal)
+        })
+    })
+
+    function openModal(modal) {
+        if (modal == null) return
+        modal.classList.add('active')
+        overlay.classList.add('active')
+    }
+
     function closeModal(modal) {
         if (modal == null) return
         modal.classList.remove('active')
         overlay.classList.remove('active')
     }
 </script>
-</div>
+
 </body>
 
 </html>
