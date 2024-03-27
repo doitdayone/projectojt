@@ -65,7 +65,7 @@ public class LoginController {
     }
     User user = new User();
     user.setEmail((String) map.get("email"));
-    user.setUserName("newuser");
+    user.setUserName((String) map.get("name"));
     user.setRoles("USER");
     user.setPassword("");
     user.setPhone("");
