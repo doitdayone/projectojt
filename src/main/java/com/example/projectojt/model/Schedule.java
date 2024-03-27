@@ -23,6 +23,7 @@ public class Schedule {
     private String status;
     private String phone;
     private String name;
+    private int shift;
 
     @JsonBackReference(value = "schedule_user")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -36,4 +37,8 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orderDetailID")
     private OrderDetail orderDetail;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "addressID")
+    private Address address;
 }
