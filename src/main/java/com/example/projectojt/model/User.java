@@ -20,7 +20,6 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int userID;
-    @Column(unique = true)
     private String userName;
     private Timestamp birthday;
     private String email;

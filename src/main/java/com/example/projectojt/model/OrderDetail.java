@@ -1,11 +1,14 @@
 package com.example.projectojt.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,4 +34,12 @@ public class OrderDetail {
 
     @OneToOne(mappedBy = "orderDetail")
     private Feedback feedback;
+
+    @JsonManagedReference(value = "orderDetail_schedule")
+    @OneToMany(mappedBy = "orderDetail", cascade = CascadeType.REMOVE)
+    private List<Schedule> schedules;
+
+    public String NameDateText(){
+        return product.getName()+" - " + order.getOrder_date();
+    }
 }

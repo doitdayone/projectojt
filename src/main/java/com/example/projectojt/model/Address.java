@@ -37,6 +37,10 @@ public class Address {
     @OneToMany(mappedBy = "address", cascade = CascadeType.REMOVE)
     private List<Order> orderList;
 
+    @JsonManagedReference(value = "address_schedule")
+    @OneToMany(mappedBy = "address", cascade = CascadeType.REMOVE)
+    private List<Schedule> schedules;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

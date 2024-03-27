@@ -5,6 +5,7 @@ import com.example.projectojt.model.User;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.service.ProductService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,7 +36,7 @@ public class ProductController {
 
   @GetMapping("/product")
   public String getProduct(Authentication authentication, Model model,
-      @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo) {
+                           @RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo, HttpSession session) {
     if (authentication != null && authentication.isAuthenticated()) {
       Object principal = authentication.getPrincipal();
 
@@ -47,6 +48,7 @@ public class ProductController {
         model.addAttribute("userRepository", userRepository);
         int user_id = user.getUserID();
         model.addAttribute("user_id", user_id);
+        session.setAttribute("user_id", userRepository.findByEmail(email).getUserID());
       } else if (principal instanceof OAuth2User oAuth2User) {
         // get user_email when sign in with google or facebook
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -57,8 +59,9 @@ public class ProductController {
             var user =  User.builder().userName("newuser")
                     .email((String) attributes.get("email")).password("").verified(true).roles("USER").build();
             userRepository.save(user);
+            ;
         }
-
+        session.setAttribute("user_id", userRepository.findByEmail((String) attributes.get("email")).getUserID());
         model.addAttribute("userRepository", userRepository);
 
 
