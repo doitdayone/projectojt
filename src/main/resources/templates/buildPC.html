@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/buildPCStyles.css">
+    <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <div class="main">
@@ -25,7 +27,7 @@
                     </div>
                 </div>
                 <div class="choose-btn">
-                    <button data-modal-target="#choose-product">Choose</button>
+                    <button data-modal-target="#choose-product" th:href="@{/EcommerceStore/productFilterCPU/CPU}">Choose</button>
                 </div>
             </div>
         </div>
@@ -201,7 +203,7 @@
     </div>
     <div class="modal" id="choose-product">
         <div class="choose-product-content">
-            <div class="choose-product-close">
+            <div class="choose-product-close" data-close-button="#choose-product">
                 <i class="fa-solid fa-x close"></i>
             </div>
             <div class="choose-product-body">
@@ -221,11 +223,33 @@
                         <div class="header-filter-category">
                             <div class="category-card">
                                 <div class="category-card-button">
+                                    <span class="category-card-button-text">
+                                        Brand CPU
+                                    </span>
+                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
+                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Intel</a></li>
+                                    <li><a href="">AMD</a></li>
+                                </ul>
+                            </div>
+                            <div class="category-card">
+                                <div class="category-card-button">
                                 <span class="category-card-button-text">
-                                    Brand
+                                    Series CPU
                                 </span>
                                     <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
                                 </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Core i3</a></li>
+                                    <li><a href="">Core i5</a></li>
+                                    <li><a href="">Core i7</a></li>
+                                    <li><a href="">Core i9</a></li>
+                                    <li><a href="">Ryzen 3</a></li>
+                                    <li><a href="">Ryzen 5</a></li>
+                                    <li><a href="">Ryzen 7</a></li>
+                                    <li><a href="">Ryzen 9</a></li>
+                                </ul>
                             </div>
                             <div class="category-card">
                                 <div class="category-card-button">
@@ -234,38 +258,11 @@
                                 </span>
                                     <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
                                 </div>
-                            </div>
-                            <div class="category-card">
-                                <div class="category-card-button">
-                                <span class="category-card-button-text">
-                                    Brand
-                                </span>
-                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
-                                </div>
-                            </div>
-                            <div class="category-card">
-                                <div class="category-card-button">
-                                <span class="category-card-button-text">
-                                    Brand
-                                </span>
-                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
-                                </div>
-                            </div>
-                            <div class="category-card">
-                                <div class="category-card-button">
-                                <span class="category-card-button-text">
-                                    Brand
-                                </span>
-                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
-                                </div>
-                            </div>
-                            <div class="category-card">
-                                <div class="category-card-button">
-                                <span class="category-card-button-text">
-                                    Brand
-                                </span>
-                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
-                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Intel</a></li>
+                                    <li><a href="">AMD</a></li>
+                                    <li><a href="">ASUS</a></li>
+                                </ul>
                             </div>
                         </div>
                         <div class="header-filter-cost">
@@ -338,6 +335,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
     <div id="overlay"></div>
 </div>

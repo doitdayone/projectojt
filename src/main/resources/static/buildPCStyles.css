@@ -288,7 +288,7 @@ body{
     display: grid;
     gap: 8px;
     grid-template-columns: 1fr 1fr 1fr;
-    height: 84px;
+    height: 70px;
 }
 .category-card{
     display: inline-block;
@@ -324,6 +324,34 @@ body{
     position: relative;
     top: 1px;
     left: 2px;
+}
+.category-card .sub-card{
+    position: absolute;
+    background-color: #fff;
+    padding: 10px 0;
+    margin-top: 0;
+    list-style: none;
+    gap: 20px;
+    display: none;
+    z-index: 1000;
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+}
+.category-card:hover>.sub-card{
+    display: flex;
+    width: 94.5%;
+    left: 0;
+    margin-left: 16px;
+    padding-left: 20px;
+}
+.category-card:hover>.sub-card li a{
+    text-decoration: none;
+    color: #000000;
+    font-size: 16px;
+    font-weight: 500;
+}
+.category-card:hover>.sub-card li a:hover{
+    color: #024dbc;
 }
 .header-filter-cost{
     padding: 0.5rem 1rem;
@@ -569,7 +597,7 @@ a:hover{
     -ms-flex-direction: column;
     flex-direction: column;
 }
-.choose-product-body-product-card-button button{
+.choose-product-body-product-card-button button {
     cursor: pointer;
     border-radius: 4px;
     overflow: hidden;
@@ -602,7 +630,7 @@ a:hover{
     position: relative;
     height: 32px;
     width: 60px;
-=======
+}
 .modal-header {
     padding: 10px 15px;
     display: flex;
