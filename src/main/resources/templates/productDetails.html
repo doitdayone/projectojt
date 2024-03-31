@@ -29,6 +29,11 @@
     <button type="submit">Thêm vào giỏ hàng</button>
   </div>
 
+  <h2>Feedbacks:</h2>
+  <div th:each="feedback : ${feedbackList}">
+    <p th:text="${feedback.description}"></p>
+  </div>
+
 </form>
 <form action="/EcommerceStore/register-product" method="post">
   <div th:if="${productRepository.getProductByProductID(productId).getQuantity() == 0}">
