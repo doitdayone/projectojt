@@ -175,7 +175,7 @@ public class AdminProductController {
             product.setSale(productDto.getSale());
             product.setDetail(productDto.getDetail());
             product.setQuantity(productDto.getQuantity());
-
+            System.err.println("XXXXXXXXX");
             service.save(product);
         }
         catch (Exception ex){
