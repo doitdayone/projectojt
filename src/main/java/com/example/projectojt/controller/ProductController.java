@@ -1,7 +1,9 @@
 package com.example.projectojt.controller;
 
+import com.example.projectojt.model.Feedback;
 import com.example.projectojt.model.Product;
 import com.example.projectojt.model.User;
+import com.example.projectojt.repository.FeedbackRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.service.ProductService;
@@ -33,6 +35,8 @@ public class ProductController {
 //  private ProductService productService;
   @Autowired
   private ProductService productService;
+  @Autowired
+  private FeedbackRepository feedbackRepository;
 
   @GetMapping("/product")
   public String getProduct(Authentication authentication, Model model,
@@ -133,6 +137,7 @@ public class ProductController {
     if (optionalProduct.isPresent()) {
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("product", optionalProduct.get());
+      model.addAttribute("feedbackList", optionalProduct.get().getFeedbacks());
       return "productDetails";
     }
 

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Products without Feedback</title>
+    <style>
+        /* Style cho ngôi sao */
+        .rating {
+            display: flex;
+            justify-content: flex-start; /* Sắp xếp từ trái sang phải */
+            align-items: center;
+        }
+
+        .rating > input[type="radio"] {
+            display: none;
+        }
+
+        .rating > label {
+            font-size: 36px;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .rating > input[type="radio"]:checked ~ label,
+        .rating > input[type="radio"]:checked ~ input[type="radio"] + label {
+            color: #ffca08; /* Màu vàng cho các sao đã chọn và các sao nhỏ */
+        }
+    </style>
+</head>
+<body>
+<h1>Products without Feedback</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Product Name</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Duyệt qua danh sách các sản phẩm -->
+    <tr th:each="product : ${products}">
+        <td th:text="${product.name}"></td>
+        <!-- Hiển thị button để mở form feedback -->
+        <td>
+            <button onclick="toggleFeedbackForm(this)">Give Feedback</button>
+            <!-- Form feedback hiển thị tại đây -->
+            <form class="feedbackForm" style="display: none;" th:action="@{/EcommerceStore/submit-feedback}" method="post">
+                <input type="hidden" name="productId" th:value="${product.productID}">
+                <textarea name="description" placeholder="Write your feedback here..."></textarea>
+                <div class="rating">
+                    <input type="radio" id="star1" name="rate" value="1" />
+                    <label for="star1" title="1 star">&#9733;</label>
+                    <input type="radio" id="star2" name="rate" value="2" />
+                    <label for="star2" title="2 stars">&#9733;</label>
+                    <input type="radio" id="star3" name="rate" value="3" />
+                    <label for="star3" title="3 stars">&#9733;</label>
+                    <input type="radio" id="star4" name="rate" value="4" />
+                    <label for="star4" title="4 stars">&#9733;</label>
+                    <input type="radio" id="star5" name="rate" value="5" />
+                    <label for="star5" title="5 stars">&#9733;</label>
+                </div>
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<script>
+    function toggleFeedbackForm(button) {
+        // Lấy form feedback tương ứng với nút được nhấn
+        var form = button.nextElementSibling;
+
+        // Lặp qua tất cả các form feedback và ẩn chúng
+        var allForms = document.getElementsByClassName("feedbackForm");
+        for (var i = 0; i < allForms.length; i++) {
+            allForms[i].style.display = 'none';
+        }
+
+        // Hiển thị form feedback cho sản phẩm được chọn
+        form.style.display = form.style.display === "none" ? "block" : "none";
+    }
+
+    // Chức năng tô màu các sao nhỏ khi chọn sao lớn hơn
+    var radios = document.querySelectorAll('.rating input[type="radio"]');
+    radios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            var rating = parseInt(this.value);
+            var labels = this.parentNode.querySelectorAll('label');
+            labels.forEach(function(label, index) {
+                if (index >= rating) {
+                    label.style.color = "#ccc"; // Màu xám nhạt cho các sao nhỏ
+                } else {
+                    label.style.color = "#ffca08"; // Màu vàng cho các sao được chọn và các sao nhỏ
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

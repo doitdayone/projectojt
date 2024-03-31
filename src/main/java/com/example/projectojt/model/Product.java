@@ -33,7 +33,8 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
     private List<OrderDetail> orderDetailList;
 
-
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Feedback> feedbacks;
 //    @JsonManagedReference(value = "cart_product")
 //    @OneToMany(mappedBy = "product", cascade = CascadeType.REMOVE)
 //    private List<Cart> cartList;

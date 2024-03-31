@@ -34,6 +34,8 @@ public class User {
     @JsonManagedReference(value = "schedule_user")
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Schedule> scheduleList;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Feedback> feedbacks;
 
     private String roles;
     private String otp;
