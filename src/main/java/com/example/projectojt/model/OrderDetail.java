@@ -32,9 +32,6 @@ public class OrderDetail {
     @JoinColumn(name="productID")
     private Product product;
 
-    @OneToOne(mappedBy = "orderDetail")
-    private Feedback feedback;
-
     @JsonManagedReference(value = "orderDetail_schedule")
     @OneToMany(mappedBy = "orderDetail", cascade = CascadeType.REMOVE)
     private List<Schedule> schedules;

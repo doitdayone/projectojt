@@ -18,7 +18,12 @@ public class Feedback {
     private long feedbackID;
     private int rating;
     private String description;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "orderDetailID", referencedColumnName = "orderDetailID")
-    OrderDetail orderDetail;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
