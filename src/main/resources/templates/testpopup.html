@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Popups</title>
+    <style>
+        /* Style cho popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 600px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            z-index: 9999;
+        }
+
+        /* Style cho nút đóng */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- Button để mở popup cho mouse -->
+<button onclick="openPopup('mouse')">Mouse Products</button>
+<!-- Popup cho mouse -->
+<div id="mousePopup" class="popup">
+    <span class="close" onclick="closePopup('mouse')">x</span>
+    <h2>Mouse Products</h2>
+    <!-- Nút lọc số lượng > 10 -->
+    <button onclick="filterByQuantity('mouse', 10)">Quantity > 10</button>
+    <!-- Dữ liệu sản phẩm Mouse sẽ được thêm ở đây từ controller -->
+    <!-- Sử dụng th:each để lặp qua danh sách sản phẩm -->
+    <ul>
+        <li th:each="product : ${mouseProducts}" th:text="${product.name} + ' - Quantity: ' + ${product.quantity}"></li>
+    </ul>
+</div>
+
+<!-- Button để mở popup cho screen -->
+<button onclick="openPopup('screen')">Screen Products</button>
+<!-- Popup cho screen -->
+<div id="screenPopup" class="popup">
+    <span class="close" onclick="closePopup('screen')">x</span>
+    <h2>Screen Products</h2>
+    <!-- Nút lọc số lượng > 10 -->
+    <button onclick="filterByQuantity('screen', 10)">Quantity > 10</button>
+    <!-- Dữ liệu sản phẩm Screen sẽ được thêm ở đây từ controller -->
+    <!-- Sử dụng th:each để lặp qua danh sách sản phẩm -->
+    <ul>
+        <li th:each="product : ${screenProducts}" th:text="${product.name} + ' - Quantity: ' + ${product.quantity}"></li>
+    </ul>
+</div>
+
+<!-- Button để mở popup cho laptop -->
+<button onclick="openPopup('laptop')">Laptop Products</button>
+<!-- Popup cho laptop -->
+<div id="laptopPopup" class="popup">
+    <span class="close" onclick="closePopup('laptop')">x</span>
+    <h2>Laptop Products</h2>
+    <!-- Nút lọc số lượng > 10 -->
+    <button onclick="filterByQuantity('laptop', 10)">Quantity > 10</button>
+    <!-- Dữ liệu sản phẩm Laptop sẽ được thêm ở đây từ controller -->
+    <!-- Sử dụng th:each để lặp qua danh sách sản phẩm -->
+    <ul>
+        <li th:each="product : ${laptopProducts}" th:text="${product.name} + ' - Quantity: ' + ${product.quantity}"></li>
+    </ul>
+</div>
+
+<script>
+    // Lưu trữ trạng thái sản phẩm trước khi áp dụng bộ lọc
+    var originalProducts = {};
+
+    // Hàm mở popup
+    function openPopup(popupId) {
+        var popup = document.getElementById(popupId + 'Popup');
+        if (popup) {
+            popup.style.display = "block";
+            // Khôi phục danh sách sản phẩm gốc nếu đã áp dụng bộ lọc trước đó
+            if (originalProducts[popupId]) {
+                var products = popup.getElementsByTagName("li");
+                for (var i = 0; i < products.length; i++) {
+                    products[i].style.display = originalProducts[popupId][i];
+                }
+            }
+        }
+    }
+
+    // Hàm đóng popup
+    function closePopup(popupId) {
+        var popup = document.getElementById(popupId + 'Popup');
+        if (popup) {
+            popup.style.display = "none";
+        }
+    }
+
+    // Hàm lọc sản phẩm theo số lượng
+    function filterByQuantity(popupId, quantity) {
+        var popup = document.getElementById(popupId + 'Popup');
+        var products = popup.getElementsByTagName("li");
+        originalProducts[popupId] = []; // Lưu trữ trạng thái gốc của các sản phẩm
+        for (var i = 0; i < products.length; i++) {
+            originalProducts[popupId][i] = products[i].style.display; // Lưu trạng thái hiện tại của sản phẩm
+            var text = products[i].innerText || products[i].textContent;
+            var quantityIndex = text.indexOf('Quantity:');
+            if (quantityIndex !== -1) {
+                var productQuantity = parseInt(text.substring(quantityIndex + 10).trim());
+                if (productQuantity <= quantity) {
+                    products[i].style.display = "none"; // Ẩn sản phẩm nếu số lượng không lớn hơn
+                } else {
+                    products[i].style.display = "list-item"; // Hiển thị sản phẩm nếu số lượng lớn hơn
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
