@@ -27,7 +27,8 @@
                     </div>
                 </div>
                 <div class="choose-btn">
-                    <button data-modal-target="#choose-product" th:href="@{/EcommerceStore/productFilterCPU/CPU}">Choose</button>
+                    <a th:href="@{/EcommerceStore/buildPC/CPU}">+</a>
+                    <button data-modal-target="#choose-product">Choose</button>
                 </div>
             </div>
         </div>
@@ -221,10 +222,11 @@
                             <div class="header-tittle-space"></div>
                         </div>
                         <div class="header-filter-category">
+                            <tr th:each="product : ${listProduct}">
                             <div class="category-card">
                                 <div class="category-card-button">
                                     <span class="category-card-button-text">
-                                        Brand CPU
+                                        Brand <span th:text="${product.type}"></span>
                                     </span>
                                     <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
                                 </div>
@@ -236,7 +238,7 @@
                             <div class="category-card">
                                 <div class="category-card-button">
                                 <span class="category-card-button-text">
-                                    Series CPU
+                                    Series <span th:text="${product.type}"></span>
                                 </span>
                                     <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
                                 </div>
@@ -264,6 +266,7 @@
                                     <li><a href="">ASUS</a></li>
                                 </ul>
                             </div>
+                            </tr>
                         </div>
                         <div class="header-filter-cost">
                             <div class="header-filter-cost-text">
@@ -291,45 +294,64 @@
                     <div class="choose-product-body-product">
                         <div class="choose-product-body-product-card">
                             <div class="choose-product-body-product-card-body">
-                                <div class="choose-product-body-product-card-image">
-                                    <div class="choose-product-body-product-card-image-border">
-                                        <img src="images/product.webp" alt="" class="choose-product-body-product-image">
-                                    </div>
-                                </div>
-                                <div class="choose-product-body-product-card-name">
-                                    <a class="choose-product-body-product-card-name-link">
-                                        <div class="choose-product-body-product-card-name-text">
-                                            <h3>CPU AMD Ryzen R7 1800X (3.6GHz - 4GHz)</h3>
-                                        </div>
-                                    </a>
-                                    <div class="choose-product-body-product-card-name-id">
-                                        SKU: 1
-                                    </div>
-                                </div>
-                                <div class="choose-product-body-product-card-price">
-                                    <div class="choose-product-body-product-card-price-body">
-                                        <div class="choose-product-body-product-card-price-text">
-                                            <div class="choose-product-body-product-card-price-space">
-                                                <div class="choose-product-body-product-card-price-sale">
-                                                <span>
-                                                    6.559.000
-                                                    <span>VND</span>
-                                                </span>
+                                <table style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="product : ${listProduct}" style="display: flex; justify-content: space-around; height: 120px; align-items: center">
+                                            <td>
+                                                <div class="choose-product-body-product-card-image">
+                                                    <div class="choose-product-body-product-card-image-border">
+                                                        <img th:src="@{'/images/' + ${product.images}}" alt="" class="choose-product-body-product-image">
+                                                    </div>
                                                 </div>
-                                                <div class="choose-product-body-product-card-price-real">
-                                                <span class="cost">
-                                                    9.240.000
-                                                    <span>VND</span>
-                                                </span>
-                                                    <span class="sale">-29.02%</span>
+                                            </td>
+                                            <td>
+                                                <div class="choose-product-body-product-card-name">
+                                                    <a class="choose-product-body-product-card-name-link">
+                                                        <div class="choose-product-body-product-card-name-text">
+                                                            <h3 th:text="${product.name}"></h3>
+                                                        </div>
+                                                    </a>
+                                                    <div class="choose-product-body-product-card-name-id">
+                                                        SKU: <span th:text="${product.productID}"></span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="choose-product-body-product-card-button">
-                                    <button>Choose</button>
-                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="choose-product-body-product-card-price">
+                                                    <div class="choose-product-body-product-card-price-body">
+                                                        <div class="choose-product-body-product-card-price-text">
+                                                            <div class="choose-product-body-product-card-price-space">
+                                                                <div class="choose-product-body-product-card-price-sale">
+                                                        <span th:text="${product.price}-${product.sale}*${product.price}/100 + ' VND'">
+                                                        </span>
+                                                                </div>
+                                                                <div class="choose-product-body-product-card-price-real">
+                                                        <span class="cost" th:text="${product.price} + ' VND'">
+                                                            <span>VND</span>
+                                                        </span>
+                                                                    <span class="sale" th:text="'-'+${product.sale} + '%'"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="choose-product-body-product-card-button">
+                                                    <button>Choose</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
