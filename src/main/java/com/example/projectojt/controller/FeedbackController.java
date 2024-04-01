@@ -4,6 +4,7 @@ import com.example.projectojt.model.Feedback;
 import com.example.projectojt.repository.FeedbackRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.repository.UserRepository;
+import com.example.projectojt.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,8 @@ public class FeedbackController {
     private FeedbackRepository feedbackRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ProductService productService;
 
     @GetMapping("/do-feedback")
     public String reviewProducts(Model model, HttpSession session) {
@@ -44,7 +47,7 @@ public class FeedbackController {
         feedback.setUser(userRepository.findByUserID((int) session.getAttribute("user_id")));
 
         feedbackRepository.save(feedback);
-
+        productService.setRating(productRepository.getProductByProductID(productId));
         return "redirect:/EcommerceStore/do-feedback";
     }
 }
