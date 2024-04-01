@@ -4,10 +4,7 @@ import com.example.projectojt.model.Order;
 import com.example.projectojt.model.OrderDetail;
 import com.example.projectojt.model.Product;
 import com.example.projectojt.model.User;
-import com.example.projectojt.repository.OrderDetailRepository;
-import com.example.projectojt.repository.OrderRepository;
-import com.example.projectojt.repository.ProductRepository;
-import com.example.projectojt.repository.UserRepository;
+import com.example.projectojt.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,6 +27,8 @@ public class ProductService {
     private OrderDetailRepository orderDetailRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private FeedbackRepository feedbackRepository;
 
 
     public List<Product> listAll() {
@@ -102,5 +101,9 @@ public class ProductService {
             e.printStackTrace();
             return null;
         }
+    }
+    public void setRating(Product product){
+        product.setRating(feedbackRepository.sumRatingByProductId(product.getProductID()) / feedbackRepository.countByProductId(product.getProductID()));
+        repo.save(product);
     }
 }
