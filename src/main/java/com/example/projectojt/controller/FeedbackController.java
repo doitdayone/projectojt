@@ -47,6 +47,7 @@ public class FeedbackController {
         feedback.setUser(userRepository.findByUserID((int) session.getAttribute("user_id")));
 
         feedbackRepository.save(feedback);
+
         productService.setRating(productRepository.getProductByProductID(productId));
         return "redirect:/EcommerceStore/do-feedback";
     }
