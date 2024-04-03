@@ -106,4 +106,11 @@ public class ProductService {
         product.setRating(feedbackRepository.sumRatingByProductId(product.getProductID()) / feedbackRepository.countByProductId(product.getProductID()));
         repo.save(product);
     }
+
+    public List<Product> getProductsByBrand(String brand) {
+        // Đây chỉ là một ví dụ, bạn cần thay thế bằng logic để lấy danh sách sản phẩm từ cơ sở dữ liệu hoặc từ nơi khác
+        // Giả sử danh sách sản phẩm đã được lấy từ cơ sở dữ liệu trước
+        List<Product> productLists = repo.findByBrand(brand);
+        return productLists;
+    }
 }
