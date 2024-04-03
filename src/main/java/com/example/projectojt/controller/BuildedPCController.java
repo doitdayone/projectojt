@@ -28,19 +28,5 @@ public class BuildedPCController {
         model.addAttribute("pcList",pcList);
         return "build_pc";
     }
-    @GetMapping("/build-pc-view")
-    public String view(HttpServletRequest request, Model model)
-    {
-        int pc_id = Integer.parseInt(request.getParameter("pc_id"));
-        BuildedPC bPC = pcRepository.findById(pc_id);
-        String[] productIdArray = bPC.getProductIds().split(" ");
-        List<Product> products = new ArrayList<>();
-        for (String id: productIdArray
-             ) {
-            products.add(productRepository.getProductByProductID(Integer.parseInt(id)));
-        }
-        model.addAttribute("total", bPC.getPrice());
-        model.addAttribute("productList",products);
-        return "build_pc_view";
-    }
+
 }
