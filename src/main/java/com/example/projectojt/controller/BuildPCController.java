@@ -209,9 +209,11 @@ public class BuildPCController {
     }
 
     @GetMapping("/deleteCoolingFan")
-    public String deleteCoolingFan(Model Model){
+    public String deleteCoolingFan(Model Model) {
         CoolingFan = null;
         addList(Model);
+        return "buildPC";
+    }
     @GetMapping("/build-pc-view")
     public String view(HttpServletRequest request, Model model)
     {
@@ -230,6 +232,20 @@ public class BuildPCController {
                     CPU = p; break;
                 case "Mainboard":
                     Mainboard = p; break;
+                case "RAM":
+                    RAM = p; break;
+                case "HDD":
+                    HDD = p; break;
+                case "SSD":
+                    SSD = p; break;
+                case "VGA":
+                    VGA = p; break;
+                case "PowerSupply":
+                    PowerSupply = p; break;
+                case "Case":
+                    Case = p; break;
+                case "CoolingFan":
+                    CoolingFan = p; break;
             }
         }
         addList(model);
