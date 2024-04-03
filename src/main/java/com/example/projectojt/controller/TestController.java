@@ -21,6 +21,14 @@ public class TestController {
         p1.setQuantity(333);
         p1.setType("mouse");
         mouseProducts.add(p1);
+        p1.setProductID(2);
+        mouseProducts.add(p1);
+        p1.setProductID(3);
+        Product p2 = new Product();
+        p2.setName("#####");
+        p2.setQuantity(5);
+        mouseProducts.add(p1);
+        mouseProducts.add(p2);
         model.addAttribute("mouseProducts", mouseProducts);
         model.addAttribute("screenProducts", mouseProducts);
         model.addAttribute("laptopProducts", mouseProducts);
@@ -59,6 +67,8 @@ public class TestController {
         p1.setType("screen");
         screenProducts.add(p1);
         p1.setProductID(2);
+        screenProducts.add(p1);
+        p1.setProductID(3);
         screenProducts.add(p1);
         model.addAttribute("screenProducts", screenProducts);
         return "screenPopup"; // Trả về view cho popup của screen
