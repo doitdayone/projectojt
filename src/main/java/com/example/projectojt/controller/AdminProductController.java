@@ -14,11 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -28,6 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminProductController {
     @Autowired private ProductService service;
     @Autowired private ProductRepository repo;
@@ -105,7 +105,7 @@ public class AdminProductController {
         service.save(product);
 
 
-        return "redirect:/manageProduct";
+        return "redirect:/admin/manageProduct";
     }
     @GetMapping("/edit")
     public String showEditPage(Model Model, @RequestParam int id){
@@ -127,7 +127,7 @@ public class AdminProductController {
         }
         catch (Exception ex){
             System.out.println("Exception: " + ex.getMessage());
-            return "redirect:/manageProduct";
+            return "redirect:/admin/manageProduct";
         }
 
         return "editProduct";
@@ -183,7 +183,7 @@ public class AdminProductController {
         } catch (UserNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return "redirect:/manageProduct";
+        return "redirect:/admin/manageProduct";
     }
 
     @Transactional
@@ -208,6 +208,6 @@ public class AdminProductController {
             System.out.println("Exception: " + ex.getMessage());
         }
 
-        return "redirect:/manageProduct";
+        return "redirect:/admin/manageProduct";
     }
 }

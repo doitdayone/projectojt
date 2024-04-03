@@ -7,7 +7,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin Home</title>
-    <link rel="stylesheet" href="styles.css">
     <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/styles.css">
     <style>
@@ -121,7 +120,7 @@
                 </a>
             </li>
             <li>
-                <a href="/manageProduct">
+                <a href="/admin/manageProduct">
                         <span class="icon">
                             <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
                         </span>
@@ -129,7 +128,7 @@
                 </a>
             </li>
             <li>
-                <a href="/create">
+                <a href="/admin/create">
                         <span class="icon">
                             <ion-icon name="add-outline"></ion-icon>
                         </span>
@@ -137,7 +136,7 @@
                 </a>
             </li>
             <li>
-                <a href="/staff">
+                <a href="/admin/staff">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
                         </span>
@@ -145,7 +144,7 @@
                 </a>
             </li>
             <li>
-                <a href="/add">
+                <a href="/admin/add">
                         <span class="icon">
                             <ion-icon name="person-add-outline"></ion-icon>
                         </span>
@@ -153,7 +152,7 @@
                 </a>
             </li>
             <li>
-                <a href="/confirm">
+                <a href="/admin/confirm">
                         <span class="icon">
                             <ion-icon name="person-add-outline"></ion-icon>
                         </span>
@@ -170,7 +169,7 @@
         </div>
         <div class="main-content">
             <h2>Edit Product</h2>
-            <form th:action="@{/edit(id=${product.productID})}" method="post" enctype="multipart/form-data" th:oject="${productDto}">
+            <form th:action="@{/admin/edit(id=${product.productID})}" method="post" enctype="multipart/form-data" th:oject="${productDto}">
                 <div class="content">
                     <label>ID</label>
                     <input readonly th:value="${product.productID}">
@@ -228,7 +227,7 @@
                         <button type="submit">Update</button>
                     </div>
                     <div class="cancel">
-                        <a href="/manageProduct" role="button">Cancel</a>
+                        <a href="/admin/manageProduct" role="button">Cancel</a>
                     </div>
                 </div>
             </form>

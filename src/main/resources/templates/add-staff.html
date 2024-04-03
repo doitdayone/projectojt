@@ -7,7 +7,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>[[${PageTittle}]]</title>
-    <link rel="stylesheet" href="styles.css">
+
     <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/styles.css">
     <style>
@@ -101,7 +101,7 @@
                 </a>
             </li>
             <li>
-                <a href="/manageProduct">
+                <a href="/admin/manageProduct">
                         <span class="icon">
                             <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
                         </span>
@@ -109,7 +109,7 @@
                 </a>
             </li>
             <li>
-                <a href="/create">
+                <a href="/admin/create">
                         <span class="icon">
                             <ion-icon name="add-outline"></ion-icon>
                         </span>
@@ -117,7 +117,7 @@
                 </a>
             </li>
             <li>
-                <a href="/staff">
+                <a href="/admin/staff">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
                         </span>
@@ -125,7 +125,7 @@
                 </a>
             </li>
             <li>
-                <a href="/add">
+                <a href="/admin/add">
                         <span class="icon">
                             <ion-icon name="person-add-outline"></ion-icon>
                         </span>
@@ -133,7 +133,7 @@
                 </a>
             </li>
             <li>
-                <a href="/confirm">
+                <a href="/admin/confirm">
                         <span class="icon">
                             <ion-icon name="person-add-outline"></ion-icon>
                         </span>
@@ -150,7 +150,7 @@
         </div>
         <div class="main-content">
             <h2>Add Staff</h2>
-            <form th:action="@{/add/new}" th:object="${staff}" method="post">
+            <form th:action="@{/admin/add/new}" th:object="${staff}" method="post">
                 <input type="hidden" th:field="*{ID}" />
                 <div class="content">
                     <label>Name:</label>
