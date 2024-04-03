@@ -21,6 +21,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("select p from Product p where p.name LIKE CONCAT('%', ?1, '%')")
     Page<Product> searchProducts(String keyword, PageRequest of);
 
+    List<Product> findByBrand(String brand);
+
     Product getProductByProductID(int id);
     @Query("SELECT DISTINCT p FROM Product p JOIN p.orderDetailList od JOIN od.order o JOIN o.address.user u WHERE u.userID = :userId AND p NOT IN (SELECT DISTINCT f.product FROM Feedback f WHERE f.user.userID = :userId)")
     List<Product> findProductsToFeedbackByUser(@Param("userId") int userId);

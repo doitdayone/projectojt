@@ -6,7 +6,74 @@
     <title>Document</title>
     <link rel="stylesheet" href="/buildPCStyles.css">
     <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
+    <style>
+        /* Style cho popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            z-index: 9999;
+        }
 
+        /* Style cho nút đóng */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .input-quantity{
+            display: flex;
+            background-color: #ffffff;
+            border-radius: 45px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+
+        }
+        .input-quantity input[type="number"]{
+            -moz-appearance: textfield;
+            text-align: center;
+            font-size: 16px;
+            border: none;
+            background-color: #ffffff;
+            color: #202030;
+            width: 20px;
+        }
+        .input-quantity input::-webkit-outer-spin-button,
+        .input-quantity input::-webkit-inner-spin-button{
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .input-quantity button{
+            color: #3264fe;
+            background-color: #ffffff;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .input-quantity #decrement{
+            padding: 10px;
+            border-radius: 45px 0 0 45px;
+        }
+        .input-quantity #increment{
+            padding: 10px;
+            border-radius: 0 45px 45px 0;
+        }
+    </style>
 </head>
 <body>
 <div class="main">
@@ -17,18 +84,50 @@
                     <div>CPU</div>
                 </div>
                 <div class="image">
-                    <div>
+                    <div th:if="${CPU == null}">
                         <img th:src="@{/images/buildPC/cpu.svg}" alt="">
+                    </div>
+                    <div th:if="${CPU != null}">
+                        <img th:src="@{'/images/' + ${CPU.images}}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
-                    <div>
+                    <div th:if="${CPU == null}">
                         Vui lòng chọn linh kiện
                     </div>
+                    <div th:if="${CPU != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                        <a class="choose-product-body-product-card-name-link">
+                            <div class="choose-product-body-product-card-name-text">
+                                <a th:text="${CPU.name}"
+                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CPU.productID})}"></a>
+                            </div>
+                        </a>
+                        <div class="choose-product-body-product-card-price-space">
+                            <div class="choose-product-body-product-card-price-sale">
+                                <span th:text="${CPU.price}-${CPU.sale}*${CPU.price}/100 + ' VND'"></span>
+                            </div>
+                            <div class="choose-product-body-product-card-price-real">
+                                                                <span class="cost" th:text="${CPU.price} + ' VND'">
+                                                                    <span>VND</span>
+                                                                </span>
+                                <span class="sale" th:text="'-'+${CPU.sale} + '%'"></span>
+                            </div>
+                        </div>
+                        <div class="input-quantity">
+                            <button id="decrement" onclick="stepper(this)"> - </button>
+                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                            <button id="increment" onclick="stepper(this)"> + </button>
+                        </div>
+                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteCPU}"></a>
+                    </div>
                 </div>
-                <div class="choose-btn">
-                    <a th:href="@{/EcommerceStore/buildPC/CPU}">+</a>
-                    <button data-modal-target="#choose-product">Choose</button>
+                <div class="choose-btn" >
+                    <div th:if="${CPU == null}">
+                        <button onclick="openPopup('CPU')">Choose</button>
+                    </div>
+                    <div th:if="${CPU != null}">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -38,17 +137,48 @@
                     <div>Mainboard</div>
                 </div>
                 <div class="image">
-                    <div>
+                    <div th:if="${Mainboard == null}">
                         <img th:src="@{/images/buildPC/mainboard.svg}" alt="">
+                    </div>
+                    <div th:if="${Mainboard != null}">
+                        <img th:src="@{'/images/' + ${Mainboard.images}}" alt="">
                     </div>
                 </div>
                 <div class="name-product">
-                    <div>
+                    <div th:if="${Mainboard == null}">
                         Vui lòng chọn linh kiện
                     </div>
+                    <div th:if="${Mainboard != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                        <a class="choose-product-body-product-card-name-link">
+                            <div class="choose-product-body-product-card-name-text">
+                                <a th:text="${Mainboard.name}"
+                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Mainboard.productID})}"></a>
+                            </div>
+                        </a>
+                        <div class="choose-product-body-product-card-price-space">
+                            <div class="choose-product-body-product-card-price-sale">
+                                <span th:text="${Mainboard.price}-${Mainboard.sale}*${Mainboard.price}/100 + ' VND'"></span>
+                            </div>
+                            <div class="choose-product-body-product-card-price-real">
+                                                                <span class="cost" th:text="${Mainboard.price} + ' VND'">
+                                                                    <span>VND</span>
+                                                                </span>
+                                <span class="sale" th:text="'-'+${Mainboard.sale} + '%'"></span>
+                            </div>
+                        </div>
+                        <div class="input-quantity">
+                            <button id="decrement" onclick="stepper(this)"> - </button>
+                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                            <button id="increment" onclick="stepper(this)"> + </button>
+                        </div>
+                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteMainboard}"></a>
+                    </div>
                 </div>
-                <div class="choose-btn">
-                    <button>Choose</button>
+                <div class="choose-btn" >
+                    <div th:if="${Mainboard == null}">
+                        <button onclick="openPopup('Mainboard')">Choose</button>
+                    </div>
+                    <div th:if="${Mainboard != null}"></div>
                 </div>
             </div>
         </div>
@@ -202,9 +332,9 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="choose-product">
+    <div id="CPUPopup" class="popup">
         <div class="choose-product-content">
-            <div class="choose-product-close" data-close-button="#choose-product">
+            <div class="choose-product-close" onclick="closePopup('CPU')">
                 <i class="fa-solid fa-x close"></i>
             </div>
             <div class="choose-product-body">
@@ -222,12 +352,11 @@
                             <div class="header-tittle-space"></div>
                         </div>
                         <div class="header-filter-category">
-                            <tr th:each="product : ${listProduct}">
                             <div class="category-card">
                                 <div class="category-card-button">
-                                    <span class="category-card-button-text">
-                                        Brand <span th:text="${product.type}"></span>
-                                    </span>
+                                <span class="category-card-button-text">
+                                    Brand
+                                </span>
                                     <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
                                 </div>
                                 <ul class="sub-card">
@@ -238,7 +367,7 @@
                             <div class="category-card">
                                 <div class="category-card-button">
                                 <span class="category-card-button-text">
-                                    Series <span th:text="${product.type}"></span>
+                                    Series
                                 </span>
                                     <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
                                 </div>
@@ -266,7 +395,6 @@
                                     <li><a href="">ASUS</a></li>
                                 </ul>
                             </div>
-                            </tr>
                         </div>
                         <div class="header-filter-cost">
                             <div class="header-filter-cost-text">
@@ -296,60 +424,214 @@
                             <div class="choose-product-body-product-card-body">
                                 <table style="width: 100%">
                                     <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
                                     </thead>
                                     <tbody>
-                                        <tr th:each="product : ${listProduct}" style="display: flex; justify-content: space-around; height: 120px; align-items: center">
-                                            <td>
-                                                <div class="choose-product-body-product-card-image">
-                                                    <div class="choose-product-body-product-card-image-border">
-                                                        <img th:src="@{'/images/' + ${product.images}}" alt="" class="choose-product-body-product-image">
-                                                    </div>
+                                    <tr th:each="CPU : ${productCPU}" style="display: flex; justify-content: space-around; height: 120px; align-items: center">
+                                        <td>
+                                            <div class="choose-product-body-product-card-image">
+                                                <div class="choose-product-body-product-card-image-border">
+                                                    <img th:src="@{'/images/' + ${CPU.images}}" alt="" class="choose-product-body-product-image">
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <div class="choose-product-body-product-card-name">
-                                                    <a class="choose-product-body-product-card-name-link">
-                                                        <div class="choose-product-body-product-card-name-text">
-                                                            <h3 th:text="${product.name}"></h3>
-                                                        </div>
-                                                    </a>
-                                                    <div class="choose-product-body-product-card-name-id">
-                                                        SKU: <span th:text="${product.productID}"></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choose-product-body-product-card-name">
+                                                <a class="choose-product-body-product-card-name-link">
+                                                    <div class="choose-product-body-product-card-name-text">
+                                                        <a th:text="${CPU.name}"
+                                                            th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CPU.productID})}"></a>
                                                     </div>
+                                                </a>
+                                                <div class="choose-product-body-product-card-name-id">
+                                                    SKU: <span th:text="${CPU.productID}"></span>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                <div class="choose-product-body-product-card-price">
-                                                    <div class="choose-product-body-product-card-price-body">
-                                                        <div class="choose-product-body-product-card-price-text">
-                                                            <div class="choose-product-body-product-card-price-space">
-                                                                <div class="choose-product-body-product-card-price-sale">
-                                                        <span th:text="${product.price}-${product.sale}*${product.price}/100 + ' VND'">
-                                                        </span>
-                                                                </div>
-                                                                <div class="choose-product-body-product-card-price-real">
-                                                        <span class="cost" th:text="${product.price} + ' VND'">
-                                                            <span>VND</span>
-                                                        </span>
-                                                                    <span class="sale" th:text="'-'+${product.sale} + '%'"></span>
-                                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choose-product-body-product-card-price">
+                                                <div class="choose-product-body-product-card-price-body">
+                                                    <div class="choose-product-body-product-card-price-text">
+                                                        <div class="choose-product-body-product-card-price-space">
+                                                            <div class="choose-product-body-product-card-price-sale">
+                                                                <span th:text="${CPU.price}-${CPU.sale}*${CPU.price}/100 + ' VND'"></span>
+                                                            </div>
+                                                            <div class="choose-product-body-product-card-price-real">
+                                                                <span class="cost" th:text="${CPU.price} + ' VND'">
+                                                                    <span>VND</span>
+                                                                </span>
+                                                                <span class="sale" th:text="'-'+${CPU.sale} + '%'"></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
-                                            <td>
+                                            </div>
+                                        </td>
+                                        <td>
                                                 <div class="choose-product-body-product-card-button">
-                                                    <button>Choose</button>
+                                                    <a th:href="@{/EcommerceStore/chooseCPU(id=${CPU.productID})}">Choose</a>
                                                 </div>
-                                            </td>
-                                        </tr>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="MainboardPopup" class="popup">
+        <div class="choose-product-content">
+            <div class="choose-product-close" onclick="closePopup('Mainboard')">
+                <i class="fa-solid fa-x close"></i>
+            </div>
+            <div class="choose-product-body">
+                <div class="choose-product-body-content">
+                    <div class="choose-product-body-header">
+                        <div class="header-tittle">
+                            <div class="header-tittle-text">
+                                <div class="header-tittle-text-sign">
+
+                                </div>
+                                <div class="header-tittle-text-word">
+                                    Filter
+                                </div>
+                            </div>
+                            <div class="header-tittle-space"></div>
+                        </div>
+                        <div class="header-filter-category">
+                            <div class="category-card">
+                                <div class="category-card-button">
+                                <span class="category-card-button-text">
+                                    Brand
+                                </span>
+                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
+                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Intel</a></li>
+                                    <li><a href="">AMD</a></li>
+                                </ul>
+                            </div>
+                            <div class="category-card">
+                                <div class="category-card-button">
+                                <span class="category-card-button-text">
+                                    Series
+                                </span>
+                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
+                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Core i3</a></li>
+                                    <li><a href="">Core i5</a></li>
+                                    <li><a href="">Core i7</a></li>
+                                    <li><a href="">Core i9</a></li>
+                                    <li><a href="">Ryzen 3</a></li>
+                                    <li><a href="">Ryzen 5</a></li>
+                                    <li><a href="">Ryzen 7</a></li>
+                                    <li><a href="">Ryzen 9</a></li>
+                                </ul>
+                            </div>
+                            <div class="category-card">
+                                <div class="category-card-button">
+                                <span class="category-card-button-text">
+                                    Brand
+                                </span>
+                                    <span class="fa-solid fa-chevron-down category-card-button-sign"></span>
+                                </div>
+                                <ul class="sub-card">
+                                    <li><a href="">Intel</a></li>
+                                    <li><a href="">AMD</a></li>
+                                    <li><a href="">ASUS</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="header-filter-cost">
+                            <div class="header-filter-cost-text">
+                                Sorted by
+                            </div>
+                            <div class="header-filter-cost-button">
+                                <div class="header-filter-cost-button-space">
+
+                                </div>
+                                <div class="header-filter-cost-button-text">
+                                    Price ascending
+                                </div>
+                            </div>
+                            <div class="header-filter-cost-button">
+                                <div class="header-filter-cost-button-space">
+
+                                </div>
+                                <div class="header-filter-cost-button-text">
+                                    Price descending
+                                </div>
+                            </div>
+                            <input class="header-filter-cost-input" placeholder="Find components"/>
+                        </div>
+                    </div>
+                    <div class="choose-product-body-product">
+                        <div class="choose-product-body-product-card">
+                            <div class="choose-product-body-product-card-body">
+                                <table style="width: 100%">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="productMainboard : ${productMainboard}" style="display: flex; justify-content: space-around; height: 120px; align-items: center">
+                                        <td>
+                                            <div class="choose-product-body-product-card-image">
+                                                <div class="choose-product-body-product-card-image-border">
+                                                    <img th:src="@{'/images/' + ${productMainboard.images}}" alt="" class="choose-product-body-product-image">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choose-product-body-product-card-name">
+                                                <a class="choose-product-body-product-card-name-link">
+                                                    <div class="choose-product-body-product-card-name-text">
+                                                        <h3 th:text="${productMainboard.name}"></h3>
+                                                    </div>
+                                                </a>
+                                                <div class="choose-product-body-product-card-name-id">
+                                                    SKU: <span th:text="${productMainboard.productID}"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choose-product-body-product-card-price">
+                                                <div class="choose-product-body-product-card-price-body">
+                                                    <div class="choose-product-body-product-card-price-text">
+                                                        <div class="choose-product-body-product-card-price-space">
+                                                            <div class="choose-product-body-product-card-price-sale">
+                                                                <span th:text="${productMainboard.price}-${productMainboard.sale}*${productMainboard.price}/100 + ' VND'"></span>
+                                                            </div>
+                                                            <div class="choose-product-body-product-card-price-real">
+                                                                <span class="cost" th:text="${productMainboard.price} + ' VND'">
+                                                                    <span>VND</span>
+                                                                </span>
+                                                                <span class="sale" th:text="'-'+${productMainboard.sale} + '%'"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="choose-product-body-product-card-button">
+                                                <a th:href="@{/EcommerceStore/chooseMainboard(id=${productMainboard.productID})}">Choose</a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -362,64 +644,102 @@
     <div id="overlay"></div>
 </div>
 <script>
-    const openModalButtons = document.querySelectorAll('[data-modal-target]')
-    const closeModalButtons = document.querySelectorAll('[data-close-button]')
-    const overlay = document.getElementById('overlay')
+    var originalProducts = {};
 
-    openModalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const modal = document.querySelector(button.dataset.modalTarget)
-            openModal(modal)
-        })
-    })
-
-    overlay.addEventListener('click', () => {
-        const modals = document.querySelectorAll('.modal.active')
-        modals.forEach(modal => {
-            closeModal(modal)
-        })
-    })
-
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const modal = button.closest('.modal')
-            closeModal(modal)
-        })
-    })
-
-    function openModal(modal) {
-        if (modal == null) return
-        modal.classList.add('active')
-        overlay.classList.add('active')
+    // Hàm mở popup
+    function openPopup(popupId) {
+        var popup = document.getElementById(popupId + 'Popup');
+        if (popup) {
+            popup.style.display = "block";
+            // Khôi phục danh sách sản phẩm gốc nếu đã áp dụng bộ lọc trước đó
+            if (originalProducts[popupId]) {
+                var products = popup.getElementsByTagName("li");
+                for (var i = 0; i < products.length; i++) {
+                    products[i].style.display = originalProducts[popupId][i];
+                }
+            }
+        }
     }
 
-
-
-    overlay.addEventListener('click', () => {
-        const modals = document.querySelectorAll('.modal.active')
-        modals.forEach(modal => {
-            closeModal(modal)
-        })
-    })
-
-    closeModalButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const modal = button.closest('.modal')
-            closeModal(modal)
-        })
-    })
-
-    function openModal(modal) {
-        if (modal == null) return
-        modal.classList.add('active')
-        overlay.classList.add('active')
+    // Hàm đóng popup
+    function closePopup(popupId) {
+        var popup = document.getElementById(popupId + 'Popup');
+        if (popup) {
+            popup.style.display = "none";
+        }
     }
+    const myInput = document.getElementById("my-input");
+    function stepper(btn){
+        let id = btn.getAttribute("id");
+        let min = myInput.getAttribute("min");
+        let max = myInput.getAttribute("max");
+        let step = myInput.getAttribute("step");
+        let val = myInput.getAttribute("value");
+        let calcStep = (id == "increment") ? (step*1) : (step * -1);
+        let newValue = parseInt(val) + calcStep;
 
-    function closeModal(modal) {
-        if (modal == null) return
-        modal.classList.remove('active')
-        overlay.classList.remove('active')
+        if(newValue >= min && newValue <= max){
+            myInput.setAttribute("value", newValue);
+        }
     }
+    // const openModalButtons = document.querySelectorAll('[data-modal-target]')
+    // const closeModalButtons = document.querySelectorAll('[data-close-button]')
+    // const overlay = document.getElementById('overlay')
+    //
+    // openModalButtons.forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         const modal = document.querySelector(button.dataset.modalTarget)
+    //         openModal(modal)
+    //     })
+    // })
+    //
+    // overlay.addEventListener('click', () => {
+    //     const modals = document.querySelectorAll('.modal.active')
+    //     modals.forEach(modal => {
+    //         closeModal(modal)
+    //     })
+    // })
+    //
+    // closeModalButtons.forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         const modal = button.closest('.modal')
+    //         closeModal(modal)
+    //     })
+    // })
+    //
+    // function openModal(modal) {
+    //     if (modal == null) return
+    //     modal.classList.add('active')
+    //     overlay.classList.add('active')
+    // }
+    //
+    //
+    //
+    // overlay.addEventListener('click', () => {
+    //     const modals = document.querySelectorAll('.modal.active')
+    //     modals.forEach(modal => {
+    //         closeModal(modal)
+    //     })
+    // })
+    //
+    // closeModalButtons.forEach(button => {
+    //     button.addEventListener('click', () => {
+    //         const modal = button.closest('.modal')
+    //         closeModal(modal)
+    //     })
+    // })
+    //
+    // function openModal(modal) {
+    //     if (modal == null) return
+    //     modal.classList.add('active')
+    //     overlay.classList.add('active')
+    // }
+    //
+    // function closeModal(modal) {
+    //     if (modal == null) return
+    //     modal.classList.remove('active')
+    //     overlay.classList.remove('active')
+    // }
 </script>
 
 </body>
