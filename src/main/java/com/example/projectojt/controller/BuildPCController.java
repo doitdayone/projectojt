@@ -1,8 +1,11 @@
 package com.example.projectojt.controller;
 
+import com.example.projectojt.model.BuildedPC;
 import com.example.projectojt.model.Product;
+import com.example.projectojt.repository.BuildedPCRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.service.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.repository.query.Param;
@@ -19,7 +22,8 @@ import java.util.List;
 public class BuildPCController {
     @Autowired
     private ProductRepository productRepository;
-
+    @Autowired
+    private BuildedPCRepository pcRepository;
     @Autowired
     private ProductService productService;
 
@@ -208,6 +212,27 @@ public class BuildPCController {
     public String deleteCoolingFan(Model Model){
         CoolingFan = null;
         addList(Model);
+    @GetMapping("/build-pc-view")
+    public String view(HttpServletRequest request, Model model)
+    {
+        int pc_id = Integer.parseInt(request.getParameter("pc_id"));
+        BuildedPC bPC = pcRepository.findById(pc_id);
+        String[] productIdArray = bPC.getProductIds().split(" ");
+        List<Product> products = new ArrayList<>();
+        for (String id: productIdArray
+        ) {
+            products.add(productRepository.getProductByProductID(Integer.parseInt(id)));
+        }
+        for (Product p:products
+             ) {
+            switch (p.getType()){
+                case "CPU":
+                    CPU = p; break;
+                case "Mainboard":
+                    Mainboard = p; break;
+            }
+        }
+        addList(model);
         return "buildPC";
     }
 }
