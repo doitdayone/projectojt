@@ -348,7 +348,7 @@
                 </div>
                 <div class="image">
                     <div th:if="${VGA == null}">
-                        <img th:src="@{/images/buildPC/vga.svg}" alt="">
+                        <img th:src="@{/images/buildPC/vga-card.svg}" alt="">
                     </div>
                     <div th:if="${VGA != null}">
                         <img th:src="@{'/images/' + ${VGA.images}}" alt="">
@@ -509,7 +509,7 @@
                     <div th:if="${CoolingFan == null}">
                         <img th:src="@{/images/buildPC/fan.svg}" alt="">
                     </div>
-                    <div th:if="${CPU != null}">
+                    <div th:if="${CoolingFan != null}">
                         <img th:src="@{'/images/' + ${CoolingFan.images}}" alt="">
                     </div>
                 </div>
