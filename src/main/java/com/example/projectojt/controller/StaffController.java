@@ -3,6 +3,7 @@ package com.example.projectojt.controller;
 import com.example.projectojt.model.Staff;
 import com.example.projectojt.service.StaffService;
 import com.example.projectojt.service.UserNotFoundException;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,19 +20,25 @@ public class StaffController {
     private StaffService service;
 
     @GetMapping("/staff")
-    public String showStaffList(Model model) {
+    public String showStaffList(Model model, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         model.addAttribute("staffList", service.listAll());
         return "staff-list";
     }
 
     @GetMapping("/add")
-    public String showAddStaffForm(Model model) {
+    public String showAddStaffForm(Model model, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         model.addAttribute("staff", new Staff());
         return "add-staff";
     }
 
     @PostMapping("/add/new")
-    public String addStaff(@ModelAttribute @Valid Staff staff, BindingResult result) {
+    public String addStaff(@ModelAttribute @Valid Staff staff, BindingResult result, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         if (result.hasErrors()) {
             return "add-staff";
         }
@@ -40,7 +47,9 @@ public class StaffController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditStaffForm(@PathVariable int id, Model model) throws UserNotFoundException {
+    public String showEditStaffForm(@PathVariable int id, Model model, HttpSession session) throws UserNotFoundException {
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         // Logic to fetch staff by ID from the list
         Staff staff = service.get(id); // Assuming the list is indexed by ID
         model.addAttribute("staff", staff);
@@ -48,7 +57,9 @@ public class StaffController {
     }
 
     @PostMapping("/edit/{id}")
-    public String editStaff(@PathVariable int id, @ModelAttribute @Valid Staff updatedStaff, BindingResult result) {
+    public String editStaff(@PathVariable int id, @ModelAttribute @Valid Staff updatedStaff, BindingResult result, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         if (result.hasErrors()) {
             return "edit-staff";
         }
@@ -58,7 +69,9 @@ public class StaffController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteStaff(@PathVariable int id){
+    public String deleteStaff(@PathVariable int id, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         try{
             service.delete(id);
         }

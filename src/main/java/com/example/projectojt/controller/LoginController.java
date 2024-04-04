@@ -32,14 +32,16 @@ public class LoginController {
 
   @PostMapping("/login")
   public String login(@RequestParam String username, @RequestParam String password, Model model) {
-
     Optional<User> user = userRepository.findByEmail2(username);
     if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
       // auth successful, redirect to the product page
+      if(username.equals("admin@admin.123"))
+        return "redirect:/admin";
       return "redirect:/EcommerceStore/product";
-    } else {
+    }
+    else {
       // auth failed, set error message and return to login page
-      model.addAttribute("errorlogin", "zInvalid username or password");
+      model.addAttribute("errorlogin", "Invalid username or password");
       return "login";
     }
   }

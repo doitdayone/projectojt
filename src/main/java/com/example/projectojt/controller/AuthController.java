@@ -1,5 +1,6 @@
 package com.example.projectojt.controller;
 
+import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.request.RegisterRequest;
 import com.example.projectojt.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,8 @@ public class AuthController {
 
   @Autowired
   private UserService userService;
+  @Autowired
+  private UserRepository userRepository;
 
   @GetMapping("/register_form")
   public String register_form()
@@ -42,7 +45,7 @@ public class AuthController {
   public String verifyUser(@RequestParam String email, @RequestParam String otp, Model model) {
     try {
       userService.verify(email, otp);
-
+      userRepository.findByEmail(email).setVerified(true);
       return "product";
     } catch (RuntimeException e) {
       model.addAttribute("error", e.getMessage());
