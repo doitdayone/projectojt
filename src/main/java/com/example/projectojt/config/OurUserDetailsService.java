@@ -4,10 +4,12 @@ package com.example.projectojt.config;
 import com.example.projectojt.model.User;
 import com.example.projectojt.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -22,6 +24,8 @@ public class OurUserDetailsService implements UserDetailsService {
   public OurUserDetailsService(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
+
+
 
   @Override
   public UserDetails loadUserByUsername(String user_name) throws UsernameNotFoundException {
