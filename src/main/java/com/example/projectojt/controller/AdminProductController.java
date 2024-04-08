@@ -8,17 +8,17 @@ import com.example.projectojt.repository.OrderRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.service.ProductService;
 import com.example.projectojt.service.UserNotFoundException;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
-import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequestMapping("/admin")
 public class AdminProductController {
     @Autowired private ProductService service;
     @Autowired private ProductRepository repo;
@@ -35,7 +36,9 @@ public class AdminProductController {
     @Autowired private OrderDetailRepository repoOrderDetail;
 
     @GetMapping("/manageProduct")
-    public String showProductList(Model model){
+    public String showProductList(Model model, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         List<Product> listProducts = service.listAll();
         model.addAttribute("listProducts", listProducts);
 
@@ -43,27 +46,35 @@ public class AdminProductController {
     }
 
     @GetMapping("/create")
-    public String showCreateProduct(Model Model){
+    public String showCreateProduct(Model Model, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         Model.addAttribute("productDto", new ProductDTO());
         return "createProduct";
     }
 
     @GetMapping("/confirm")
-    public String showConfirmProduct(Model Model){
+    public String showConfirmProduct(Model Model, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         List<Order> listOrders = repoOrder.findOrdersByStatus("PENDING");
         Model.addAttribute("listOrders", listOrders);
         return "confirmOrder";
     }
 
     @GetMapping("/orderDetail")
-    public String showOrderDetail(Model Model, @RequestParam long id){
+    public String showOrderDetail(Model Model, @RequestParam long id, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         List<OrderDetail> orderDetail = repoOrderDetail.findByOrder(repoOrder.findById(id));
         Model.addAttribute("orderDetail", orderDetail);
         return "OrderDetail";
     }
 
     @PostMapping("/create/add")
-    public String addProduct(@Valid @ModelAttribute ProductDTO productDto, BindingResult result){
+    public String addProduct(@Valid @ModelAttribute ProductDTO productDto, BindingResult result, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
 
         if (productDto.getImages().isEmpty()){
             result.addError(new FieldError("productDto", "image", "The image file is required"));
@@ -105,10 +116,12 @@ public class AdminProductController {
         service.save(product);
 
 
-        return "redirect:/manageProduct";
+        return "redirect:/admin/manageProduct";
     }
     @GetMapping("/edit")
-    public String showEditPage(Model Model, @RequestParam int id){
+    public String showEditPage(Model Model, @RequestParam int id, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
 
         try {
             Product product = repo.findById(id).get();
@@ -127,7 +140,7 @@ public class AdminProductController {
         }
         catch (Exception ex){
             System.out.println("Exception: " + ex.getMessage());
-            return "redirect:/manageProduct";
+            return "redirect:/admin/manageProduct";
         }
 
         return "editProduct";
@@ -139,7 +152,9 @@ public class AdminProductController {
             @RequestParam int id,
             @Valid @ModelAttribute ProductDTO productDto,
             BindingResult result
-    ){
+            , HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         try {
             Product product = service.get(id);
             Model.addAttribute("product", product);
@@ -183,14 +198,16 @@ public class AdminProductController {
         } catch (UserNotFoundException e) {
             throw new RuntimeException(e);
         }
-        return "redirect:/manageProduct";
+        return "redirect:/admin/manageProduct";
     }
 
     @Transactional
     @GetMapping("/delete")
     public String deleteProduct(
             @RequestParam int id
-    ){
+            , HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
         try {
 
             Product product = service.get(id);
@@ -208,6 +225,6 @@ public class AdminProductController {
             System.out.println("Exception: " + ex.getMessage());
         }
 
-        return "redirect:/manageProduct";
+        return "redirect:/admin/manageProduct";
     }
 }

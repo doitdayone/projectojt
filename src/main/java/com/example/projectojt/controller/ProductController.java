@@ -53,6 +53,8 @@ public class ProductController {
         int user_id = user.getUserID();
         model.addAttribute("user_id", user_id);
         session.setAttribute("user_id", userRepository.findByEmail(email).getUserID());
+        if (user.getRoles().equals("ADMIN"))
+          return "redirect:/admin";
       } else if (principal instanceof OAuth2User oAuth2User) {
         // get user_email when sign in with google or facebook
         Map<String, Object> attributes = oAuth2User.getAttributes();
@@ -68,20 +70,12 @@ public class ProductController {
         session.setAttribute("user_id", userRepository.findByEmail((String) attributes.get("email")).getUserID());
         model.addAttribute("userRepository", userRepository);
 
-
       } else {
         return "error";
       }
     }
-//    List<Product> productList = productRepository.findAll();
-//    model.addAttribute("productList", productList);
-//    List<Product> productList = productRepository.findAll();
-//    if (keyword != null) {
-//      productList = productRepository.searchProduct(keyword);
-//    }
-//    model.addAttribute("keyword", keyword);
 
-//    Page<Product> productList = this.productService.getAll(pageNo);
+
     List<Product> productList = productService.getInitialProducts();
     model.addAttribute("productList", productList);
 

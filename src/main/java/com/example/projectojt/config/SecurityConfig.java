@@ -3,6 +3,7 @@ package com.example.projectojt.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -10,8 +11,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -19,14 +24,26 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-
 @EnableMethodSecurity
+@Order(2)
 public class SecurityConfig {
 
     @Autowired
     private OurUserDetailsService userDetailsService;
+    @Bean
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+        UserDetails user = User.withUsername("user")
+                .password("password")
+                .roles("USER")
+                .build();
 
+        UserDetails admin = User.withUsername("admin")
+                .password("adminpassword")
+                .roles("ADMIN")
+                .build();
 
+        return new InMemoryUserDetailsManager(user, admin);
+    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(auth -> auth
@@ -36,7 +53,7 @@ public class SecurityConfig {
                                 "/EcommerceStore/register_form", "/EcommerceStore/register",
                                 "/EcommerceStore/otp_verify","/EcommerceStore/search","/EcommerceStore/productFilter/**"
                                 ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**",
-                                "/EcommerceStore/products/more").permitAll()
+                                "/EcommerceStore/products/more","/asset/**","/styles.css","/admin/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(formLogin ->
@@ -92,7 +109,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
