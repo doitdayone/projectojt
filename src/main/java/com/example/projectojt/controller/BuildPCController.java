@@ -6,6 +6,7 @@ import com.example.projectojt.model.Cart;
 import com.example.projectojt.model.Product;
 import com.example.projectojt.model.User;
 import com.example.projectojt.repository.BuildedPCRepository;
+import com.example.projectojt.repository.CartRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.service.ProductService;
@@ -33,6 +34,8 @@ public class BuildPCController {
     private ProductService productService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CartRepository cartRepository;
     private CartID cartID;
     private Cart CPU = null;
     private Cart Mainboard = null;
@@ -45,6 +48,28 @@ public class BuildPCController {
     private Cart CoolingFan = null;
 
     private int total = 0;
+
+    private void countTotal(){
+        total =0;
+        List<Cart> carts =new ArrayList<>();
+        carts.add(CPU);
+        carts.add(Mainboard);
+        carts.add(RAM);
+        carts.add(HDD);
+        carts.add(SSD);
+        carts.add(VGA);
+        carts.add(PowerSupply);
+        carts.add(Case);
+        carts.add(CoolingFan);
+        for (Cart c:carts
+             ) {
+            if (c==null) {
+                continue;
+            }
+            total+=c.quantity*c.getCartID().getProduct().getPrice();
+        }
+    }
+
 
     @GetMapping("/buildPC")
     public String showBuildPCPage(ModelMap model){
@@ -67,6 +92,7 @@ public class BuildPCController {
         model.addAttribute("productPowerSupply", productPowerSupply);
         model.addAttribute("productCase", productCase);
         model.addAttribute("productCoolingFan", productCoolingFan);
+        model.addAttribute("total",total);
         return "buildPC";
     }
 
@@ -98,6 +124,7 @@ public class BuildPCController {
         model.addAttribute("Case", Case);
         model.addAttribute("productCoolingFan", productCoolingFan);
         model.addAttribute("CoolingFan", CoolingFan);
+        model.addAttribute("total",total);
     }
 
     @GetMapping("/chooseCPU")
@@ -105,6 +132,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -112,6 +140,7 @@ public class BuildPCController {
     @GetMapping("/deleteCPU")
     public String deleteCPU(Model Model){
         CPU = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -121,6 +150,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -128,6 +158,7 @@ public class BuildPCController {
     @GetMapping("/deleteMainboard")
     public String deleteMainboard(Model Model){
         Mainboard = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -137,6 +168,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -144,6 +176,7 @@ public class BuildPCController {
     @GetMapping("/deleteRAM")
     public String deleteRAMd(Model Model){
         RAM = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -153,6 +186,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -160,6 +194,7 @@ public class BuildPCController {
     @GetMapping("/deleteHDD")
     public String deleteHDD(Model Model){
         HDD = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -169,6 +204,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -176,6 +212,7 @@ public class BuildPCController {
     @GetMapping("/deleteSSD")
     public String deleteSSD(Model Model){
         SSD = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -185,6 +222,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -192,6 +230,7 @@ public class BuildPCController {
     @GetMapping("/deleteVGA")
     public String deleteVGAd(Model Model){
         VGA = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -201,6 +240,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -209,6 +249,7 @@ public class BuildPCController {
     public String deletePowerSupply(Model Model){
         PowerSupply = null;
         addList(Model);
+        countTotal();
         return "buildPC";
     }
 
@@ -217,6 +258,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -224,6 +266,7 @@ public class BuildPCController {
     @GetMapping("/deleteCase")
     public String deleteCase(Model Model){
         Case = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -233,6 +276,7 @@ public class BuildPCController {
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
+        total += product.getPrice();
         addList(Model);
         return "buildPC";
     }
@@ -240,6 +284,7 @@ public class BuildPCController {
     @GetMapping("/deleteCoolingFan")
     public String deleteCoolingFan(Model Model) {
         CoolingFan = null;
+        countTotal();
         addList(Model);
         return "buildPC";
     }
@@ -278,6 +323,10 @@ public class BuildPCController {
                     CoolingFan = new Cart(new CartID(user,p),1); break;
             }
         }
+        for (Product p:products
+             ) {
+            total+=p.getPrice();
+        }
         addList(model);
         return "buildPC";
     }
@@ -304,6 +353,7 @@ public class BuildPCController {
             case "CoolingFan":
                 if (CoolingFan.quantity>1) CoolingFan.quantity--; break;
         }
+        countTotal();
         addList(model);
         return "buildPC";
     }
@@ -329,8 +379,37 @@ public class BuildPCController {
             case "CoolingFan":
                 if (CoolingFan.quantity+1<=CoolingFan.getCartID().getProduct().getQuantity()) CoolingFan.quantity++; break;
         }
+        countTotal();
         addList(model);
         return "buildPC";
+    }
+
+    @PostMapping("/buildPC/order")
+    public String order(HttpSession session){
+        List<Cart> carts =new ArrayList<>();
+        carts.add(CPU);
+        carts.add(Mainboard);
+        carts.add(RAM);
+        carts.add(HDD);
+        carts.add(SSD);
+        carts.add(VGA);
+        carts.add(PowerSupply);
+        carts.add(Case);
+        carts.add(CoolingFan);
+
+        for (Cart c: carts
+             ) {
+            if (c==null) {
+                carts.remove(c);
+                continue;
+            }
+            Cart existedCart = cartRepository.findByUserIdAndProductId(c.getCartID().getUser().getUserID(),c.getCartID().getProduct().getProductID());
+            if(existedCart!=null)
+                cartRepository.delete(existedCart);
+            cartRepository.save(c);
+        }
+
+        return "redirect:/EcommerceStore/cart/"+session.getAttribute("user_id");
     }
 }
 
