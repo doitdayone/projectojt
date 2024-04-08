@@ -16,5 +16,5 @@ import lombok.Setter;
 public class Cart {
     @EmbeddedId
     private CartID cartID;
-    private int quantity;
+    public int quantity;
 }

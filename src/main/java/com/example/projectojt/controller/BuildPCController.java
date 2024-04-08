@@ -1,11 +1,16 @@
 package com.example.projectojt.controller;
 
+import com.example.projectojt.Key.CartID;
 import com.example.projectojt.model.BuildedPC;
+import com.example.projectojt.model.Cart;
 import com.example.projectojt.model.Product;
+import com.example.projectojt.model.User;
 import com.example.projectojt.repository.BuildedPCRepository;
 import com.example.projectojt.repository.ProductRepository;
+import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.repository.query.Param;
@@ -26,21 +31,24 @@ public class BuildPCController {
     private BuildedPCRepository pcRepository;
     @Autowired
     private ProductService productService;
-
-    private Product CPU = null;
-    private Product Mainboard = null;
-    private Product RAM = null;
-    private Product HDD = null;
-    private Product SSD = null;
-    private Product VGA = null;
-    private Product PowerSupply = null;
-    private Product Case = null;
-    private Product CoolingFan = null;
+    @Autowired
+    private UserRepository userRepository;
+    private CartID cartID;
+    private Cart CPU = null;
+    private Cart Mainboard = null;
+    private Cart RAM = null;
+    private Cart HDD = null;
+    private Cart SSD = null;
+    private Cart VGA = null;
+    private Cart PowerSupply = null;
+    private Cart Case = null;
+    private Cart CoolingFan = null;
 
     private int total = 0;
 
     @GetMapping("/buildPC")
     public String showBuildPCPage(ModelMap model){
+
         List<Product> productCPU = productRepository.findProductsByType("CPU");
         List<Product> productMainboard = productRepository.findProductsByType("Mainboard");
         List<Product> productRAM = productRepository.findProductsByType("RAM");
@@ -93,8 +101,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseCPU")
-    public String chooseCPU(Model Model, @RequestParam("id") int id){
-        CPU = productRepository.getProductByProductID(id);
+    public String chooseCPU(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -107,8 +117,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseMainboard")
-    public String chooseMainboard(Model Model, @RequestParam("id") int id){
-        Mainboard = productRepository.getProductByProductID(id);
+    public String chooseMainboard(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -121,8 +133,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseRAM")
-    public String chooseRAM(Model Model, @RequestParam("id") int id){
-        RAM = productRepository.getProductByProductID(id);
+    public String chooseRAM(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -135,8 +149,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseHDD")
-    public String chooseHDD(Model Model, @RequestParam("id") int id){
-        HDD = productRepository.getProductByProductID(id);
+    public String chooseHDD(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -149,8 +165,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseSSD")
-    public String chooseSSD(Model Model, @RequestParam("id") int id){
-        SSD = productRepository.getProductByProductID(id);
+    public String chooseSSD(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -163,8 +181,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseVGA")
-    public String chooseVGA(Model Model, @RequestParam("id") int id){
-        VGA = productRepository.getProductByProductID(id);
+    public String chooseVGA(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -177,8 +197,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/choosePowerSupply")
-    public String choosePowerSupply(Model Model, @RequestParam("id") int id){
-        PowerSupply = productRepository.getProductByProductID(id);
+    public String choosePowerSupply(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -191,8 +213,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseCase")
-    public String chooseCase(Model Model, @RequestParam("id") int id){
-        Case = productRepository.getProductByProductID(id);
+    public String chooseCase(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -205,8 +229,10 @@ public class BuildPCController {
     }
 
     @GetMapping("/chooseCoolingFan")
-    public String chooseCoolingFan(Model Model, @RequestParam("id") int id){
-        CoolingFan = productRepository.getProductByProductID(id);
+    public String chooseCoolingFan(Model Model, @RequestParam("id") int id,HttpSession session){
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
+        Product product = productRepository.getProductByProductID(id);
+        CPU = new Cart(new CartID(user,product),1);
         addList(Model);
         return "buildPC";
     }
@@ -218,8 +244,9 @@ public class BuildPCController {
         return "buildPC";
     }
     @GetMapping("/build-pc-view")
-    public String view(HttpServletRequest request, Model model)
+    public String view(HttpServletRequest request, Model model, HttpSession session)
     {
+        User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         int pc_id = Integer.parseInt(request.getParameter("pc_id"));
         BuildedPC bPC = pcRepository.findById(pc_id);
         String[] productIdArray = bPC.getProductIds().split(" ");
@@ -232,29 +259,78 @@ public class BuildPCController {
              ) {
             switch (p.getType()){
                 case "CPU":
-                    CPU = p; break;
+                    CPU = new Cart(new CartID(user,p),1); break;
                 case "Mainboard":
-                    Mainboard = p; break;
+                    Mainboard = new Cart(new CartID(user,p),1); break;
                 case "RAM":
-                    RAM = p; break;
+                    RAM = new Cart(new CartID(user,p),1); break;
                 case "HDD":
-                    HDD = p; break;
+                    HDD = new Cart(new CartID(user,p),1); break;
                 case "SSD":
-                    SSD = p; break;
+                    SSD = new Cart(new CartID(user,p),1); break;
                 case "VGA":
-                    VGA = p; break;
+                    VGA = new Cart(new CartID(user,p),1); break;
                 case "PowerSupply":
-                    PowerSupply = p; break;
+                    PowerSupply = new Cart(new CartID(user,p),1); break;
                 case "Case":
-                    Case = p; break;
+                    Case = new Cart(new CartID(user,p),1); break;
                 case "CoolingFan":
-                    CoolingFan = p; break;
+                    CoolingFan = new Cart(new CartID(user,p),1); break;
             }
         }
         addList(model);
         return "buildPC";
     }
 
-
+    @GetMapping("/buildPC/decrement")
+    public String decrement(@RequestParam("type") String type, Model model){
+        switch (type){
+            case "CPU":
+                if (CPU.quantity>1) CPU.quantity--; break;
+            case "Mainboard":
+                if (Mainboard.quantity>1) Mainboard.quantity--; break;
+            case "RAM":
+                if (RAM.quantity>1) RAM.quantity--; break;
+            case "HDD":
+                if (HDD.quantity>1) HDD.quantity--; break;
+            case "SSD":
+                if (SSD.quantity>1) SSD.quantity--; break;
+            case "VGA":
+                if (VGA.quantity>1) VGA.quantity--; break;
+            case "PowerSupply":
+                if (PowerSupply.quantity>1) PowerSupply.quantity--; break;
+            case "Case":
+                if (Case.quantity>1) Case.quantity--; break;
+            case "CoolingFan":
+                if (CoolingFan.quantity>1) CoolingFan.quantity--; break;
+        }
+        addList(model);
+        return "buildPC";
+    }
+    @GetMapping("/buildPC/increment")
+    public String increment(@RequestParam("type") String type, Model model){
+        switch (type){
+            case "CPU":
+                if (CPU.quantity+1<=CPU.getCartID().getProduct().getQuantity()) CPU.quantity++; break;
+            case "Mainboard":
+                if (Mainboard.quantity+1<=Mainboard.getCartID().getProduct().getQuantity()) Mainboard.quantity++; break;
+            case "RAM":
+                if (RAM.quantity+1<=RAM.getCartID().getProduct().getQuantity()) RAM.quantity++; break;
+            case "HDD":
+                if (HDD.quantity+1<=HDD.getCartID().getProduct().getQuantity()) HDD.quantity++; break;
+            case "SSD":
+                if (SSD.quantity+1<=SSD.getCartID().getProduct().getQuantity()) SSD.quantity++; break;
+            case "VGA":
+                if (VGA.quantity+1<=VGA.getCartID().getProduct().getQuantity()) VGA.quantity++; break;
+            case "PowerSupply":
+                if (PowerSupply.quantity+1<=PowerSupply.getCartID().getProduct().getQuantity()) PowerSupply.quantity++; break;
+            case "Case":
+                if (Case.quantity+1<=Case.getCartID().getProduct().getQuantity()) Case.quantity++; break;
+            case "CoolingFan":
+                if (CoolingFan.quantity+1<=CoolingFan.getCartID().getProduct().getQuantity()) CoolingFan.quantity++; break;
+        }
+        addList(model);
+        return "buildPC";
+    }
 }
 

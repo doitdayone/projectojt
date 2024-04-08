@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -87,11 +87,11 @@
                     <div class="image">
                         <div th:if="${CPU == null}">
                             <img th:src="@{/images/buildPC/cpu.svg}" alt="">
-                            <input type="hidden" th:value="${null}" name="CPUId">
+                            
                         </div>
                         <div th:if="${CPU != null}">
-                            <img th:src="@{'/images/' + ${CPU.images}}" alt="">
-                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                            <img th:src="@{'/images/' + ${CPU.cartID.product.images}}" alt="">
+                            <input type="hidden" th:value="${CPU.cartID.product.productID}" name="CPUId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -101,25 +101,31 @@
                         <div th:if="${CPU != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${CPU.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CPU.productID})}"></a>
+                                    <a th:text="${CPU.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CPU.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="input-quantity">
-                                <button id="decrement" onclick="stepper(this)"> - </button>
-                                <input type="number" min="1" max="100" step="1" value="1" id="my-input" name="CPUquantity" readonly>
-                                <button id="increment" onclick="stepper(this)"> + </button>
+                                <form th:action="@{/EcommerceStore/buildPC/decrement}" method="get">
+                                    <input type="hidden" name="type" value="CPU">
+                                <button id="decrement"  type="submit"> - </button>
+                                </form>
+                                <input type="number" min="1" max="100" step="1" th:value="${CPU.getQuantity()}" id="my-input" name="CPUquantity" readonly>
+                                <form th:action="@{/EcommerceStore/buildPC/increment}" method="get">
+                                    <input type="hidden" name="type" value="CPU">
+                                <button id="increment" type="submit"> + </button>
+                                </form>
                             </div>
                             <p>x</p>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${CPU.price}-${CPU.sale}*${CPU.price}/100 + ' VND'"></span>
+                                    <span th:text="${CPU.cartID.product.price}-${CPU.cartID.product.sale}*${CPU.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${CPU.price} + ' VND'">
+                                                                    <span class="cost" th:text="${CPU.cartID.product.price}*${CPU.quantity} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${CPU.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${CPU.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
@@ -142,13 +148,13 @@
                     </div>
                     <div class="image">
                         <div th:if="${Mainboard == null}">
-                            <img th:src="@{/images/buildPC/mainboard.svg}" alt="">                            <input type="hidden" th:value="${null}" name="CPUId">
+                            <img th:src="@{/images/buildPC/mainboard.svg}" alt="">                            
                             <input type="hidden" th:value="${null}" name="MainboardId">
 
                         </div>
                         <div th:if="${Mainboard != null}">
-                            <img th:src="@{'/images/' + ${Mainboard.images}}" alt="">
-                            <input type="hidden" th:value="${Mainboard.productID}" name="MainboardId">
+                            <img th:src="@{'/images/' + ${Mainboard.cartID.product.images}}" alt="">
+                            <input type="hidden" th:value="${Mainboard.cartID.product.productID}" name="MainboardId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -158,19 +164,19 @@
                         <div th:if="${Mainboard != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${Mainboard.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Mainboard.productID})}"></a>
+                                    <a th:text="${Mainboard.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Mainboard.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${Mainboard.price}-${Mainboard.sale}*${Mainboard.price}/100 + ' VND'"></span>
+                                    <span th:text="${Mainboard.cartID.product.price}-${Mainboard.cartID.product.sale}*${Mainboard.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${Mainboard.price} + ' VND'">
+                                                                    <span class="cost" th:text="${Mainboard.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${Mainboard.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${Mainboard.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
@@ -198,12 +204,12 @@
                     </div>
                     <div class="image">
                         <div th:if="${RAM == null}">
-                            <img th:src="@{/images/buildPC/ram.svg}" alt="">                            <input type="hidden" th:value="${null}" name="CPUId">
+                            <img th:src="@{/images/buildPC/ram.svg}" alt="">                            
                             <input type="hidden" th:value="${null}" name="RAMId">
                         </div>
                         <div th:if="${RAM != null}">
-                            <img th:src="@{'/images/' + ${RAM.images}}" alt="">
-                            <input type="hidden" th:value="${RAM.productID}" name="RAMId">
+                            <img th:src="@{'/images/' + ${RAM.cartID.product.images}}" alt="">
+                            <input type="hidden" th:value="${RAM.cartID.product.productID}" name="RAMId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -213,19 +219,19 @@
                         <div th:if="${RAM != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${RAM.name}"
+                                    <a th:text="${RAM.cartID.product.name}"
                                        th:href="@{/EcommerceStore/productDetails/{productId}(productId=${RAM.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${RAM.price}-${RAM.sale}*${RAM.price}/100 + ' VND'"></span>
+                                    <span th:text="${RAM.cartID.product.price}-${RAM.cartID.product.sale}*${RAM.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${RAM.price} + ' VND'">
+                                                                    <span class="cost" th:text="${RAM.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${RAM.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${RAM.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
@@ -257,8 +263,8 @@
                             <input type="hidden" th:value="${null}" name="HDDId">
                         </div>
                         <div th:if="${HDD != null}">
-                            <img th:src="@{'/images/' + ${HDD.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
-                            <input type="hidden" th:value="${HDD.productID}" name="HDDId">
+                            <img th:src="@{'/images/' + ${HDD.cartID.product.images}}" alt="">                            <input type="hidden" th:value="${CPU.cartID.product.productID}" name="CPUId">
+                            <input type="hidden" th:value="${HDD.cartID.product.productID}" name="HDDId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -268,19 +274,19 @@
                         <div th:if="${HDD != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${HDD.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${HDD.productID})}"></a>
+                                    <a th:text="${HDD.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${HDD.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${HDD.price}-${HDD.sale}*${HDD.price}/100 + ' VND'"></span>
+                                    <span th:text="${HDD.cartID.product.price}-${HDD.cartID.product.sale}*${HDD.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${HDD.price} + ' VND'">
+                                                                    <span class="cost" th:text="${HDD.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${HDD.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${HDD.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
@@ -312,8 +318,8 @@
                             <input type="hidden" th:value="${null}" name="SSDId">
                         </div>
                         <div th:if="${SSD != null}">
-                            <img th:src="@{'/images/' + ${SSD.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
-                            <input type="hidden" th:value="${SSD.productID}" name="SSDId">
+                            <img th:src="@{'/images/' + ${SSD.cartID.product.images}}" alt="">                            
+                            <input type="hidden" th:value="${SSD.cartID.product.productID}" name="SSDId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -323,19 +329,19 @@
                         <div th:if="${SSD != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${SSD.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${SSD.productID})}"></a>
+                                    <a th:text="${SSD.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${SSD.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${SSD.price}-${SSD.sale}*${SSD.price}/100 + ' VND'"></span>
+                                    <span th:text="${SSD.cartID.product.price}-${SSD.cartID.product.sale}*${SSD.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${SSD.price} + ' VND'">
+                                                                    <span class="cost" th:text="${SSD.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${SSD.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${SSD.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
@@ -367,8 +373,8 @@
                             <input type="hidden" th:value="${null}" name="VGAId">
                         </div>
                         <div th:if="${VGA != null}">
-                            <img th:src="@{'/images/' + ${VGA.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
-                            <input type="hidden" th:value="${VGA.productID}" name="VGAId">
+                            <img th:src="@{'/images/' + ${VGA.cartID.product.images}}" alt="">                            
+                            <input type="hidden" th:value="${VGA.cartID.product.productID}" name="VGAId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -378,19 +384,19 @@
                         <div th:if="${VGA != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${VGA.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${VGA.productID})}"></a>
+                                    <a th:text="${VGA.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${VGA.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${VGA.price}-${VGA.sale}*${VGA.price}/100 + ' VND'"></span>
+                                    <span th:text="${VGA.cartID.product.price}-${VGA.cartID.product.sale}*${VGA.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${VGA.price} + ' VND'">
+                                                                    <span class="cost" th:text="${VGA.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${VGA.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${VGA.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
@@ -422,8 +428,8 @@
                             <input type="hidden" th:value="${null}" name="VGAId">
                         </div>
                         <div th:if="${PowerSupply != null}">
-                            <img th:src="@{'/images/' + ${PowerSupply.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
-                            <input type="hidden" th:value="${PowerSupply.productID}" name="PowerSupplyId">
+                            <img th:src="@{'/images/' + ${PowerSupply.cartID.product.images}}" alt="">                            
+                            <input type="hidden" th:value="${PowerSupply.cartID.product.productID}" name="PowerSupplyId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -433,19 +439,19 @@
                         <div th:if="${PowerSupply != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${PowerSupply.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${PowerSupply.productID})}"></a>
+                                    <a th:text="${PowerSupply.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${PowerSupply.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${PowerSupply.price}-${PowerSupply.sale}*${PowerSupply.price}/100 + ' VND'"></span>
+                                    <span th:text="${PowerSupply.cartID.product.price}-${PowerSupply.cartID.product.sale}*${PowerSupply.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${PowerSupply.price} + ' VND'">
+                                                                    <span class="cost" th:text="${PowerSupply.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${PowerSupply.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${PowerSupply.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
@@ -477,8 +483,8 @@
                             <input type="hidden" th:value="${null}" name="CaseId">
                         </div>
                         <div th:if="${Case != null}">
-                            <img th:src="@{'/images/' + ${Case.images}}" alt="">
-                            <input type="hidden" th:value="${Case.productID}" name="CaseId">
+                            <img th:src="@{'/images/' + ${Case.cartID.product.images}}" alt="">
+                            <input type="hidden" th:value="${Case.cartID.product.productID}" name="CaseId">
                         </div>
                     </div>
                     <div class="name-product">
@@ -488,19 +494,19 @@
                         <div th:if="${Case != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${Case.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Case.productID})}"></a>
+                                    <a th:text="${Case.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Case.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${Case.price}-${Case.sale}*${Case.price}/100 + ' VND'"></span>
+                                    <span th:text="${Case.cartID.product.price}-${Case.cartID.product.sale}*${Case.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${Case.price} + ' VND'">
+                                                                    <span class="cost" th:text="${Case.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${Case.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${Case.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
@@ -528,11 +534,11 @@
                     </div>
                     <div class="image">
                         <div th:if="${CoolingFan == null}">
-                            <img th:src="@{/images/buildPC/fan.svg}" alt="">                            <input type="hidden" th:value="${null}" name="CPUId">
+                            <img th:src="@{/images/buildPC/fan.svg}" alt="">                            
                             <input type="hidden" th:value="${null}" name="CoolingFanId">
                         </div>
                         <div th:if="${CoolingFan != null}">
-                            <img th:src="@{'/images/' + ${CoolingFan.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                            <img th:src="@{'/images/' + ${CoolingFan.cartID.product.images}}" alt="">                            
                             <input type="hidden" th:value="${CoolingFan.productID}" name="CoolingFanId">
                         </div>
                     </div>
@@ -543,19 +549,19 @@
                         <div th:if="${CoolingFan != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
                             <a class="choose-product-body-product-card-name-link">
                                 <div class="choose-product-body-product-card-name-text">
-                                    <a th:text="${CoolingFan.name}"
-                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CoolingFan.productID})}"></a>
+                                    <a th:text="${CoolingFan.cartID.product.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CoolingFan.cartID.product.productID})}"></a>
                                 </div>
                             </a>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${CoolingFan.price}-${CoolingFan.sale}*${CoolingFan.price}/100 + ' VND'"></span>
+                                    <span th:text="${CoolingFan.cartID.product.price}-${CoolingFan.cartID.product.sale}*${CoolingFan.cartID.product.price}/100 + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${CoolingFan.price} + ' VND'">
+                                                                    <span class="cost" th:text="${CoolingFan.cartID.product.price} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
-                                    <span class="sale" th:text="'-'+${CoolingFan.sale} + '%'"></span>
+                                    <span class="sale" th:text="'-'+${CoolingFan.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
                             <div class="input-quantity">
