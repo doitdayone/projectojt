@@ -127,15 +127,12 @@ public class CartController {
             if ("increase".equalsIgnoreCase(action)) {
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
                 cartRepository.save(cartItem);
-//
-//        System.out.println("Product ID: " + cartItem.getProductId());
-//        System.out.println("Quantity: "+ cartItem.getQuantity());
+
             } else if ("decrease".equalsIgnoreCase(action)) {
                 if (cartItem.getQuantity() > 1) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
                     cartRepository.save(cartItem);
-//          System.out.println("Product ID: " + cartItem.getProductId());
-//          System.out.println("Quantity: "+ cartItem.getQuantity());
+
                 } else {
                     removeItem(cartItemId, user_id, model);
                     return "cart";

@@ -36,6 +36,7 @@ public class BuildPCController {
     private Product PowerSupply = null;
     private Product Case = null;
     private Product CoolingFan = null;
+
     @GetMapping("/buildPC")
     public String showBuildPCPage(ModelMap model){
         List<Product> productCPU = productRepository.findProductsByType("CPU");
