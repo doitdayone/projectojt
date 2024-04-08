@@ -127,7 +127,6 @@ public class CartController {
             if ("increase".equalsIgnoreCase(action)) {
                 cartItem.setQuantity(cartItem.getQuantity() + 1);
                 cartRepository.save(cartItem);
-
             } else if ("decrease".equalsIgnoreCase(action)) {
                 if (cartItem.getQuantity() > 1) {
                     cartItem.setQuantity(cartItem.getQuantity() - 1);
