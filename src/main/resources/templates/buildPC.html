@@ -78,482 +78,506 @@
 <body>
 <div class="main">
     <div class="content-1">
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>CPU</div>
-                </div>
-                <div class="image">
-                    <div th:if="${CPU == null}">
-                        <img th:src="@{/images/buildPC/cpu.svg}" alt="">
-                    </div>
-                    <div th:if="${CPU != null}">
-                        <img th:src="@{'/images/' + ${CPU.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${CPU == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${CPU != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${CPU.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CPU.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${CPU.price}-${CPU.sale}*${CPU.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${CPU.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${CPU.sale} + '%'"></span>
-                            </div>
-                        </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
-                        </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteCPU}"></a>
-                    </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${CPU == null}">
-                        <button onclick="openPopup('CPU')">Choose</button>
-                    </div>
-                    <div th:if="${CPU != null}">
 
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>CPU</div>
+                    </div>
+                    <div class="image">
+                        <div th:if="${CPU == null}">
+                            <img th:src="@{/images/buildPC/cpu.svg}" alt="">
+                            <input type="hidden" th:value="${null}" name="CPUId">
+                        </div>
+                        <div th:if="${CPU != null}">
+                            <img th:src="@{'/images/' + ${CPU.images}}" alt="">
+                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                        </div>
+                    </div>
+                    <div class="name-product">
+                        <div th:if="${CPU == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${CPU != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${CPU.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CPU.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="1" max="100" step="1" value="1" id="my-input" name="CPUquantity" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <p>x</p>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${CPU.price}-${CPU.sale}*${CPU.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${CPU.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${CPU.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                        </div>
+                    </div>
+                    <div class="choose-btn" >
+                        <div th:if="${CPU == null}">
+                            <button onclick="openPopup('CPU')">Choose</button>
+                        </div>
+                        <div th:if="${CPU != null}">
+                            <button onclick="openPopup('CPU')">Other Products</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>Mainboard</div>
-                </div>
-                <div class="image">
-                    <div th:if="${Mainboard == null}">
-                        <img th:src="@{/images/buildPC/mainboard.svg}" alt="">
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>Mainboard</div>
                     </div>
-                    <div th:if="${Mainboard != null}">
-                        <img th:src="@{'/images/' + ${Mainboard.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${Mainboard == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${Mainboard != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${Mainboard.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Mainboard.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${Mainboard.price}-${Mainboard.sale}*${Mainboard.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${Mainboard.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${Mainboard.sale} + '%'"></span>
-                            </div>
-                        </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
-                        </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteMainboard}"></a>
-                    </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${Mainboard == null}">
-                        <button onclick="openPopup('Mainboard')">Choose</button>
-                    </div>
-                    <div th:if="${Mainboard != null}"></div>
-                </div>
-            </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>RAM</div>
-                </div>
-                <div class="image">
-                    <div th:if="${RAM == null}">
-                        <img th:src="@{/images/buildPC/ram.svg}" alt="">
-                    </div>
-                    <div th:if="${RAM != null}">
-                        <img th:src="@{'/images/' + ${RAM.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${RAM == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${RAM != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${RAM.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${RAM.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${RAM.price}-${RAM.sale}*${RAM.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${RAM.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${RAM.sale} + '%'"></span>
-                            </div>
-                        </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
-                        </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteRAM}"></a>
-                    </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${RAM == null}">
-                        <button onclick="openPopup('RAM')">Choose</button>
-                    </div>
-                    <div th:if="${RAM != null}">
+                    <div class="image">
+                        <div th:if="${Mainboard == null}">
+                            <img th:src="@{/images/buildPC/mainboard.svg}" alt="">                            <input type="hidden" th:value="${null}" name="CPUId">
+                            <input type="hidden" th:value="${null}" name="MainboardId">
 
+                        </div>
+                        <div th:if="${Mainboard != null}">
+                            <img th:src="@{'/images/' + ${Mainboard.images}}" alt="">
+                            <input type="hidden" th:value="${Mainboard.productID}" name="MainboardId">
+                        </div>
+                    </div>
+                    <div class="name-product">
+                        <div th:if="${Mainboard == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${Mainboard != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${Mainboard.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Mainboard.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${Mainboard.price}-${Mainboard.sale}*${Mainboard.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${Mainboard.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${Mainboard.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteMainboard}"></a>
+                        </div>
+                    </div>
+                    <div class="choose-btn" >
+                        <div th:if="${Mainboard == null}">
+                            <button onclick="openPopup('Mainboard')">Choose</button>
+                        </div>
+                        <div th:if="${Mainboard != null}">
+                            <button onclick="openPopup('Mainboard')">Other Products</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>HDD</div>
-                </div>
-                <div class="image">
-                    <div th:if="${HDD == null}">
-                        <img th:src="@{/images/buildPC/hdd.svg}" alt="">
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>RAM</div>
                     </div>
-                    <div th:if="${HDD != null}">
-                        <img th:src="@{'/images/' + ${HDD.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${HDD == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${HDD != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${HDD.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${HDD.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${HDD.price}-${HDD.sale}*${HDD.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${HDD.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${HDD.sale} + '%'"></span>
-                            </div>
+                    <div class="image">
+                        <div th:if="${RAM == null}">
+                            <img th:src="@{/images/buildPC/ram.svg}" alt="">                            <input type="hidden" th:value="${null}" name="CPUId">
+                            <input type="hidden" th:value="${null}" name="RAMId">
                         </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
+                        <div th:if="${RAM != null}">
+                            <img th:src="@{'/images/' + ${RAM.images}}" alt="">
+                            <input type="hidden" th:value="${RAM.productID}" name="RAMId">
                         </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteHDD}"></a>
                     </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${HDD == null}">
-                        <button onclick="openPopup('HDD')">Choose</button>
+                    <div class="name-product">
+                        <div th:if="${RAM == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${RAM != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${RAM.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${RAM.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${RAM.price}-${RAM.sale}*${RAM.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${RAM.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${RAM.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteRAM}"></a>
+                        </div>
                     </div>
-                    <div th:if="${HDD != null}">
+                    <div class="choose-btn" >
+                        <div th:if="${RAM == null}">
+                            <button onclick="openPopup('RAM')">Choose</button>
+                        </div>
+                        <div th:if="${RAM != null}">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>SSD</div>
-                </div>
-                <div class="image">
-                    <div th:if="${SSD == null}">
-                        <img th:src="@{/images/buildPC/ssd.svg}" alt="">
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>HDD</div>
                     </div>
-                    <div th:if="${SSD != null}">
-                        <img th:src="@{'/images/' + ${SSD.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${SSD == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${SSD != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${SSD.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${SSD.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${SSD.price}-${SSD.sale}*${SSD.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${SSD.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${SSD.sale} + '%'"></span>
-                            </div>
+                    <div class="image">
+                        <div th:if="${HDD == null}">
+                            <img th:src="@{/images/buildPC/hdd.svg}" alt="">
+                            <input type="hidden" th:value="${null}" name="HDDId">
                         </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
+                        <div th:if="${HDD != null}">
+                            <img th:src="@{'/images/' + ${HDD.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                            <input type="hidden" th:value="${HDD.productID}" name="HDDId">
                         </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteSSD}"></a>
                     </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${SSD == null}">
-                        <button onclick="openPopup('SSD')">Choose</button>
+                    <div class="name-product">
+                        <div th:if="${HDD == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${HDD != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${HDD.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${HDD.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${HDD.price}-${HDD.sale}*${HDD.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${HDD.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${HDD.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteHDD}"></a>
+                        </div>
                     </div>
-                    <div th:if="${SSD != null}">
+                    <div class="choose-btn" >
+                        <div th:if="${HDD == null}">
+                            <button onclick="openPopup('HDD')">Choose</button>
+                        </div>
+                        <div th:if="${HDD != null}">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>VGA</div>
-                </div>
-                <div class="image">
-                    <div th:if="${VGA == null}">
-                        <img th:src="@{/images/buildPC/vga-card.svg}" alt="">
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>SSD</div>
                     </div>
-                    <div th:if="${VGA != null}">
-                        <img th:src="@{'/images/' + ${VGA.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${VGA == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${VGA != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${VGA.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${VGA.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${VGA.price}-${VGA.sale}*${VGA.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${VGA.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${VGA.sale} + '%'"></span>
-                            </div>
+                    <div class="image">
+                        <div th:if="${SSD == null}">
+                            <img th:src="@{/images/buildPC/ssd.svg}" alt="">
+                            <input type="hidden" th:value="${null}" name="SSDId">
                         </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
+                        <div th:if="${SSD != null}">
+                            <img th:src="@{'/images/' + ${SSD.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                            <input type="hidden" th:value="${SSD.productID}" name="SSDId">
                         </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteVGA}"></a>
                     </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${VGA == null}">
-                        <button onclick="openPopup('VGA')">Choose</button>
+                    <div class="name-product">
+                        <div th:if="${SSD == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${SSD != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${SSD.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${SSD.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${SSD.price}-${SSD.sale}*${SSD.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${SSD.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${SSD.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteSSD}"></a>
+                        </div>
                     </div>
-                    <div th:if="${VGA != null}">
+                    <div class="choose-btn" >
+                        <div th:if="${SSD == null}">
+                            <button onclick="openPopup('SSD')">Choose</button>
+                        </div>
+                        <div th:if="${SSD != null}">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>Power Supply</div>
-                </div>
-                <div class="image">
-                    <div th:if="${PowerSupply == null}">
-                        <img th:src="@{/images/buildPC/power-supply.svg}" alt="">
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>VGA</div>
                     </div>
-                    <div th:if="${PowerSupply != null}">
-                        <img th:src="@{'/images/' + ${PowerSupply.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${PowerSupply == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${PowerSupply != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${PowerSupply.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${PowerSupply.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${PowerSupply.price}-${PowerSupply.sale}*${PowerSupply.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${PowerSupply.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${PowerSupply.sale} + '%'"></span>
-                            </div>
+                    <div class="image">
+                        <div th:if="${VGA == null}">
+                            <img th:src="@{/images/buildPC/vga-card.svg}" alt="">
+                            <input type="hidden" th:value="${null}" name="VGAId">
                         </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
+                        <div th:if="${VGA != null}">
+                            <img th:src="@{'/images/' + ${VGA.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                            <input type="hidden" th:value="${VGA.productID}" name="VGAId">
                         </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deletePowerSupply}"></a>
                     </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${PowerSupply == null}">
-                        <button onclick="openPopup('PowerSupply')">Choose</button>
+                    <div class="name-product">
+                        <div th:if="${VGA == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${VGA != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${VGA.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${VGA.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${VGA.price}-${VGA.sale}*${VGA.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${VGA.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${VGA.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteVGA}"></a>
+                        </div>
                     </div>
-                    <div th:if="${PowerSupply != null}">
+                    <div class="choose-btn" >
+                        <div th:if="${VGA == null}">
+                            <button onclick="openPopup('VGA')">Choose</button>
+                        </div>
+                        <div th:if="${VGA != null}">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>Case</div>
-                </div>
-                <div class="image">
-                    <div th:if="${Case == null}">
-                        <img th:src="@{/images/buildPC/case.svg}" alt="">
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>Power Supply</div>
                     </div>
-                    <div th:if="${Case != null}">
-                        <img th:src="@{'/images/' + ${Case.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${Case == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${Case != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${Case.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Case.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${Case.price}-${Case.sale}*${Case.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${Case.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${Case.sale} + '%'"></span>
-                            </div>
+                    <div class="image">
+                        <div th:if="${PowerSupply == null}">
+                            <img th:src="@{/images/buildPC/power-supply.svg}" alt="">
+                            <input type="hidden" th:value="${null}" name="VGAId">
                         </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
+                        <div th:if="${PowerSupply != null}">
+                            <img th:src="@{'/images/' + ${PowerSupply.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                            <input type="hidden" th:value="${PowerSupply.productID}" name="PowerSupplyId">
                         </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteCase}"></a>
                     </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${Case == null}">
-                        <button onclick="openPopup('Case')">Choose</button>
+                    <div class="name-product">
+                        <div th:if="${PowerSupply == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${PowerSupply != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${PowerSupply.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${PowerSupply.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${PowerSupply.price}-${PowerSupply.sale}*${PowerSupply.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${PowerSupply.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${PowerSupply.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deletePowerSupply}"></a>
+                        </div>
                     </div>
-                    <div th:if="${Case != null}">
+                    <div class="choose-btn" >
+                        <div th:if="${PowerSupply == null}">
+                            <button onclick="openPopup('PowerSupply')">Choose</button>
+                        </div>
+                        <div th:if="${PowerSupply != null}">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-1">
-            <div class="card-body">
-                <div class="tittle">
-                    <div>Cooling Fan</div>
-                </div>
-                <div class="image">
-                    <div th:if="${CoolingFan == null}">
-                        <img th:src="@{/images/buildPC/fan.svg}" alt="">
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>Case</div>
                     </div>
-                    <div th:if="${CoolingFan != null}">
-                        <img th:src="@{'/images/' + ${CoolingFan.images}}" alt="">
-                    </div>
-                </div>
-                <div class="name-product">
-                    <div th:if="${CoolingFan == null}">
-                        Vui lòng chọn linh kiện
-                    </div>
-                    <div th:if="${CoolingFan != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
-                        <a class="choose-product-body-product-card-name-link">
-                            <div class="choose-product-body-product-card-name-text">
-                                <a th:text="${CoolingFan.name}"
-                                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CoolingFan.productID})}"></a>
-                            </div>
-                        </a>
-                        <div class="choose-product-body-product-card-price-space">
-                            <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="${CoolingFan.price}-${CoolingFan.sale}*${CoolingFan.price}/100 + ' VND'"></span>
-                            </div>
-                            <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${CoolingFan.price} + ' VND'">
-                                                                    <span>VND</span>
-                                                                </span>
-                                <span class="sale" th:text="'-'+${CoolingFan.sale} + '%'"></span>
-                            </div>
+                    <div class="image">
+                        <div th:if="${Case == null}">
+                            <img th:src="@{/images/buildPC/case.svg}" alt="">
+                            <input type="hidden" th:value="${null}" name="CaseId">
                         </div>
-                        <div class="input-quantity">
-                            <button id="decrement" onclick="stepper(this)"> - </button>
-                            <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
-                            <button id="increment" onclick="stepper(this)"> + </button>
+                        <div th:if="${Case != null}">
+                            <img th:src="@{'/images/' + ${Case.images}}" alt="">
+                            <input type="hidden" th:value="${Case.productID}" name="CaseId">
                         </div>
-                        <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteCoolingFan}"></a>
                     </div>
-                </div>
-                <div class="choose-btn" >
-                    <div th:if="${CoolingFan == null}">
-                        <button onclick="openPopup('CoolingFan')">Choose</button>
+                    <div class="name-product">
+                        <div th:if="${Case == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${Case != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${Case.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${Case.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${Case.price}-${Case.sale}*${Case.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${Case.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${Case.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteCase}"></a>
+                        </div>
                     </div>
-                    <div th:if="${CoolingFan != null}">
+                    <div class="choose-btn" >
+                        <div th:if="${Case == null}">
+                            <button onclick="openPopup('Case')">Choose</button>
+                        </div>
+                        <div th:if="${Case != null}">
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="card-1">
+                <div class="card-body">
+                    <div class="tittle">
+                        <div>Cooling Fan</div>
+                    </div>
+                    <div class="image">
+                        <div th:if="${CoolingFan == null}">
+                            <img th:src="@{/images/buildPC/fan.svg}" alt="">                            <input type="hidden" th:value="${null}" name="CPUId">
+                            <input type="hidden" th:value="${null}" name="CoolingFanId">
+                        </div>
+                        <div th:if="${CoolingFan != null}">
+                            <img th:src="@{'/images/' + ${CoolingFan.images}}" alt="">                            <input type="hidden" th:value="${CPU.productID}" name="CPUId">
+                            <input type="hidden" th:value="${CoolingFan.productID}" name="CoolingFanId">
+                        </div>
+                    </div>
+                    <div class="name-product">
+                        <div th:if="${CoolingFan == null}">
+                            Vui lòng chọn linh kiện
+                        </div>
+                        <div th:if="${CoolingFan != null}" style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                            <a class="choose-product-body-product-card-name-link">
+                                <div class="choose-product-body-product-card-name-text">
+                                    <a th:text="${CoolingFan.name}"
+                                       th:href="@{/EcommerceStore/productDetails/{productId}(productId=${CoolingFan.productID})}"></a>
+                                </div>
+                            </a>
+                            <div class="choose-product-body-product-card-price-space">
+                                <div class="choose-product-body-product-card-price-sale">
+                                    <span th:text="${CoolingFan.price}-${CoolingFan.sale}*${CoolingFan.price}/100 + ' VND'"></span>
+                                </div>
+                                <div class="choose-product-body-product-card-price-real">
+                                                                    <span class="cost" th:text="${CoolingFan.price} + ' VND'">
+                                                                        <span>VND</span>
+                                                                    </span>
+                                    <span class="sale" th:text="'-'+${CoolingFan.sale} + '%'"></span>
+                                </div>
+                            </div>
+                            <div class="input-quantity">
+                                <button id="decrement" onclick="stepper(this)"> - </button>
+                                <input type="number" min="0" max="100" step="1" value="1" id="my-input" readonly>
+                                <button id="increment" onclick="stepper(this)"> + </button>
+                            </div>
+                            <a class="fa-solid fa-trash-can" th:href="@{/EcommerceStore/deleteCoolingFan}"></a>
+                        </div>
+                    </div>
+                    <div class="choose-btn" >
+                        <div th:if="${CoolingFan == null}">
+                            <button onclick="openPopup('CoolingFan')">Choose</button>
+                        </div>
+                        <div th:if="${CoolingFan != null}">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
+
     <div class="content-2">
         <div class="card-2">
             <div class="card-body-2">
@@ -1957,6 +1981,13 @@
             </div>
         </div>
     </div>
+    <div id="confirmPopup" class="popup">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <a th:href="@{/EcommerceStore/deleteCPU}">Yes</a>
+            <a onclick="cancelAction()">No</a>
+        </div>
+    </div>
     <div id="overlay"></div>
 </div>
 <script>
@@ -1984,20 +2015,65 @@
             popup.style.display = "none";
         }
     }
-    const myInput = document.getElementById("my-input");
-    function stepper(btn){
-        let id = btn.getAttribute("id");
-        let min = myInput.getAttribute("min");
-        let max = myInput.getAttribute("max");
-        let step = myInput.getAttribute("step");
-        let val = myInput.getAttribute("value");
-        let calcStep = (id == "increment") ? (step*1) : (step * -1);
-        let newValue = parseInt(val) + calcStep;
+    function stepper(btn) {
+        const input = btn.parentNode.querySelector("input");
+        const id = btn.getAttribute("id");
+        const min = parseInt(input.getAttribute("min"));
+        const max = parseInt(input.getAttribute("max"));
+        const step = parseInt(input.getAttribute("step"));
+        let val = parseInt(input.value);
+        let newValue;
 
-        if(newValue >= min && newValue <= max){
-            myInput.setAttribute("value", newValue);
+        if (id === "increment") {
+            newValue = val + step;
+        } else {
+            newValue = val - step;
+        }
+
+        if (newValue >= min && newValue <= max) {
+            input.value = newValue;
+            calculateTotalPrice(btn.parentNode.parentNode);
         }
     }
+
+    function confirmPopup() {
+        // Hiển thị popup
+        document.getElementById("confirmPopup").style.display = "block";
+    }
+
+    function confirmAction() {
+        // Xử lý hành động khi xác nhận
+        alert("Hành động đã được xác nhận!");
+        // Đóng popup
+        document.getElementById("confirmPopup").style.display = "none";
+    }
+
+    function cancelAction() {
+        // Xử lý hành động khi hủy bỏ
+        alert("Hành động đã được hủy bỏ!");
+        // Đóng popup
+        document.getElementById("confirmPopup").style.display = "none";
+    }
+
+    function updatePrice(element) {
+        var cardBody = element.closest('.card-body');
+        var price = parseFloat(cardBody.querySelector('.cost').innerText);
+        var sale = parseFloat(cardBody.querySelector('.sale').innerText.replace('%', ''));
+        var quantity = parseFloat(cardBody.querySelector('.input-quantity input').value);
+
+        var totalPrice = price * quantity * (1 - sale / 100);
+        cardBody.querySelector('.choose-product-body-product-card-price-sale span').innerText = totalPrice.toFixed(2) + ' VND';
+    }
+
+    document.querySelectorAll('.input-quantity input').forEach(input => {
+        input.addEventListener('input', function() {
+            updatePrice(this);
+        });
+    });
+
+
+
+
     // const openModalButtons = document.querySelectorAll('[data-modal-target]')
     // const closeModalButtons = document.querySelectorAll('[data-close-button]')
     // const overlay = document.getElementById('overlay')
