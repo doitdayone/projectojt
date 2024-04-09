@@ -54,7 +54,7 @@
   <button type="submit">Confirm Order</button>
 </form>
 <a href="/EcommerceStore/product">Back</a>
-
+</body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 <script>
   var cities = document.getElementById("city");
@@ -101,6 +101,64 @@
     };
   }
 
+    document.addEventListener("DOMContentLoaded", function() {
+    // Lấy ra các input radio và select
+    var address1 = document.getElementById("address1");
+    var address2 = document.getElementById("address2");
+    var userAddressList = document.getElementById("useraddress");
+
+    // Nếu danh sách địa chỉ không rỗng
+    if (userAddressList.options.length > 0) {
+    // Chọn saved address
+    address1.checked = true;
+  } else {
+    // Chọn other address
+    address2.checked = true;
+  }
+  });
+
+  document.addEventListener("DOMContentLoaded", function() {
+    // Lấy ra các phần tử HTML của các trường dữ liệu và label
+    var otherAddressFields = document.querySelectorAll("#city, #district, #commute, #detail_address, #receive_name, #receive_phone");
+    var otherAddressLabels = document.querySelectorAll("label[for='city'], label[for='district'], label[for='commute'], label[for='detail_address'], label[for='receive_name'], label[for='receive_phone']");
+
+    // Lấy ra các input radio
+    var address1 = document.getElementById("address1");
+    var address2 = document.getElementById("address2");
+
+    // Thiết lập sự kiện onchange cho các input radio
+    address1.addEventListener("change", function() {
+      if (this.checked) {
+        // Ẩn các trường dữ liệu và label khi chọn saved address
+        otherAddressFields.forEach(function(field) {
+          field.style.display = "none";
+        });
+        otherAddressLabels.forEach(function(label) {
+          label.style.display = "none";
+        });
+      }
+    });
+
+    address2.addEventListener("change", function() {
+      if (this.checked) {
+        // Hiển thị các trường dữ liệu và label khi chọn other address
+        otherAddressFields.forEach(function(field) {
+          field.style.display = "block";
+        });
+        otherAddressLabels.forEach(function(label) {
+          label.style.display = "block";
+        });
+      }
+    });
+
+    // Mặc định ẩn các trường dữ liệu và label khi trang được tải
+    otherAddressFields.forEach(function(field) {
+      field.style.display = "none";
+    });
+    otherAddressLabels.forEach(function(label) {
+      label.style.display = "none";
+    });
+  });
 </script>
 </body>
 

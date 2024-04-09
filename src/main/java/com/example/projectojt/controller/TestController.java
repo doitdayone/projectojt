@@ -86,4 +86,9 @@ public class TestController {
         model.addAttribute("laptopProducts", laptopProducts);
         return "laptopPopup"; // Trả về view cho popup của laptop
     }
+    @GetMapping("/od")
+    public  String getod(){
+        return "order1";
+    }
+
 }
