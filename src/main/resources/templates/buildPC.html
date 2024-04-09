@@ -73,6 +73,88 @@
             padding: 10px;
             border-radius: 0 45px 45px 0;
         }
+        .view-total{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            justify-content: space-evenly;
+        }
+        .view-total div{
+            font-size: 24px;
+        }
+        .view-total div span{
+            font-size: 20px;
+        }
+        .btn-addtocart{
+            width: 80%;
+            height: 50px;
+            background-color: #0298cf;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .btn-addtocart:hover{
+            background-color: #007bff;
+        }
+        .popup2 {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 150px;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            z-index: 9999;
+        }
+        .popup-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            height: 100%;
+            width: 100%;
+        }
+        .popup-content p{
+            font-size: 24px;
+        }
+        .popup-content div{
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            width: 70%;
+        }
+        .popup-content div div:first-child{
+            width: 80px;
+            height: 40px;
+            background-color: #8de02c;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-content div div:last-child{
+            width: 80px;
+            height: 40px;
+            background-color: #f80000;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .popup-content div div a{
+            text-decoration: none;
+            font-size: 20px;
+            color: #FFFFFF;
+        }
     </style>
 </head>
 <body>
@@ -129,7 +211,7 @@
                                     <span class="sale" th:text="'-'+${CPU.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('CPU')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -191,7 +273,7 @@
                                     <span class="sale" th:text="'-'+${Mainboard.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('Mainboard')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -253,7 +335,7 @@
                                     <span class="sale" th:text="'-'+${RAM.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('RAM')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -315,7 +397,7 @@
                                     <span class="sale" th:text="'-'+${HDD.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('HDD')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -377,7 +459,7 @@
                                     <span class="sale" th:text="'-'+${SSD.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('SSD')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -439,7 +521,7 @@
                                     <span class="sale" th:text="'-'+${VGA.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('VGA')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -501,7 +583,7 @@
                                     <span class="sale" th:text="'-'+${PowerSupply.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('PowerSupply')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -563,7 +645,7 @@
                                     <span class="sale" th:text="'-'+${Case.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('Case')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -625,7 +707,7 @@
                                     <span class="sale" th:text="'-'+${CoolingFan.cartID.product.sale} + '%'"></span>
                                 </div>
                             </div>
-                            <button class="fa-solid fa-trash-can" onclick="confirmPopup()"></button>
+                            <button class="fa-solid fa-trash-can" onclick="openConfirmPopup('CoolingFan')"></button>
                         </div>
                     </div>
                     <div class="choose-btn" >
@@ -644,10 +726,15 @@
         <div class="card-2">
             <div class="card-body-2">
                 <div class="content" height="200">
-                    <p th:text="${total}"></p>
-                    <form th:action="@{/EcommerceStore/buildPC/order}" method="post">
-                        <button type="submit">Order</button>
-                    </form>
+                    <div th:if="${total == 0}">
+                        <img th:src="@{/images/buildPC/box.png}">
+                    </div>
+                    <div th:if="${total > 0}" class="view-total">
+                        <div>Total: <span th:text="${total}"></span></div>
+                        <form th:action="@{/EcommerceStore/buildPC/order}" method="post">
+                            <button type="submit" class="btn-addtocart">Order</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2047,11 +2134,121 @@
             </div>
         </div>
     </div>
-    <div id="confirmPopup" class="popup">
+    <div id="ConfirmPopupCPU" class="popup2">
         <div class="popup-content">
             <p>Are you sure?</p>
-            <a th:href="@{/EcommerceStore/deleteCPU}">Yes</a>
-            <a onclick="cancelAction()">No</a>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteCPU}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('CPU')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupMainboard" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteMainboard}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('Mainboard')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupRAM" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteRAMd}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('RAM')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupHDD" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteHDD}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('HDD')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupSSD" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteSSD}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('SSD')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupVGA" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteVGA}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('VGA')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupPowerSupply" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deletePowerSupply}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('PowerSupply')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupCase" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteCase}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('Case')">No</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="ConfirmPopupCoolingFan" class="popup2">
+        <div class="popup-content">
+            <p>Are you sure?</p>
+            <div>
+                <div>
+                    <a th:href="@{/EcommerceStore/deleteCoolingFan}">Yes</a>
+                </div>
+                <div>
+                    <a onclick="closeConfirmPopup('CoolingFan')">No</a>
+                </div>
+            </div>
         </div>
     </div>
     <div id="overlay"></div>
@@ -2074,9 +2271,22 @@
         }
     }
 
+    function openConfirmPopup(popupId) {
+        var popup = document.getElementById('ConfirmPopup' + popupId);
+        if (popup) {
+            popup.style.display = "block";
+        }
+    }
+
     // Hàm đóng popup
     function closePopup(popupId) {
         var popup = document.getElementById(popupId + 'Popup');
+        if (popup) {
+            popup.style.display = "none";
+        }
+    }
+    function closeConfirmPopup(popupId) {
+        var popup = document.getElementById('ConfirmPopup' + popupId);
         if (popup) {
             popup.style.display = "none";
         }
@@ -2116,7 +2326,6 @@
 
     function cancelAction() {
         // Xử lý hành động khi hủy bỏ
-        alert("Hành động đã được hủy bỏ!");
         // Đóng popup
         document.getElementById("confirmPopup").style.display = "none";
     }
