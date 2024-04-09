@@ -94,7 +94,8 @@ public class BuildPCController {
         model.addAttribute("productCoolingFan", productCoolingFan);
         model.addAttribute("total",total);
         model.addAttribute("discount",discount);
-        return "buildPC";
+        //return "buildPC";
+        return "testBPC2";
     }
 
     private void addList(Model model){
@@ -340,7 +341,7 @@ public class BuildPCController {
             discount += p.getPrice()*(100-p.getSale())/100;
         }
         addList(model);
-        return "buildPC";
+        return "testBPC2";
     }
 
     @GetMapping("/buildPC/decrement")
