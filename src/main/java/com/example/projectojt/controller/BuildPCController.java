@@ -1,14 +1,8 @@
 package com.example.projectojt.controller;
 
 import com.example.projectojt.Key.CartID;
-import com.example.projectojt.model.BuildedPC;
-import com.example.projectojt.model.Cart;
-import com.example.projectojt.model.Product;
-import com.example.projectojt.model.User;
-import com.example.projectojt.repository.BuildedPCRepository;
-import com.example.projectojt.repository.CartRepository;
-import com.example.projectojt.repository.ProductRepository;
-import com.example.projectojt.repository.UserRepository;
+import com.example.projectojt.model.*;
+import com.example.projectojt.repository.*;
 import com.example.projectojt.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RequestMapping("/EcommerceStore")
 @Controller
@@ -36,6 +31,8 @@ public class BuildPCController {
     private UserRepository userRepository;
     @Autowired
     private CartRepository cartRepository;
+    @Autowired
+    private AddressRepository userAddressRepository;
     private CartID cartID;
     private Cart CPU = null;
     private Cart Mainboard = null;
@@ -149,7 +146,7 @@ public class BuildPCController {
     public String chooseMainboard(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        Mainboard = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -167,7 +164,7 @@ public class BuildPCController {
     public String chooseRAM(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        RAM = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -185,7 +182,7 @@ public class BuildPCController {
     public String chooseHDD(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        HDD = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -203,7 +200,7 @@ public class BuildPCController {
     public String chooseSSD(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        SSD = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -221,7 +218,7 @@ public class BuildPCController {
     public String chooseVGA(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        VGA = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -239,7 +236,7 @@ public class BuildPCController {
     public String choosePowerSupply(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        PowerSupply = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -257,7 +254,7 @@ public class BuildPCController {
     public String chooseCase(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        Case = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -275,7 +272,7 @@ public class BuildPCController {
     public String chooseCoolingFan(Model Model, @RequestParam("id") int id,HttpSession session){
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
         Product product = productRepository.getProductByProductID(id);
-        CPU = new Cart(new CartID(user,product),1);
+        CoolingFan = new Cart(new CartID(user,product),1);
         total += product.getPrice();
         addList(Model);
         return "buildPC";
@@ -385,8 +382,8 @@ public class BuildPCController {
     }
 
     @PostMapping("/buildPC/order")
-    public String order(HttpSession session){
-        List<Cart> carts =new ArrayList<>();
+    public String order(HttpSession session) {
+        List<Cart> carts = new ArrayList<>();
         carts.add(CPU);
         carts.add(Mainboard);
         carts.add(RAM);
@@ -397,19 +394,20 @@ public class BuildPCController {
         carts.add(Case);
         carts.add(CoolingFan);
 
-        for (Cart c: carts
-             ) {
-            if (c==null) {
-                carts.remove(c);
-                continue;
-            }
-            Cart existedCart = cartRepository.findByUserIdAndProductId(c.getCartID().getUser().getUserID(),c.getCartID().getProduct().getProductID());
-            if(existedCart!=null)
+        // Remove null elements from the list
+        carts.removeIf(Objects::isNull);
+
+        for (Cart c : carts) {
+            Cart existedCart = cartRepository.findByUserIdAndProductId(c.getCartID().getUser().getUserID(), c.getCartID().getProduct().getProductID());
+            if (existedCart != null) {
                 cartRepository.delete(existedCart);
+            }
             cartRepository.save(c);
         }
 
-        return "redirect:/EcommerceStore/cart/"+session.getAttribute("user_id");
+        return "redirect:/EcommerceStore/cart/" + session.getAttribute("user_id");
     }
+
+
 }
 
