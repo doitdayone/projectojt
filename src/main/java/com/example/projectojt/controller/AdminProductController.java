@@ -112,7 +112,7 @@ public class AdminProductController {
         product.setDetail(productDto.getDetail());
         product.setImages(storageFileName);
         product.setQuantity(productDto.getQuantity());
-
+        product.setSale(productDto.getSale());
         service.save(product);
 
 

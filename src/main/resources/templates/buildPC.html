@@ -205,7 +205,7 @@
                                     <span th:text="(${CPU.cartID.product.price}-${CPU.cartID.product.sale}*${CPU.cartID.product.price}/100)*${CPU.quantity} + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost" th:text="${CPU.cartID.product.price} + ' VND'">
+                                                                    <span class="cost" th:text="${CPU.cartID.product.price}*${CPU.quantity} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
                                     <span class="sale" th:text="'-'+${CPU.cartID.product.sale} + '%'"></span>
@@ -264,7 +264,7 @@
                             <p>x</p>
                             <div class="choose-product-body-product-card-price-space">
                                 <div class="choose-product-body-product-card-price-sale">
-                                    <span th:text="${Mainboard.cartID.product.price}-${Mainboard.cartID.product.sale}*${Mainboard.cartID.product.price}/100 + ' VND'"></span>
+                                    <span th:text="(${Mainboard.cartID.product.price}-${Mainboard.cartID.product.sale}*${Mainboard.cartID.product.price}/100)*${Mainboard.getQuantity()} + ' VND'"></span>
                                 </div>
                                 <div class="choose-product-body-product-card-price-real">
                                                             <span class="cost" th:text="${Mainboard.cartID.product.price}*${Mainboard.quantity} + ' VND'">
@@ -730,7 +730,8 @@
                         <img th:src="@{/images/buildPC/box.png}">
                     </div>
                     <div th:if="${total > 0}" class="view-total">
-                        <div>Total: <span th:text="${total}"></span></div>
+                        <div>Chua khuyen mai: <span th:text="${total}"></span></div>
+                        <div>Total: <span th:text="${discount}"></span></div>
                         <form th:action="@{/EcommerceStore/buildPC/order}" method="post">
                             <button type="submit" class="btn-addtocart">Order</button>
                         </form>
