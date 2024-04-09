@@ -70,7 +70,7 @@ public class BuildPCController {
 
     @GetMapping("/buildPC")
     public String showBuildPCPage(ModelMap model){
-
+        total = 0;
         List<Product> productCPU = productRepository.findProductsByType("CPU");
         List<Product> productMainboard = productRepository.findProductsByType("Mainboard");
         List<Product> productRAM = productRepository.findProductsByType("RAM");
