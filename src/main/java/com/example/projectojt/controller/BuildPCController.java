@@ -45,9 +45,11 @@ public class BuildPCController {
     private Cart CoolingFan = null;
 
     private int total = 0;
+    private int discount = 0;
 
     private void countTotal(){
         total =0;
+        discount =0;
         List<Cart> carts =new ArrayList<>();
         carts.add(CPU);
         carts.add(Mainboard);
@@ -64,6 +66,7 @@ public class BuildPCController {
                 continue;
             }
             total+=c.quantity*c.getCartID().getProduct().getPrice();
+            discount+= c.quantity*c.getCartID().getProduct().getPrice()*(100-c.getCartID().getProduct().getSale())/100;
         }
     }
 
@@ -90,6 +93,7 @@ public class BuildPCController {
         model.addAttribute("productCase", productCase);
         model.addAttribute("productCoolingFan", productCoolingFan);
         model.addAttribute("total",total);
+        model.addAttribute("discount",discount);
         return "buildPC";
     }
 
@@ -122,6 +126,7 @@ public class BuildPCController {
         model.addAttribute("productCoolingFan", productCoolingFan);
         model.addAttribute("CoolingFan", CoolingFan);
         model.addAttribute("total",total);
+        model.addAttribute("discount",discount);
     }
 
     @GetMapping("/chooseCPU")
@@ -130,6 +135,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         CPU = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -148,6 +154,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         Mainboard = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -166,6 +173,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         RAM = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -184,6 +192,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         HDD = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -202,6 +211,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         SSD = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -220,6 +230,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         VGA = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -238,6 +249,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         PowerSupply = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -256,6 +268,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         Case = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -274,6 +287,7 @@ public class BuildPCController {
         Product product = productRepository.getProductByProductID(id);
         CoolingFan = new Cart(new CartID(user,product),1);
         total += product.getPrice();
+        discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
         return "buildPC";
     }
@@ -323,6 +337,7 @@ public class BuildPCController {
         for (Product p:products
              ) {
             total+=p.getPrice();
+            discount += p.getPrice()*(100-p.getSale())/100;
         }
         addList(model);
         return "buildPC";

@@ -181,8 +181,8 @@
                         <option value="Acer">Acer</option>
                         <option value="Dell">Dell</option>
                         <option value="ROG">ROG</option>
-                        <option value="ROG">AMD</option>
-                        <option value="ROG">Intel</option>
+                        <option value="AMD">AMD</option>
+                        <option value="Intel">Intel</option>
                     </select>
                 </div>
                 <div class="content">
@@ -192,7 +192,7 @@
                         <option value="Screen">Screen</option>
                         <option value="Keyboard">Keyboard</option>
                         <option value="CPU">CPU</option>
-                        <option value="CPU">Mainboard</option>
+                        <option value="Mainboard">Mainboard</option>
                     </select>
                 </div>
                 <div class="content">
@@ -202,6 +202,10 @@
                 <div class="content">
                     <label>Quantity</label>
                     <input type="number" step="0.1" min="0" th:field="${productDto.quantity}">
+                </div>
+                <div class="content">
+                    <label>Sale</label>
+                    <input type="number" step="1" min="0" max="100" th:field="${productDto.sale}">
                 </div>
                 <div class="content">
                     <label>Description</label>
