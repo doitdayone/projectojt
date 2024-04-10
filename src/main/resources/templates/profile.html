@@ -14,15 +14,15 @@
   <input type="hidden" name="user_id" readonly th:if="${user != null}" th:value="${user.userID}" class="d-none form-control">
 
   <!-- Null check for user_name -->
-  <input type="text" name="user_name" th:if="${user != null}" th:value="${user.userName}" class="d-none form-control">
+  <input type="text" name="user_name" th:text="${user.userName}" class="d-none form-control">
   <br>
-  <input type="text" name="user_email" readonly th:if="${user != null}" th:value="${user.email}" class="d-none form-control">
+  <input type="text" name="user_email" readonly th:value="${user.email}" class="d-none form-control">
   <br>
-  <input type="text" name="user_phoneNumber" th:if="${user != null}" th:value="${user.phone}" class="d-none form-control">
+  <input type="text" name="user_phoneNumber"  th:value="${user.phone}" class="d-none form-control">
   <br>
-  <input type="text" name="birthday" th:if="${user != null}" th:value="${user.birthday}" class="d-none form-control">
+  <input type="text" name="birthday"  th:value="${user.birthday}" class="d-none form-control">
   <br>
-  <input type="password" name="password" th:if="${user != null}" th:value="${user.password}" class="d-none form-control">
+  <input type="password" name="password"  th:value="${user.password}" class="d-none form-control">
 
   <button type="submit">Submit</button>
 </form>

@@ -1296,26 +1296,34 @@
                     <div class="title d-flex align-items space-between">
                         <h2>Thông tin giao hàng</h2>
                     </div>
+                    <select id="forjs" hidden="hidden" >
+                        <option th:each="useraddress: ${userAddressList}"
+                                th:value="${useraddress.getAddressID()}"
+                                th:text="${useraddress.toString()}"
+                        ></option>
+                    </select>
                     <div class="content-input-form d-flex flex-wrap">
-
-                        <div class="item-input" style="width: 100%">
-                            <label for="address1" >Saved Address</label>
-                            <input type="radio" name="address" id="address1" value="1" >
-                        </div>
-                        <div class="item-input" style="width: 100%">
-                            <label for="useraddress">Tỉnh/thành phố<span>*</span></label>
-                            <div class="province">
-                                <select id="useraddress" type="text" name="useraddress" class="form-control" style="color: #222;">
-                                    <option th:each="useraddress: ${userAddressList}"
-                                            th:value="${useraddress.getAddressID()}"
-                                            th:text="${useraddress.toString()}"
-                                    ></option>
-                                    <option th:if="${userAddressList.isEmpty()}" th:value="${-1}" type="hidden">
-                                    </option>
-                                </select>
+                        <div th:if="${!userAddressList.isEmpty()}">
+                            <div class="item-input" style="width: 100%">
+                                <label for="address1" >Saved Address</label>
+                                <input type="radio" name="address" id="address1" value="1" >
+                            </div>
+                            <div class="item-input" style="width: 100%">
+                                <label for="useraddress">Tỉnh/thành phố<span>*</span></label>
+                                <div class="province">
+                                    <select id="useraddress" type="text" name="useraddress" class="form-control" style="color: #222;">
+                                        <option th:each="useraddress: ${userAddressList}"
+                                                th:value="${useraddress.getAddressID()}"
+                                                th:text="${useraddress.toString()}"
+                                        ></option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-
+                        <div th:if="${userAddressList.isEmpty()}">
+                            <label for="useraddress" hidden="hidden">
+                                <input name="useraddress" id="useraddress" hidden="hidden" th:value="${-1}">
+                        </div>
                         <div class="item-input" style="width: 100%">
                             <label for="address2" >Other Address</label>
                             <input type="radio" name="address" id="address2" value="2" >
@@ -1369,12 +1377,12 @@
                         <h2 class="title">Hình thức thanh toán</h2>
                         <div class="content-select-radio d-flex align-items">
                             <label for="vnpay" class="item-radio d-flex align-items">
-                                <input type="radio" id="vnpay" name="payment_method" value="1" class="check-radio">
+                                <input type="radio" id="vnpay" name="payment_method" value="2" class="check-radio">
                                 <span class="checkmark"></span>
                                 <span class="txt">Thanh toán bằng VNPay</span>
                             </label>
                             <label for="cash" class="item-radio d-flex align-items">
-                                <input type="radio" id="cash" name="payment_method" value="2"
+                                <input type="radio" id="cash" name="payment_method" value="1"
                                        class="check-radio active">
                                 <span class="checkmark"></span>
                                 <span class="txt">Thanh toán khi nhận hàng</span>
@@ -1672,12 +1680,11 @@
         };
     }
 
-
     document.addEventListener("DOMContentLoaded", function() {
         // Lấy ra các input radio và select
         var address1 = document.getElementById("address1");
         var address2 = document.getElementById("address2");
-        var userAddressList = document.getElementById("useraddress");
+        var userAddressList = document.getElementById("forjs");
 
         // Nếu danh sách địa chỉ không rỗng
         if (userAddressList.options.length > 0) {
@@ -1687,49 +1694,6 @@
             // Chọn other address
             address2.checked = true;
         }
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        // Lấy ra các phần tử HTML của các trường dữ liệu và label
-        var otherAddressFields = document.querySelectorAll("#city, #district, #commute, #detail_address, #receive_name, #receive_phone");
-        var otherAddressLabels = document.querySelectorAll("label[for='city'], label[for='district'], label[for='commute'], label[for='detail_address'], label[for='receive_name'], label[for='receive_phone']");
-
-        // Lấy ra các input radio
-        var address1 = document.getElementById("address1");
-        var address2 = document.getElementById("address2");
-
-        // Thiết lập sự kiện onchange cho các input radio
-        address1.addEventListener("change", function() {
-            if (this.checked) {
-                // Ẩn các trường dữ liệu và label khi chọn saved address
-                otherAddressFields.forEach(function(field) {
-                    field.style.display = "none";
-                });
-                otherAddressLabels.forEach(function(label) {
-                    label.style.display = "none";
-                });
-            }
-        });
-
-        address2.addEventListener("change", function() {
-            if (this.checked) {
-                // Hiển thị các trường dữ liệu và label khi chọn other address
-                otherAddressFields.forEach(function(field) {
-                    field.style.display = "block";
-                });
-                otherAddressLabels.forEach(function(label) {
-                    label.style.display = "block";
-                });
-            }
-        });
-
-        // Mặc định ẩn các trường dữ liệu và label khi trang được tải
-        otherAddressFields.forEach(function(field) {
-            field.style.display = "none";
-        });
-        otherAddressLabels.forEach(function(label) {
-            label.style.display = "none";
-        });
     });
 </script>
 </html>
