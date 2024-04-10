@@ -7,8 +7,6 @@ import com.example.projectojt.service.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -74,6 +72,7 @@ public class BuildPCController {
     @GetMapping("/buildPC")
     public String showBuildPCPage(ModelMap model){
         total = 0;
+        discount = 0;
         List<Product> productCPU = productRepository.findProductsByType("CPU");
         List<Product> productMainboard = productRepository.findProductsByType("Mainboard");
         List<Product> productRAM = productRepository.findProductsByType("RAM");
@@ -95,7 +94,7 @@ public class BuildPCController {
         model.addAttribute("total",total);
         model.addAttribute("discount",discount);
         //return "buildPC";
-        return "testBPC2";
+        return "BuildPC1";
     }
 
     private void addList(Model model){
@@ -138,7 +137,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteCPU")
@@ -146,7 +145,7 @@ public class BuildPCController {
         CPU = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/chooseMainboard")
@@ -157,7 +156,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteMainboard")
@@ -165,7 +164,7 @@ public class BuildPCController {
         Mainboard = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/chooseRAM")
@@ -176,7 +175,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteRAM")
@@ -184,7 +183,7 @@ public class BuildPCController {
         RAM = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/chooseHDD")
@@ -195,7 +194,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteHDD")
@@ -203,7 +202,7 @@ public class BuildPCController {
         HDD = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/chooseSSD")
@@ -214,7 +213,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteSSD")
@@ -222,7 +221,7 @@ public class BuildPCController {
         SSD = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/chooseVGA")
@@ -233,7 +232,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteVGA")
@@ -241,7 +240,7 @@ public class BuildPCController {
         VGA = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/choosePowerSupply")
@@ -252,7 +251,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deletePowerSupply")
@@ -260,7 +259,7 @@ public class BuildPCController {
         PowerSupply = null;
         addList(Model);
         countTotal();
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/chooseCase")
@@ -271,7 +270,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteCase")
@@ -279,7 +278,7 @@ public class BuildPCController {
         Case = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/chooseCoolingFan")
@@ -290,7 +289,7 @@ public class BuildPCController {
         total += product.getPrice();
         discount += product.getPrice()*(100-product.getSale())/100;
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @GetMapping("/deleteCoolingFan")
@@ -298,7 +297,7 @@ public class BuildPCController {
         CoolingFan = null;
         countTotal();
         addList(Model);
-        return "buildPC";
+        return "BuildPC1";
     }
     @GetMapping("/build-pc-view")
     public String view(HttpServletRequest request, Model model, HttpSession session)
@@ -341,7 +340,7 @@ public class BuildPCController {
             discount += p.getPrice()*(100-p.getSale())/100;
         }
         addList(model);
-        return "testBPC2";
+        return "BuildPC1";
     }
 
     @GetMapping("/buildPC/decrement")
@@ -368,7 +367,7 @@ public class BuildPCController {
         }
         countTotal();
         addList(model);
-        return "buildPC";
+        return "BuildPC1";
     }
     @GetMapping("/buildPC/increment")
     public String increment(@RequestParam("type") String type, Model model){
@@ -394,7 +393,7 @@ public class BuildPCController {
         }
         countTotal();
         addList(model);
-        return "buildPC";
+        return "BuildPC1";
     }
 
     @PostMapping("/buildPC/order")

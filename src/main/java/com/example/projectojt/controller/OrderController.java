@@ -48,7 +48,7 @@ public class OrderController {
             model.addAttribute("userAddressList", userAddressList);
             model.addAttribute("total", total);
             model.addAttribute("user_id", user_id);
-            return "order";
+            return "order1";
 
         }
 

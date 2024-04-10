@@ -1,6 +1,5 @@
 package com.example.projectojt.controller;
 
-import com.example.projectojt.model.Feedback;
 import com.example.projectojt.model.Product;
 import com.example.projectojt.model.User;
 import com.example.projectojt.repository.FeedbackRepository;
