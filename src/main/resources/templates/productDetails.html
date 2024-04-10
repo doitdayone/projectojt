@@ -1300,7 +1300,7 @@
             <div class="info-main-price">
               <div class="d-flex align-items">
                 <div class="price" > </div>
-                <p th:text="${product.price}-(${product.price}*(${product.sale}*100))"></p>
+                <p th:text="${product.price}-(${product.price}*(${product.sale}/100))"></p>
 
                 <del class="old-price" th:text="${product.price}"></del>
                 <div class="saleoff" th:text="'-'+${product.sale}+'%'"> </div>

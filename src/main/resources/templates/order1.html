@@ -146,26 +146,14 @@
                     </div>
                 </div>
                 <div class="header-mid-right d-flex align-items">
-                    <a class="item account d-flex align-items" href="/taikhoan">
-                        <i class="icon_2023 account"></i>
-                        <span
-                                class="hover-txt line-clamp-1"
-                                style="width: 74px; white-space: normal"
-                        >thanh hải</span
-                        >
+                    <a th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}"
+                       style="color: #FFFFFF; text-align: center">
+                        <i class="fa-solid fa-user"></i> <p th:text="${user_email}"></p>
                     </a>
-
-                    <a
-                            href="javascript:void(0)"
-                            class="item box-cart"
-                            id="js-header-cart"
-                    >
-                        <i class="icon_2023 cart"></i>
-                        <span class="counter-cart js-cart-counter">0</span>
-
-                        <div class="header-cart-hover" id="js-header-cart-holder">
-                            <!-- cart hover -->
-                        </div>
+                    <a th:if="${userRepository != null and userRepository.findByEmail(user_email) != null}"
+                       th:href="@{/EcommerceStore/cart/{user_id}(user_id=${userRepository.findByEmail(user_email).userID})}"
+                       style="color: #FFFFFF; text-align: center">
+                        <i class="fa-solid fa-cart-shopping"></i> <span>0</span>
                     </a>
                 </div>
                 <div class="global-login">
@@ -1392,88 +1380,34 @@
                 </div>
             </div>
             <div class="content-right">
-                <div class="form-voucher background-white">
-                    <h2 class="title">Nhập mã voucher</h2>
-                    <input class="voucher-input js_voucher_input" id="js_voucher_input" placeholder="Nhập mã khuyến mãi"
-                           readonly="">
-                    <div class="info-voucher d-flex" id="js-voucher-message">
-                        Chưa nhập mã voucher nào
-                    </div>
-                    <div class="note">Mã giảm giá và phiếu mua hàng sẽ khổng thể dùng lại sau khi đã đặt mua
-                        hàng
-                    </div>
-                </div>
                 <div class="ground-info-product background-white">
                     <h2 class="title">Thông tin giỏ hàng</h2>
-                    <div class="content-product">
+                    <tr class="content-product" th:each="cartItem: ${cartItemList}">
+                        <div class="item-product">
+                            <a href="/" class="image">
 
-
-                        <div class="item-product js-item-row" data-variant_id="" data-item_id="8746"
-                             data-item_type="product" data-check-deal="">
-                            <a href="/laptop-gigabyte-g5-mf-f2vn333sh.html" class="image">
-
-                                <img src="/media/product/250-8746-laptop-gigabyte-g5-ge-51vn213sh-1.jpg"
-                                     alt="Laptop Gigabyte G5 MF-F2VN333SH i5-12450H/ 8GB/ 512GB/ RTX 4050 6GB/ 15.6 inch FHD 144Hz/ Win 11">
-
+                                <img th:src="@{'/images/' + ${cartItem.cartID.getProduct().images}}" alt="" style="width: 100px; height: 100px">
                             </a>
                             <div class="info">
-                                <a href="/laptop-gigabyte-g5-mf-f2vn333sh.html" class="name line-clamp-2">
-                                    Laptop Gigabyte G5 MF-F2VN333SH i5-12450H/ 8GB/ 512GB/ RTX 4050 6GB/ 15.6 inch FHD
-                                    144Hz/ Win 11
+                                <a href="/" class="name line-clamp-2" th:text="${cartItem.cartID.getProduct().name}">
                                 </a>
-                                <div class="d-flex align-items space-between" style="margin-top: 7px;">
-                                    <b style="margin-right: 5px;">x9</b>
-                                    <div class="price js-total-item-price" style="margin-top: 0;">173.610.000đ</div>
-                                </div>
+                                <div class="price" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
                             </div>
                         </div>
+                    </tr>
 
-
-                        <div class="item-product js-item-row" data-variant_id="" data-item_id="9224"
-                             data-item_type="product" data-check-deal="">
-                            <a href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-korea.html"
-                               class="image">
-
-                                <img src="/media/product/250-9224-ps5-3.jpg"
-                                     alt="Máy Chơi Game Sony Playstation 5 Slim (PS5 Slim) Digital Edition - Nhập Khẩu Korea">
-
-                            </a>
-                            <div class="info">
-                                <a href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-korea.html"
-                                   class="name line-clamp-2">
-                                    Máy Chơi Game Sony Playstation 5 Slim (PS5 Slim) Digital Edition - Nhập Khẩu Korea
-                                </a>
-                                <div class="d-flex align-items space-between" style="margin-top: 7px;">
-                                    <b style="margin-right: 5px;">x1</b>
-                                    <div class="price js-total-item-price" style="margin-top: 0;">10.990.000đ</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
 
                     <div class="total-price">
                         <div class="d-flex align-items item space-between">
-                            <b>Tổng số lượng sản phẩm</b>
-                            <b>10</b>
-                        </div>
-
-
-                        <div class="d-flex align-items item space-between">
                             <b>Tổng chi phí</b>
-                            <div class="js-total-cart-price">184.600.000</div>
+                            <div class="js-total-cart-price" th:text="${total}"></div>
                         </div>
-                        <span class="vat">
-                                Đã bao gồm VAT [nếu có]
-                            </span>
                     </div>
-                    <div class="btn">
-                        <label hidden="hidden" for="total">Total: </label> <br>
-                        <input hidden="hidden" type="text" name="total" id="total" th:value="${total}" readonly>
+                    <form class="btn" th:action="@{/EcommerceStore/order}" method="get">
                         <input type="hidden" name="user_id" th:value="${user_id}">
-                        <button type="submit" class="button-send-cart"><span class="txt">Xác nhận mua hàng</span>
-                        </button>
-                    </div>
+                        <input type="hidden" name="total" th:value="${total}">
+                        <button class="button-send-cart" type="submit">Tiến hành thanh thanh toán</button>
+                    </form>
                     <div class="icon-pay">
                         <img src="/asset/default/images/pay_cart.png" alt="pay">
                     </div>

@@ -163,7 +163,18 @@
 
                     <td>
                         <a class="edit button" th:href="@{/admin/orderDetail(id=${order.orderID})}" style="word-wrap: break-word">View Detail</a>
-<!--                        <a class="delete button" th:href="@{/delete(id=${product.productID})}" onclick="return confirm('Are you sure')"><ion-icon name="trash-outline"></ion-icon></a>-->
+                        <div th:if="${order.status == 'PENDING'}">
+                            <form th:action="@{/admin/confirmOrder(id=${order.orderID})}" method="post">
+                                <button type="submit">Confirm Order</button>
+                            </form>
+                        </div>
+                        <div th:if="${order.status == 'CONFIRM' && order.getPStatus() == 'NOT YET'}">
+                            <form th:action="@{/admin/confirmPendingOrder(id=${order.orderID})}" method="post">
+                                <button type="submit">Confirm Paid Order</button>
+                            </form>
+                        </div>
+                        <div th:if="${order.getPStatus() == 'PAID' && order.status == 'CONFIRM'}">
+                        </div>
                     </td>
                 </tr>
                 </tbody>

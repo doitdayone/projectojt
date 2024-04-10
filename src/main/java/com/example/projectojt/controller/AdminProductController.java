@@ -54,12 +54,38 @@ public class AdminProductController {
     }
 
     @GetMapping("/confirm")
-    public String showConfirmProduct(Model Model, HttpSession session){
-        if ((boolean) session.getAttribute("admin")!=true)
+    public String showConfirmProduct(Model model, HttpSession session) {
+        if ((boolean) session.getAttribute("admin") != true)
             return "error";
-        List<Order> listOrders = repoOrder.findOrdersByStatus("PENDING");
-        Model.addAttribute("listOrders", listOrders);
+
+        List<Order> listOrders = repoOrder.findAll(); // Fetch all orders
+        model.addAttribute("listOrders", listOrders);
+
         return "confirmOrder";
+    }
+
+    @PostMapping("/confirmOrder")
+    public String confirmOrder(@RequestParam("id") Long orderId) {
+        // Retrieve the order from the database based on orderId
+        Order order = repoOrder.findById(orderId).orElse(null);
+        if (order != null) {
+            // Update the status to CONFIRM
+            order.setStatus("CONFIRM");
+            repoOrder.save(order); // Save the updated order
+        }
+        return "redirect:/admin/confirm"; // Redirect back to the confirm page
+    }
+
+    @PostMapping("/confirmPendingOrder")
+    public String confirmPendingOrder(@RequestParam("id") Long orderId) {
+        // Retrieve the order from the database based on orderId
+        Order order = repoOrder.findById(orderId).orElse(null);
+        if (order != null) {
+            // Update the status to CONFIRM
+            order.setPStatus("PAID");
+            repoOrder.save(order); // Save the updated order
+        }
+        return "redirect:/admin/confirm"; // Redirect back to the confirm page
     }
 
     @GetMapping("/orderDetail")

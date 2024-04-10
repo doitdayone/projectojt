@@ -1285,7 +1285,7 @@
                     <div class="name-price">
                       <a th:text="${cartItem.cartID.getProduct().name}" class="name line-clamp-2">
                       </a>
-                      <div class="price js-total-item-price" th:text="${cartItem.cartID.getProduct().price}"></div>
+                      <div class="price js-total-item-price" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
                     </div>
                     <div class="quantity-remove" style="width: 25%">
                       <div class="update-qnt-cart d-flex justify-content-around align-items-center" style="border: solid 1px #000000; padding: 5px; border-radius: 4px">
@@ -1318,18 +1318,68 @@
               </tr>
             </table>
             </div>
-            <span>Total: </span>
-            <p th:text="${total}"></p>
-            <form th:action="@{/EcommerceStore/order}" method="get">
-              <input type="hidden" name="user_id" th:value="${user_id}">
-              <input type="hidden" name="total" th:value="${total}">
-              <button type="submit">Order</button>
-            </form>
             <!---end item product --->
           </div>
           <!---end list product --->
         </div>
         <!---end background --->
+      </div>
+
+      <div class="content-right">
+        <div class="ground-info-product background-white">
+          <h2 class="title">Thông tin giỏ hàng</h2>
+          <tr class="content-product" th:each="cartItem: ${cartItemList}">
+            <div class="item-product">
+              <a href="/" class="image">
+
+                <img th:src="@{'/images/' + ${cartItem.cartID.getProduct().images}}" alt="" style="width: 100px; height: 100px">
+              </a>
+              <div class="info">
+                <a href="/" class="name line-clamp-2" th:text="${cartItem.cartID.getProduct().name}">
+                </a>
+                <div class="price" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
+              </div>
+            </div>
+          </tr>
+
+
+          <div class="total-price">
+            <div class="d-flex align-items item space-between">
+              <b>Tổng chi phí</b>
+              <div class="js-total-cart-price" th:text="${total}"></div>
+            </div>
+          </div>
+          <form class="btn" th:action="@{/EcommerceStore/order}" method="get">
+            <input type="hidden" name="user_id" th:value="${user_id}">
+            <input type="hidden" name="total" th:value="${total}">
+            <button class="button-send-cart" type="submit">Tiến hành thanh thanh toán</button>
+          </form>
+          <div class="icon-pay">
+            <img src="/asset/default/images/pay_cart.png" alt="pay">
+          </div>
+          <div class="info-policy">
+            <div class="item">
+              <i class="fa-solid fa-credit-card"></i>
+              <span>Hỗ trợ trả góp 0%, trả trước 0 đ</span>
+            </div>
+            <div class="item">
+              <i class="fa-solid fa-money-bill"></i>
+              <span>Hoàn tiền 200% nếu có hàng giả</span>
+            </div>
+            <div class="item">
+              <i class="fa-solid fa-bolt"></i>
+              <span>Giao hàng nhanh trên toàn quốc</span>
+            </div>
+            <div class="item">
+              <i class="fa-solid fa-headset"></i>
+              <span>Hỗ trợ kĩ thuật online 24/7</span>
+            </div>
+            <div class="item">
+              <i class="fa-solid fa-wrench"></i>
+              <span>Vệ sinh miễn phí PC, Laptop trọn đời</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -232,8 +232,7 @@ public class CartController {
         } else {
             int total = 0;
             for (Cart c : cartItemList) {
-                total += c.getQuantity() * c.getCartID().getProduct().getPrice();
-            }
+                total += c.getQuantity() * (c.getCartID().getProduct().getPrice() - c.getCartID().getProduct().getPrice()*c.getCartID().getProduct().getSale()/100);            }
             return total;
         }
 
