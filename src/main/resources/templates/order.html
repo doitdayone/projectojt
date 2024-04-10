@@ -121,6 +121,7 @@
     // Lấy ra các phần tử HTML của các trường dữ liệu và label
     var otherAddressFields = document.querySelectorAll("#city, #district, #commute, #detail_address, #receive_name, #receive_phone");
     var otherAddressLabels = document.querySelectorAll("label[for='city'], label[for='district'], label[for='commute'], label[for='detail_address'], label[for='receive_name'], label[for='receive_phone']");
+    var userAddressList = document.getElementById("useraddress");
 
     // Lấy ra các input radio
     var address1 = document.getElementById("address1");
@@ -136,6 +137,7 @@
         otherAddressLabels.forEach(function(label) {
           label.style.display = "none";
         });
+        userAddressList.style.display = "block"
       }
     });
 

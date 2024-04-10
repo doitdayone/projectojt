@@ -42,7 +42,7 @@ public class EditProfileController {
       model.addAttribute("user", user);
     }
 
-    return "profile";
+    return "profile1";
   }
 //update profile
 @Transactional
