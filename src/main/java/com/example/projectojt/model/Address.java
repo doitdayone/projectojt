@@ -45,12 +45,12 @@ public class Address {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Address address)) return false;
-        return getAddressID() == address.getAddressID();
+        return getAddressID() == address.getAddressID() && Objects.equals(getReceiverName(), address.getReceiverName()) && Objects.equals(getReceiverPhone(), address.getReceiverPhone()) && Objects.equals(getCity(), address.getCity()) && Objects.equals(getCommute(), address.getCommute()) && Objects.equals(getDistrict(), address.getDistrict()) && Objects.equals(getUser(), address.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getAddressID());
+        return Objects.hash(getAddressID(), getReceiverName(), getReceiverPhone(), getCity(), getCommute(), getDistrict(), getUser());
     }
 
     @Override
