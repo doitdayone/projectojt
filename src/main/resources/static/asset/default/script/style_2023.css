@@ -2704,6 +2704,7 @@ table tr:nth-child(2n) {
   overflow: hidden;
   outline: none;
   border: none;
+  border-radius: 5px;
 }
 .page-cart .button-send-cart::before {
   position: absolute;
@@ -2718,13 +2719,15 @@ table tr:nth-child(2n) {
   transition: 0.5s;
   opacity: 0;
 }
-.page-cart .button-send-cart .txt {
+.page-cart .button-send-cart:hover {
+  opacity: 1;
+  width: 100%;
   position: relative;
   z-index: 9;
-}
-.page-cart .button-send-cart:hover::before {
-  opacity: 1;
-  width: 120%;
+  background-color: #FFFFFF;
+  color: var(--color-global);
+  border: solid 1px var(--color-global);
+  border-radius: 5px;
 }
 .page-cart .content-input-form {
   margin-right: -24px;

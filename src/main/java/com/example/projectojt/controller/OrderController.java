@@ -9,8 +9,14 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +45,58 @@ public class OrderController {
 
     @GetMapping("/order")
     public String viewOrder(@RequestParam("user_id") int user_id,
-                            @RequestParam("total") int total, Model model) {
+                            @RequestParam("total") int total, Model model,
+                            Authentication authentication,
+                            HttpSession session) {
+        ArrayList<Cart> cartItemList = cartRepository.findCartsByUserID(user_id);
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof UserDetails userDetails) {
+                // Standard UserDetails case
+                String email = userDetails.getUsername();
+                model.addAttribute("user_email", email);
+                User user = userRepository.findByEmail(email);
+                model.addAttribute("userRepository", userRepository);
+                int userid = user.getUserID();
+                model.addAttribute("user_id", userid);
+                session.setAttribute("user_id", userRepository.findByEmail(email).getUserID());
+                if (user.getRoles().equals("ADMIN"))
+                    return "redirect:/admin";
+            } else if (principal instanceof OAuth2User oAuth2User) {
+                // get user_email when sign in with google or facebook
+                Map<String, Object> attributes = oAuth2User.getAttributes();
+                model.addAttribute("user_email",
+                        attributes.get("email"));
+
+                if(!userRepository.existsByEmail((String) attributes.get("email"))){
+                    var user =  User.builder().userName((String) attributes.get("name"))
+                            .email((String) attributes.get("email")).password("").verified(true).roles("USER").build();
+                    userRepository.save(user);
+                    ;
+                }
+                session.setAttribute("user_id", userRepository.findByEmail((String) attributes.get("email")).getUserID());
+                model.addAttribute("userRepository", userRepository);
+
+            } else {
+                return "error";
+            }
+        }
+
+        if (cartItemList == null) {
+            int totalPrice = 0;
+            model.addAttribute("total", totalPrice);
+            model.addAttribute("error", "Your cart is empty");
+            cartItemList = new ArrayList<Cart>();
+        }
+
+        model.addAttribute("productRepository", productRepository);
+        model.addAttribute("cartItemList", cartItemList);
+        model.addAttribute("user_id", user_id);
+        session.setAttribute("cartItemList", cartItemList);
+        int totalPrice = getTotal(cartItemList);
+
+        model.addAttribute("total", totalPrice);
         if (total == 0) {
             model.addAttribute("error", "Your cart is empty");
             return "order_error";
@@ -208,6 +265,19 @@ public class OrderController {
         } else {
             return "order_fail";
         }
+
+    }
+
+    public int getTotal(List<Cart> cartItemList) {
+        if (cartItemList == null) {
+            return 0;
+        } else {
+            int total = 0;
+            for (Cart c : cartItemList) {
+                total += c.getQuantity() * (c.getCartID().getProduct().getPrice() - c.getCartID().getProduct().getPrice()*c.getCartID().getProduct().getSale()/100);            }
+            return total;
+        }
+
 
     }
 }
