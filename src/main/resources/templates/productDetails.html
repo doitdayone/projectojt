@@ -1300,7 +1300,7 @@
             <div class="info-main-price">
               <div class="d-flex align-items">
                 <div class="price" > </div>
-                <p th:text="${product.price}-(${product.price}*(${product.sale}*100))"></p>
+                <p th:text="${product.price}-(${product.price}*(${product.sale}/100))"></p>
 
                 <del class="old-price" th:text="${product.price}"></del>
                 <div class="saleoff" th:text="'-'+${product.sale}+'%'"> </div>
@@ -1450,8 +1450,8 @@
   </div>
 </div>
 </div>
-<script src="/static/assets/default/script/library.js?v=1.002"></script>
-<script src="/static/assets/default/script/main.js?1.71"></script>
+<script src="/asset/default/script/library.js?v=1.002"></script>
+<!--<script src="/asset/default/script/main.js?1.71"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
 
 

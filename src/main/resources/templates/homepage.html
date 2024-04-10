@@ -41,97 +41,42 @@
         </a>
         <div class="form__input">
           <form
-                  method="get"
-                  action="/tim"
-                  enctype="multipart/form-data"
-                  class="clearfix search-form bg-white"
+                  class="clearfix search-form bg-white"  th:action="@{/EcommerceStore/search}" method="get"
           >
             <div class="searh-form-container">
-              <div class="box-select" onclick="_show_option_search();">
-                <input
+              <div class="box-select">
+                <a
                         type="hidden"
-                        name="category"
                         id="js-search-catId"
                         value="0"
-                />
+                ></a>
                 <a
-                        href="javascript:void(0)"
                         class="title-select"
                         id="js-search-title"
                 >
                   Tất cả danh mục
                 </a>
                 <div class="content-select" id="js-list-option-search">
-                  <a href="javascript:void(0)">Tất cả danh mục</a>
+                  <a>Tất cả danh mục</a>
 
-                  <a href="javascript:void(0)" data-id="76"
-                  >Xây dựng cấu hình PC</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="82">PC Gaming</a>
-
-                  <a href="javascript:void(0)" data-id="210">PC Đồ Họa</a>
-
-                  <a href="javascript:void(0)" data-id="182"
-                  >PC Văn Phòng</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="217"
-                  >Máy chơi game - Console</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="68"
-                  >Màn Hình Máy Tính</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="65"
-                  >VGA - Card màn hình</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="60"
-                  >Linh kiện máy tính</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="78">Gaming Gears</a>
-
-                  <a href="javascript:void(0)" data-id="79"
-                  >Laptop - Máy Tính Xách Tay</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="103"
-                  >Phụ Kiện - Tản Nhiệt PC</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="191">Apple</a>
-
-                  <a href="javascript:void(0)" data-id="159">AUDIO</a>
-
-                  <a href="javascript:void(0)" data-id="197"
-                  >Hàng Cũ - Giá Tốt</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="75"
-                  >Thiết bị văn phòng</a
-                  >
-
-                  <a href="javascript:void(0)" data-id="74"
-                  >Thiết bị mạng</a
-                  >
                 </div>
               </div>
+
               <input
-                      type="text"
-                      id="js-global-seach"
+                      type="text" name="keyword"
+                      id="keyword"
                       class="text_search"
-                      name="q"
                       placeholder="Nhập sản phẩm cần tìm..."
                       autocomplete="off"
-                      value=""
+                      th:value="${keyword}"
               />
+                <input type="hidden" name="page" id="page" th:value="${10}"/>
+                <input type="hidden" name="size" id="size" value="4"/>
               <button type="submit" class="submit-search">
                 <span>Tìm kiếm</span>
                 <i class="icon_2023 search"></i>
               </button>
+
             </div>
           </form>
           <div class="autocomplete-suggestions" id="js-show-search">
@@ -1565,8 +1510,7 @@
                 <div class="hot-product-main-item">
                   <img
                           width="100%"
-                          src="https://www.tncstore.vn/media/product/250-8741-sniper-i3060---wh---01-2000000.jpg"
-                          alt=""
+                          th:src="${product.images}"
                   />
                   <div class="hot-product-main-item-content">
                     <h1>
@@ -1852,6 +1796,70 @@
     });
   });
 
+  var swiper = new Swiper(".mySwiper", {
+    cssMode: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    autoplay: {
+      delay: 5000,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+    },
+    mousewheel: true,
+    keyboard: true,
+  });
+  // show more product
+  const keyword = document.getElementById('keyword').value;
+  let page = 0;
+  let size = 4; // Số sản phẩm muốn hiển thị mỗi lần
+  document.addEventListener('DOMContentLoaded', function () {
+
+    if (keyword === '') {
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+        page++;
+        fetch('/EcommerceStore/products/more?page=' + page + '&size=' + size)
+                .then(function (response) {
+                  return response.text();
+                })
+                .then(function (html) {
+                  console.log("Response HTML:", html);
+                  var tempContainer = document.createElement('div');
+                  tempContainer.innerHTML = html;
+                  var productContainer = document.getElementById('product-container');
+                  var newProducts = tempContainer.querySelectorAll('#product-container > div');
+                  newProducts.forEach(function (product) {
+                    productContainer.appendChild(product);
+                  });
+                });
+      });
+    } else {
+
+      document.getElementById('show-more-btn').addEventListener('click', function () {
+
+        page++;
+        fetch('/EcommerceStore/search?keyword=' + encodeURIComponent(keyword) + '&page=' + page
+                + '&size=' + size)
+
+                .then(function (response) {
+                  return response.text();
+                })
+                .then(function (html) {
+                  var tempContainer = document.createElement('div');
+                  tempContainer.innerHTML = html;
+                  var productContainer = document.getElementById('product-container');
+                  var newProducts = tempContainer.querySelectorAll('#product-container > div');
+                  newProducts.forEach(function (product) {
+                    productContainer.appendChild(product);
+                  });
+                });
+      });
+
+    }
+
+  });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
