@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0,maximum-scale=1"
+    />
+
+
+    <title>Giỏ Hàng</title>
+
+    <link rel="icon" type="image/png" href="/static/asset/default/images/logo-white.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/static/asset/default/script/library.css?v=1.00111" />
+    <link href="/static/asset/default/script/style_2023.css?2024-03-25.22.08.47" rel="stylesheet" />
+</head>
+<body>
+<div class="header">
+    <div class="header-top">
+        <div class="container">
+            <div class="right d-flex align-items">
+                <a href="tel:0868302123" class="item d-flex align-items">
+                    <i class="icon_2023 phone"></i>
+                    <span class="hover-txt">0123456789</span>
+                </a>
+                <a href="mailto:cskh@tncstore.vn" class="item d-flex align-items">
+                    <i class="icon_2023 email"></i>
+                    <span class="hover-txt">abcd@gmail.com</span>
+                </a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="header-mid">
+        <div class="container">
+            <div class="content-header-mid d-flex align-items">
+                <a href="/" class="logo">
+                    <img
+                            src="static\asset\default\images\logo-no-background.png"
+                            alt="logo"
+                            width="160px"
+                            height="45px"
+                    />
+                </a>
+                <div class="form__input">
+                    <form
+                            method="get"
+                            action="/tim"
+                            enctype="multipart/form-data"
+                            class="clearfix search-form bg-white"
+                    >
+                        <div class="searh-form-container">
+                            <div class="box-select" onclick="_show_option_search();">
+                                <input
+                                        type="hidden"
+                                        name="category"
+                                        id="js-search-catId"
+                                        value="0"
+                                />
+                                <a
+                                        href="javascript:void(0)"
+                                        class="title-select"
+                                        id="js-search-title"
+                                >
+                                    Tất cả danh mục
+                                </a>
+                                <div class="content-select" id="js-list-option-search">
+                                    <a href="javascript:void(0)">Tất cả danh mục</a>
+
+                                    <a href="javascript:void(0)" data-id="76"
+                                    >Xây dựng cấu hình PC</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="82">PC Gaming</a>
+
+                                    <a href="javascript:void(0)" data-id="210">PC Đồ Họa</a>
+
+                                    <a href="javascript:void(0)" data-id="182"
+                                    >PC Văn Phòng</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="217"
+                                    >Máy chơi game - Console</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="68"
+                                    >Màn Hình Máy Tính</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="65"
+                                    >VGA - Card màn hình</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="60"
+                                    >Linh kiện máy tính</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="78">Gaming Gears</a>
+
+                                    <a href="javascript:void(0)" data-id="79"
+                                    >Laptop - Máy Tính Xách Tay</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="103"
+                                    >Phụ Kiện - Tản Nhiệt PC</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="191">Apple</a>
+
+                                    <a href="javascript:void(0)" data-id="159">AUDIO</a>
+
+                                    <a href="javascript:void(0)" data-id="197"
+                                    >Hàng Cũ - Giá Tốt</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="75"
+                                    >Thiết bị văn phòng</a
+                                    >
+
+                                    <a href="javascript:void(0)" data-id="74"
+                                    >Thiết bị mạng</a
+                                    >
+                                </div>
+                            </div>
+                            <input
+                                    type="text"
+                                    id="js-global-seach"
+                                    class="text_search"
+                                    name="q"
+                                    placeholder="Nhập sản phẩm cần tìm..."
+                                    autocomplete="off"
+                                    value=""
+                            />
+                            <button type="submit" class="submit-search">
+                                <span>Tìm kiếm</span>
+                                <i class="icon_2023 search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="autocomplete-suggestions" id="js-show-search">
+                        <div class="content-suggestions" id="js-seach-holder"></div>
+                        <a href="/" class="more-all" id="click_search"
+                        ><span class="hover-txt"
+                        >Xem tất cả <span id="total-pro"></span> sản phẩm</span
+                        ></a
+                        >
+                    </div>
+                </div>
+                <div class="header-mid-right d-flex align-items">
+                    <a class="item account d-flex align-items" href="/taikhoan">
+                        <i class="icon_2023 account"></i>
+                        <span
+                                class="hover-txt line-clamp-1"
+                                style="width: 74px; white-space: normal"
+                        >thanh hải</span
+                        >
+                    </a>
+
+                    <a
+                            href="javascript:void(0)"
+                            class="item box-cart"
+                            id="js-header-cart"
+                    >
+                        <i class="icon_2023 cart"></i>
+                        <span class="counter-cart js-cart-counter">0</span>
+
+                        <div class="header-cart-hover" id="js-header-cart-holder">
+                            <!-- cart hover -->
+                        </div>
+                    </a>
+                </div>
+                <div class="global-login">
+                    <a
+                            href="javascript:void(0)"
+                            class="close-login"
+                            onclick="close_login();"
+                    >
+                        <i class="fa fa-times"></i>
+                    </a>
+                    <div
+                            class="content-form-login padding-24"
+                            id="js-form-holder"
+                    ></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="header-bottom">
+        <div class="container">
+            <div class="header-bottom-content d-flex">
+                <div class="header-menu">
+                    <div class="title">
+                        <i class="fa fa-bars"></i>
+                        <span class="hover-txt">Danh mục sản phẩm</span>
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                    <div class="height-hover"></div>
+                    <div class="menu_holder">
+                        <div class="item">
+                            <a
+                                    href="/xay-dung-cau-hinh-pc.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Xây dựng cấu hình PC</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a
+                                                href="/gaming-workstation-pc.html"
+                                                class="title-holder"
+                                        >Gaming Workstation PC</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/may-tinh-dong-bo.html" class="title-holder"
+                                        >Pro Creator</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/pro-ductivity.html" class="title-holder"
+                                        >Pro Ductivity</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/pro-vr.html" class="title-holder">Pro VR</a>
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/pro-audio.html" class="title-holder"
+                                        >Pro Audio</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/gaming-pc.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">PC Gaming</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/pc-do-hoa.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">PC Đồ Họa</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/pc-van-phong.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">PC Văn Phòng</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a
+                                                href="/may-tinh-van-phong-tnc.html"
+                                                class="title-holder"
+                                        >Máy Tính Văn Phòng TNC</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a
+                                                href="/may-tinh-de-ban-dell.html"
+                                                class="title-holder"
+                                        >Máy Tính Để Bàn DELL</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/may-tinh-de-ban-hp.html" class="title-holder"
+                                        >Máy Tính Để Bàn HP</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a
+                                                href="/may-tinh-de-ban-asus.html"
+                                                class="title-holder"
+                                        >Máy Tính Để Bàn ASUS</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/may-tinh-intel-nuc.html" class="title-holder"
+                                        >Máy Tính Intel NUC</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/pc-sinh-vien.html" class="title-holder"
+                                        >PC Dành Cho Học Sinh - Sinh Viên</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/may-choi-game.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Máy chơi game - Console</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/may-play-station-5.html" class="title-holder"
+                                        >Máy PS5 - PlayStation 5</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/tay-cam-ps5.html" class="title-holder"
+                                        >Tay Cầm PS5</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/dia-game-ps5.html" class="title-holder"
+                                        >Đĩa Game PS5</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a
+                                                href="/phu-kien-playstation.html"
+                                                class="title-holder"
+                                        >Phụ Kiện Playstation</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/tay-cam-xbox.html" class="title-holder"
+                                        >Tay Cầm Xbox</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/pc-handheld.html" class="title-holder"
+                                        >Console Handheld</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a href="/monitor.html" class="item-cate d-flex align-items">
+                                <p class="cat-title">Màn Hình Máy Tính</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-gaming.html" class="title-holder"
+                                        >Màn Hình Gaming</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a
+                                                href="/man-hinh-gaming-gia-re.html"
+                                                class="title-holder"
+                                        >Màn Hình Gaming Giá Rẻ</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-hp.html" class="title-holder"
+                                        >Màn Hình HP</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-dell.html" class="title-holder"
+                                        >Màn Hình DELL</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-viewsonic.html" class="title-holder"
+                                        >Màn Hình Viewsonic</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-do-hoa.html" class="title-holder"
+                                        >Màn Hình Đồ Họa</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-acer.html" class="title-holder"
+                                        >Màn Hình ACER</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-asus.html" class="title-holder"
+                                        >Màn Hình ASUS</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-lg.html" class="title-holder"
+                                        >Màn Hình LG</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-msi.html" class="title-holder"
+                                        >Màn Hình MSI</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-van-phong.html" class="title-holder"
+                                        >Màn Hình Văn Phòng</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/man-hinh-philips.html" class="title-holder"
+                                        >Màn hình Philips</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/vga-card-man-hinh.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">VGA - Card màn hình</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/vga-rtx-3060-ti.html" class="title-holder"
+                                        >VGA Nvidia RTX 3060/ RTX 3060Ti</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/vga-nvidia-rtx-4060.html" class="title-holder"
+                                        >VGA Nvidia RTX 4060 / 4060Ti</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/vga-nvidia-rtx-4070.html" class="title-holder"
+                                        >VGA Nvidia RTX 4070 / 4070 Super / 4070Ti / 4070Ti
+                                            Super</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/vga-nvidia-rtx-4080.html" class="title-holder"
+                                        >VGA Nvidia RTX 4080 / 4080 Super</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/vga-nvidia-rtx-4090.html" class="title-holder"
+                                        >VGA Nvidia RTX 4090</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/vga-nvidia-rtx-3050.html" class="title-holder"
+                                        >VGA Nvidia RTX 3050</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/linh-kien-pc.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Linh kiện máy tính</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/cpu.html" class="title-holder"
+                                        >CPU - Bộ vi xử lý</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a
+                                                href="/mainboard-bo-mach-chu.html"
+                                                class="title-holder"
+                                        >Mainboard - Bo mạch chủ</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ram.html" class="title-holder"
+                                        >RAM - Bộ nhớ trong</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/hdd.html" class="title-holder">Ổ cứng HDD</a>
+
+                                        <div class="holder-last">
+                                            <a href="/o-cung-hdd-pc.html">Ổ cứng HDD - PC </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/o-cung-hdd-laptop.html"
+                                            >Ổ cứng HDD - Laptop
+                                            </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/hdd-western-digital.html"
+                                            >HDD Western Digital
+                                            </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/hdd-seagate.html">HDD Seagate </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/vo-case.html" class="title-holder"
+                                        >Case - Vỏ máy tính</a
+                                        >
+
+                                        <div class="holder-last">
+                                            <a href="/case-msi.html">Case MSI </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-gigabyte.html">Case Gigabyte </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-fractal-design.html"
+                                            >Case Fractal Design
+                                            </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-cougar.html">Case Cougar </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-hyte.html">Case Hyte </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-deepcool.html">Case DeepCool </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-asus.html">Case Asus </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-darkflash.html">Case DarkFlash </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-e-dra.html">Case E-Dra </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-corsair.html">Case Corsair </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-vitra.html">Case VITRA </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-kenoo.html">Case Kenoo </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-montech.html">Case Montech </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-lian-li.html">Case Lian Li </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-cooler-master.html"
+                                            >Case Cooler Master
+                                            </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-jonsbo.html">Case Jonsbo </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-mik.html">Case MIK </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-forgame.html">Case Forgame </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-centaur.html">Case Centaur </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/case-xigmatek.html">Case Xigmatek </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/nguon-may-tinh.html" class="title-holder"
+                                        >PSU - Nguồn máy tính</a
+                                        >
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-coolermaster.html"
+                                            >Nguồn Cooler Master
+                                            </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-kenoo.html">Nguồn Kenoo </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-antec.html">Nguồn Antec </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-deepcool.html">Nguồn DeepCool </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-gigabyte.html">Nguồn Gigabyte </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-nzxt.html">Nguồn NZXT </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-lian-li.html">Nguồn Lian Li </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-leadtek.html">Nguồn Leadtek </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-msi.html">Nguồn MSI </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-asus.html">Nguồn ASUS </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/nguon-corsair.html">Nguồn Corsair </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ssd-o-the-ran.html" class="title-holder"
+                                        >Ổ cứng SSD</a
+                                        >
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-seagate.html">SSD Seagate </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-samsung.html">SSD Samsung </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-western-digital.html"
+                                            >SSD Western Digital
+                                            </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-corsair.html">SSD Corsair </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-pioneer.html">SSD Pioneer </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-kingston.html">SSD Kingston </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-lexar.html">SSD Lexar </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-gigabyte.html">SSD Gigabyte </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-adata.html">SSD Adata </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-msi.html">SSD MSI </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-apacer.html">SSD Apacer </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-biostar.html">SSD Biostar </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-intel.html">SSD Intel </a>
+                                        </div>
+
+                                        <div class="holder-last">
+                                            <a href="/ssd-silicon-power.html"
+                                            >SSD Silicon Power
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/gaming-gear.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Gaming Gears</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/ban-phim-co.html" class="title-holder"
+                                        >Bàn Phím Cơ</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ban-phim-co-akko.html" class="title-holder"
+                                        >Bàn Phím Akko</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/tai-nghe-choi-game.html" class="title-holder"
+                                        >Tai Nghe Gaming</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/chuot-gaming.html" class="title-holder"
+                                        >Chuột Gaming</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ban-di-chuot.html" class="title-holder"
+                                        >Bàn di chuột</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ghe-cong-thai-hoc.html" class="title-holder"
+                                        >Ghế Công Thái Học</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ban-cong-thai-hoc.html" class="title-holder"
+                                        >Bàn Công Thái Học</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ghe-gaming.html" class="title-holder"
+                                        >Ghế Gaming</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/ban-gaming.html" class="title-holder"
+                                        >Bàn Gaming</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/microphone.html" class="title-holder"
+                                        >MIC - Microphone</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/thiet-bi-stream.html" class="title-holder"
+                                        >Thiết bị Stream</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/keycap.html" class="title-holder">Keycaps</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a href="/lap-top.html" class="item-cate d-flex align-items">
+                                <p class="cat-title">Laptop - Máy Tính Xách Tay</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/laptop-ai.html" class="title-holder"
+                                        >Laptop AI</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/gaming-laptop.html" class="title-holder"
+                                        >Laptop Gaming</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-asus.html" class="title-holder"
+                                        >Laptop Asus</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-acer.html" class="title-holder"
+                                        >Laptop Acer</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-acer-nitro.html" class="title-holder"
+                                        >Laptop Acer Nitro</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-dell.html" class="title-holder"
+                                        >Laptop Dell</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-hp.html" class="title-holder"
+                                        >Laptop HP</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-lg.html" class="title-holder"
+                                        >Laptop LG</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-van-phong.html" class="title-holder"
+                                        >Laptop Văn Phòng</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/phu-kien-laptop.html" class="title-holder"
+                                        >Phụ kiện, Balo laptop</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-gigabyte.html" class="title-holder"
+                                        >Laptop Gigabyte</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/laptop-msi.html" class="title-holder"
+                                        >Laptop MSI</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/tan-nhiet-may-tinh.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Phụ Kiện - Tản Nhiệt PC</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/tan-nhiet-khi.html" class="title-holder"
+                                        >Tản nhiệt khí cho PC</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/tan-nuoc-all-in-one.html" class="title-holder"
+                                        >Tản nước ALL IN ONE</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/quat-tan-nhiet-pc.html" class="title-holder"
+                                        >Quạt Tản Nhiệt PC</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/day-noi-dai.html" class="title-holder"
+                                        >Dây Nối Dài - Dây Riser</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/phu-kien-trang-tri.html" class="title-holder"
+                                        >Phụ Kiện Trang Trí</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/gia-treo-man-hinh.html" class="title-holder"
+                                        >Giá Treo Màn Hình</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/gia-do-vga.html" class="title-holder"
+                                        >Giá Đỡ VGA</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/tan-nhiet-valkyrie.html" class="title-holder"
+                                        >Tản nhiệt Valkyrie</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a href="/apple.html" class="item-cate d-flex align-items">
+                                <p class="cat-title">Apple</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/apple-iphone.html" class="title-holder"
+                                        >iPhone</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/apple-ipad.html" class="title-holder">Ipad</a>
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/apple-imac.html" class="title-holder">iMac</a>
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/apple-macbook.html" class="title-holder"
+                                        >Macbook</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a href="/audio.html" class="item-cate d-flex align-items">
+                                <p class="cat-title">AUDIO</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/loa-nghe-nhac.html" class="title-holder"
+                                        >Loa Nghe Nhạc</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a
+                                                href="/tai-nghe-true-wireless.html"
+                                                class="title-holder"
+                                        >Tai Nghe True Wireless</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/loa-may-tinh.html" class="title-holder"
+                                        >Loa Máy Tính</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/hang-cu-gia-tot.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Hàng Cũ - Giá Tốt</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/card-man-hinh-cu.html" class="title-holder"
+                                        >Card Màn Hình Cũ</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/thiet-bi-van-phong.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Thiết bị văn phòng</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/phan-mem-ban-quyen.html" class="title-holder"
+                                        >Phần mềm bản quyền</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a
+                                                href="/ban-phim-chuot-khong-day.html"
+                                                class="title-holder"
+                                        >Bộ Bàn Phím Chuột Không Dây</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/may-in-laser.html" class="title-holder"
+                                        >Máy in Laser</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/webcam.html" class="title-holder">Webcam</a>
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/usb-flash.html" class="title-holder"
+                                        >USB Flash</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/bo-chia-hub-usb.html" class="title-holder"
+                                        >Bộ Chia/Hub USB</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/o-dia-gan-ngoai.html" class="title-holder"
+                                        >Ổ Đĩa Gắn Ngoài</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item">
+                            <a
+                                    href="/thiet-bi-mang.html"
+                                    class="item-cate d-flex align-items"
+                            >
+                                <p class="cat-title">Thiết bị mạng</p>
+                                <span class="box-right">
+                        <i class="fa fa-angle-right"></i>
+                      </span>
+                            </a>
+
+                            <div class="menu-hover">
+                                <div class="list-holder d-flex flex-wrap">
+                                    <div class="item-holder">
+                                        <a href="/bo-phat-wifi.html" class="title-holder"
+                                        >Bộ phát Wifi</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/card-mang.html" class="title-holder"
+                                        >Card Mạng</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/usb-wifi.html" class="title-holder"
+                                        >USB Wifi</a
+                                        >
+                                    </div>
+
+                                    <div class="item-holder">
+                                        <a href="/router-accesspoint.html" class="title-holder"
+                                        >Router Wifi</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---header menu --->
+                <div class="header-bottom-right d-flex align-items">
+                    <a href="/buildpc" class="item">
+                  <span class="txt" alt="Build PC Gaming"
+                  >Xây dựng cấu hình PC</span
+                  >
+                    </a>
+                    <a href="/gaming-pc.html" class="item">
+                        <span class="txt" alt="PC Gaming">PC gaming</span>
+                    </a>
+                    <a href="/man-hinh-gaming.html" class="item">
+                        <span class="txt" alt="Màn hình Gaming">Màn hình gaming</span>
+                    </a>
+                    <a href="/gaming-laptop.html" class="item">
+                        <span class="txt" alt="Laptop Gaming">Laptop gaming</span>
+                    </a>
+                    <a
+                            href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-japan.html"
+                            class="item"
+                    >
+                  <span class="txt"
+                  >PS5 Slim
+                    <img
+                            border="0"
+                            src="/media/lib/07-12-2023/hotsale2.png"
+                            width="20"
+                            height="20"
+                    /></span>
+                    </a>
+                    <a href="/pc-van-phong.html" class="item">
+                        <span class="txt">PC Văn phòng</span>
+                    </a>
+                    <a
+                            href="/media/marketing/khuyenmai/khuyen-mai-8-3.html"
+                            class="item"
+                    >
+                        <span class="txt"> Khuyến mãi </span>
+                    </a>
+                    <a href="/vga-nvidia-rtx-4070.html" class="item">
+                        <span class="txt">RTX 4070 Super</span>
+                    </a>
+                    <a href="/vga-nvidia-rtx-4080.html" class="item">
+                        <span class="txt">RTX 4080 Super</span>
+                    </a>
+                    <a href="/gioi-thieu" class="item">
+                        <span class="txt">Giới thiệu</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-cart">
+    <div class="container">
+
+
+
+        <div id="breadcrumb" class="breadcrumb">
+            <ol itemscope="" itemtype="http://schema.org/BreadcrumbList">
+                <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem" class="home">
+                    <a href="/" itemprop="item" class="nopad-l">
+                        <span itemprop="name"><i class="fa fa-home"></i> Trang chủ</span>
+                    </a> <i class="fa fa-angle-right"></i>
+                    <meta itemprop="position" content="1">
+                </li>
+                <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+                    <a href="/cart" itemprop="item" class="nopad-l">
+                        <span itemprop="name">Giỏ hàng</span>
+                    </a><i class="fa fa-angle-right"></i>
+                    <meta itemprop="position" content="2">
+                </li>
+
+            </ol>
+        </div>
+        <div class="clearfix"></div>
+
+
+
+
+        <div class="content-main-cart d-flex">
+            <div class="content-left">
+                <div class="background-white">
+                    <div class="title d-flex align-items space-between">
+                        <h2>Thông tin sản phẩm</h2>
+                        <div class="btn-action-cart d-flex align-items">
+                            <a href="/export_file.php?file_type=xls&amp;content_type=shopping-cart" class="item">
+                                <img src="/static/asset/default/images/icon_dowload.png" alt="tải báo giá"> Tải báo giá
+                            </a>
+                            <a href="/print/user.php?view=cart" class="item">
+                                <img src="/static/asset/default/images/icon_printer.png" alt="in báo giá"> In báo giá
+                            </a>
+                        </div>
+                    </div>
+                    <div class="list-product-cart">
+
+
+
+                        <div class="item-cart d-flex js-item-row" data-variant_id="" data-item_id="8746" data-item_type="product" data-check-deal="">
+                            <a href="/laptop-gigabyte-g5-mf-f2vn333sh.html" class="image">
+
+                                <img src="/media/product/250-8746-laptop-gigabyte-g5-ge-51vn213sh-1.jpg" alt="Laptop Gigabyte G5 MF-F2VN333SH i5-12450H/ 8GB/ 512GB/ RTX 4050 6GB/ 15.6 inch FHD 144Hz/ Win 11">
+
+                            </a>
+                            <div class="info-product">
+                                <div class="d-flex">
+                                    <div class="name-price">
+                                        <a href="/laptop-gigabyte-g5-mf-f2vn333sh.html" class="name line-clamp-2">
+                                            Laptop Gigabyte G5 MF-F2VN333SH i5-12450H/ 8GB/ 512GB/ RTX 4050 6GB/ 15.6 inch FHD 144Hz/ Win 11
+                                        </a>
+                                        <input type="hidden" class="js-buy-price" data-price="19290000">
+                                        <div class="price js-total-item-price">173.610.000đ</div>
+
+                                    </div>
+                                    <div class="quantity-remove">
+                                        <div class="update-qnt-cart d-flex">
+                                            <input type="text" size="3" data-total="1" value="9" class="js-quantity-change js-buy-quantity" id="js-buy-quantity" data-stock="100">
+                                            <div class="btn-click d-flex flex-direction">
+                                                <a href="javascript:;" data-value="1" class="js-quantity-change"><i class="fa fa-plus"></i></a>
+                                                <a href="javascript:;" data-value="-1" class="js-quantity-change"><i class="fa fa-minus"></i></a>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:void(0)" class="remove-product js-delete-item">
+                                            Xóa
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                                <div class="summary">
+                                    <a href="javascript:void(0)" class="more-all hover-txt" onclick="show_summary.call(this)">Chi tiết sản phẩm
+                                        <i class="fa fa-angle-down"></i></a>
+                                    <ul class="content">
+
+
+                                        <li><p>CPU: Intel Core i5-12450H (upto 4.40GHz, 12MB)</p>
+                                        </li>
+
+                                        <li><p>RAM: 8GB(8GBx1)DDR4 3200Mhz (2 khe, Nâng cấp tối đa 64GB)</p>
+                                        </li>
+
+                                        <li><p>Ổ cứng: 512GB SSD M.2 PCIE G4X4 (2 khe M.2, Còn trống 1 khe SSD M.2 PCIE G3x4)</p>
+                                        </li>
+
+                                        <li><p>VGA: Nvidia Geforce RTX 4050 6GB GDDR6 + Intel Iris Xe Graphics</p>
+                                        </li>
+
+                                        <li><p>Màn hình: 15.6 inch FHD (1920x1080), 144Hz, IPS-level, Thin Bezel, 45% NTSC</p>
+                                        </li>
+
+                                        <li><p>Pin: 54 WHrs</p>
+                                        </li>
+
+                                        <li><p>Cân nặng: 1.9 kg</p>
+                                        </li>
+
+                                        <li><p>Màu sắc: Đen</p>
+                                        </li>
+
+                                        <li><p>OS: Windows 11 Home</p></li>
+
+                                    </ul>
+                                </div>
+
+
+
+                                <div class="specialOffer">
+                                    <div class="title">
+                                        <i class="fa fa-gift"></i>
+                                        Khuyến mại áp dụng
+                                    </div>
+                                    <ul class="content">
+
+
+                                        <li><p>Gói quà tặng bao gồm:</p>
+                                        </li>
+
+                                        <li><p>- Tặng Balo</p>
+                                        </li>
+
+                                        <li><p>- Chuột Wireless E-Dra EM604W</p>
+                                        </li>
+
+                                        <li><p>- Bộ vệ sinh Laptop 4 món&nbsp;</p>
+                                        </li>
+
+                                        <li><p>- Gói vệ sinh dịch vụ Laptop trị giá 500.000đ</p>
+                                        </li>
+
+                                        <li><p>- Dịch vụ cân màu màn hình trị giá 200.000đ</p></li>
+
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="item-cart d-flex js-item-row" data-variant_id="" data-item_id="9224" data-item_type="product" data-check-deal="">
+                            <a href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-korea.html" class="image">
+
+                                <img src="/media/product/250-9224-ps5-3.jpg" alt="Máy Chơi Game Sony Playstation 5 Slim (PS5 Slim) Digital Edition - Nhập Khẩu Korea">
+
+                            </a>
+                            <div class="info-product">
+                                <div class="d-flex">
+                                    <div class="name-price">
+                                        <a href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-korea.html" class="name line-clamp-2">
+                                            Máy Chơi Game Sony Playstation 5 Slim (PS5 Slim) Digital Edition - Nhập Khẩu Korea
+                                        </a>
+                                        <input type="hidden" class="js-buy-price" data-price="10990000">
+                                        <div class="price js-total-item-price">10.990.000đ</div>
+
+                                    </div>
+                                    <div class="quantity-remove">
+                                        <div class="update-qnt-cart d-flex">
+                                            <input type="text" size="3" data-total="1" value="1" class="js-quantity-change js-buy-quantity" id="js-buy-quantity" data-stock="10">
+                                            <div class="btn-click d-flex flex-direction">
+                                                <a href="javascript:;" data-value="1" class="js-quantity-change"><i class="fa fa-plus"></i></a>
+                                                <a href="javascript:;" data-value="-1" class="js-quantity-change"><i class="fa fa-minus"></i></a>
+                                            </div>
+                                        </div>
+                                        <a href="javascript:void(0)" class="remove-product js-delete-item">
+                                            Xóa
+                                        </a>
+                                    </div>
+                                </div>
+
+
+                                <div class="summary">
+                                    <a href="javascript:void(0)" class="more-all hover-txt" onclick="show_summary.call(this)">Chi tiết sản phẩm
+                                        <i class="fa fa-angle-down"></i></a>
+                                    <ul class="content">
+
+
+                                        <li><p><span style="font-size: 12pt;">Version máy: PLAYSTATION 5 SLIM - CFI-2000 model group - slim</span></p>
+                                        </li>
+
+                                        <li><p><span style="font-size: 12pt;">Hệ máy Sonsole mới nhất hãng Sony</span></p>
+                                        </li>
+
+                                        <li><p><span style="font-size: 12pt;">Thiết kế nhỏ gọn và mỏng hơn khoảng 30% so với phiên bản cũ cùng với hiệu năng tản nhiệt không đổi.</span></p>
+                                        </li>
+
+                                        <li><p><span style="font-size: 12pt;">Tích hợp tính năng Ray Tracing cho đồ hoạ game chân thực hơn bao giờ hết</span></p>
+                                        </li>
+
+                                        <li><p><span style="font-size: 12pt;">Hỗ trợ game có thể lên đến 120Fps với đầu ra tần số quét 120Hz với độ phân giải 4K</span></p>
+                                        </li>
+
+                                        <li><p><span style="font-size: 12pt;">PlayStation 5 hỗ trợ độ phân giải 8K, người dùng có thể chơi game với độ phân giải 4320p</span></p>
+                                        </li>
+
+                                        <li><p><span style="font-size: 12pt;">Phiên bản Digital không có ổ đĩa phù hợp với những người thích mua game qua cửa hàng trực tuyến của Sony</span></p>
+                                        </li>
+
+                                        <li><p><span style="font-size: 12pt;">Có thể chơi được cả các game của hệ máy PS4</span></p></li>
+
+                                    </ul>
+                                </div>
+
+
+
+                                <div class="specialOffer">
+                                    <div class="title">
+                                        <i class="fa fa-gift"></i>
+                                        Khuyến mại áp dụng
+                                    </div>
+                                    <ul class="content">
+
+
+                                        <li><p>Giảm trực tiếp 50.000đ khi mua kèm&nbsp;<strong><a href="https://www.tncstore.vn/tay-cam-ps5.html" target="_blank">Tay cầm PS5</a></strong></p>
+                                        </li>
+
+                                        <li><p>Giảm trực tiếp&nbsp;100.000đ khi mua kèm&nbsp;<strong><a href="https://www.tncstore.vn/ssd-o-the-ran.html" target="_blank">Ổ cứng SSD</a></strong></p>
+                                        </li>
+
+                                        <li><p>Giảm trực tiếp&nbsp;200.000đ khi mua kèm&nbsp;<strong><a href="https://www.tncstore.vn/may-choi-game-ps-portal.html" target="_blank">Máy Chơi Game PS Portal</a></strong></p></li>
+
+                                    </ul>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <!---end item product --->
+                    </div>
+                    <!---end list product --->
+                </div>
+                <!---end background --->
+            </div>
+            <!---end content left --->
+
+            <div class="content-right">
+                <div class="form-voucher background-white">
+                    <h2 class="title">Nhập mã voucher</h2>
+                    <input class="voucher-input js_voucher_input" id="js_voucher_input" placeholder="Nhập mã khuyến mãi">
+                    <div class="info-voucher d-flex" id="js-voucher-message">
+                        Chưa nhập mã voucher nào
+                    </div>
+                    <div class="note">Mã giảm giá và phiếu mua hàng sẽ khổng thể dùng lại sau khi đã đặt mua
+                        hàng
+                    </div>
+                </div>
+                <div class="ground-info-product background-white">
+                    <h2 class="title">Thông tin giỏ hàng</h2>
+                    <div class="content-product">
+
+
+
+                        <div class="item-product">
+                            <a href="/laptop-gigabyte-g5-mf-f2vn333sh.html" class="image">
+
+                                <img src="/media/product/250-8746-laptop-gigabyte-g5-ge-51vn213sh-1.jpg" alt="Laptop Gigabyte G5 MF-F2VN333SH i5-12450H/ 8GB/ 512GB/ RTX 4050 6GB/ 15.6 inch FHD 144Hz/ Win 11">
+
+                            </a>
+                            <div class="info">
+                                <a href="/laptop-gigabyte-g5-mf-f2vn333sh.html" class="name line-clamp-2">
+                                    Laptop Gigabyte G5 MF-F2VN333SH i5-12450H/ 8GB/ 512GB/ RTX 4050 6GB/ 15.6 inch FHD 144Hz/ Win 11
+                                </a>
+                                <div class="price">173.610.000đ</div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="item-product">
+                            <a href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-korea.html" class="image">
+
+                                <img src="/media/product/250-9224-ps5-3.jpg" alt="Máy Chơi Game Sony Playstation 5 Slim (PS5 Slim) Digital Edition - Nhập Khẩu Korea">
+
+                            </a>
+                            <div class="info">
+                                <a href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-korea.html" class="name line-clamp-2">
+                                    Máy Chơi Game Sony Playstation 5 Slim (PS5 Slim) Digital Edition - Nhập Khẩu Korea
+                                </a>
+                                <div class="price">10.990.000đ</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="total-price">
+
+                        <div class="d-flex align-items item space-between">
+                            <b>Tổng số lượng sản phẩm</b>
+                            <b>10</b>
+                        </div>
+
+                        <div class="d-flex align-items item space-between">
+                            <b>Tổng chi phí</b>
+                            <div class="js-total-cart-price">184.600.000</div>
+                        </div>
+                        <span class="vat">
+                                Đã bao gồm VAT [nếu có]
+                            </span>
+                    </div>
+                    <div class="btn">
+                        <input type="hidden" id="js-total-before-fee-discount" value="184600000">
+                        <input type="hidden" id="js-discount-voucher" value="0">
+                        <input type="hidden" name="coupon_code" value="" id="js_coupon_code">
+                        <input type="hidden" id="js-discount-membership" value="0">
+                        <input type="hidden" name="shipping_fee" id="js-fee-shipping" value="0">
+                        <input type="hidden" name="cod_fee" id="js-fee-cod" value="0">
+                        <a href="/cart?step=2" class="button-send-cart">
+                            <span class="txt">Tiến hành thanh thanh toán</span>
+                        </a>
+                    </div>
+                    <div class="icon-pay">
+                        <img src="/static/asset/default/images/pay_cart.png" alt="pay">
+                    </div>
+                    <div class="info-policy">
+                        <div class="item">
+                            <i class="fa-solid fa-credit-card"></i>
+                            <span>Hỗ trợ trả góp 0%, trả trước 0 đ</span>
+                        </div>
+                        <div class="item">
+                            <i class="fa-solid fa-money-bill"></i>
+                            <span>Hoàn tiền 200% nếu có hàng giả</span>
+                        </div>
+                        <div class="item">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Giao hàng nhanh trên toàn quốc</span>
+                        </div>
+                        <div class="item">
+                            <i class="fa-solid fa-headset"></i>
+                            <span>Hỗ trợ kĩ thuật online 24/7</span>
+                        </div>
+                        <div class="item">
+                            <i class="fa-solid fa-wrench"></i>
+                            <span>Vệ sinh miễn phí PC, Laptop trọn đời</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<div class="footer">
+    <div class="form-info-sale">
+        <div class="container">
+            <div class="d-flex space-between align-items">
+                <div class="social-left">
+                    <h3>
+                        Theo dõi chúng tôi tại
+                    </h3>
+                    <div class="list-social d-flex align-items">
+                        <a href="" target="_blank" class="item">
+                            <i class="icon_2023 facebook">
+                            </i>
+                        </a>
+                        <a href="" target="_blank" class="item">
+                            <i class="icon_2023 instagram">
+                            </i>
+                        </a>
+                        <a href="" target="_blank" class="item">
+                            <i class="icon_2023 youtobe">
+                            </i>
+                        </a>
+                        <a href="" target="_blank" class="item">
+                            <i class="icon_2023 shopee">
+                            </i>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-sale">
+                    <h3>
+                        Đăng ký email để nhận tin khuyến mãi
+                    </h3>
+                    <div id="newsletter" class="d-flex">
+                        <input type="text" id="email-newsletter" placeholder="Nhập email của bạn"
+                        />
+                        <a href="javascript:;" class="send-newsletter">
+                            Đăng ký
+                        </a>
+                    </div>
+                    <div class="note-error">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-main">
+        <div class="container">
+            <div class="content-footer d-flex">
+                <div class="item">
+                    <h3 class="title">
+                        Danh Mục Sản Phẩm
+                    </h3>
+                    <div class="cnt">
+                        <a href="">
+                            PC Gaming
+                        </a>
+                        <a href="">
+                            Laptop Gaming
+                        </a>
+                        <a href="">
+                            VGA NVidia Rtx 4070
+                        </a>
+                        <a href="">
+                            Ps5 Rẻ nhất Việt Nam
+                        </a>
+                        <a href="">
+                            VGA NVidia Rtx 4060
+                        </a>
+                    </div>
+                </div>
+                <div class="item">
+                    <h3 class="title">
+                        Thông Tin Chung
+                    </h3>
+                    <div class="cnt">
+                        <a href="/gioi-thieu">
+                            Giới Thiệu
+                        </a>
+                        <a href="#">
+                            Tuyển Dụng
+                        </a>
+                        <a href="/tin-tuc">
+                            Tin Tức
+                        </a>
+                        <a href="#">
+                            Ý Kiến Khách Hàng
+                        </a>
+                        <a href="/lien-he">
+                            Liên Hệ Hợp Tác
+                        </a>
+                    </div>
+                </div>
+                <div class="item">
+                    <h3 class="title">
+                        Chính Sách
+                    </h3>
+                    <div class="cnt">
+                        <a href="#">
+                            Quy Định Chung
+                        </a>
+                        <a href="/chinh-sach-van-chuyen-tnc-store">
+                            Chính Sách Vận Chuyển
+                        </a>
+                        <a href="/chinh-sach-va-quy-dinh-bao-hanh-tai-tnc-store">
+                            Chính Sách Bảo Hành
+                        </a>
+                        <a href="/chinh-sach-doi-tra-lai-hang">
+                            Chính Sách Đổi, Trả Hàng
+                        </a>
+                        <a href="/chinh-sach-cho-doanh-nghiep">
+                            Chính Sách Cho Doanh Nghiệp
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="info-pay">
+                <h3>
+                    Hình thức thanh toán
+                </h3>
+                <a href="#">
+                    <div class="icon_2023 pay">
+                        <img src="/static/asset/default/images/pay_cart.png " alt="">
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

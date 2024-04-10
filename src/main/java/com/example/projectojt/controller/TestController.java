@@ -98,5 +98,9 @@ public class TestController {
         model.addAttribute("user",user);
         return "profile1";
     }
+    @GetMapping("/ca")
+    public  String getca(){
+        return "cart";
+    }
 
 }

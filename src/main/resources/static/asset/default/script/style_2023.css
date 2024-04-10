@@ -2268,41 +2268,40 @@ table {
   line-height: 50px;
 }
 .product-detail .btn-buy {
-  width: calc(100% / 2 - 10px);
+  width: 100%;
   text-align: center;
   background: var(--color-global);
   height: 50px;
   margin-right: 10px;
-}
-.product-detail .btn-buy.buyNow {
-  margin-right: 0;
-  background: #fff;
-  color: var(--color-global);
-  border: 1px solid var(--color-global);
-  width: calc(100% / 2);
-}
-.product-detail .btn-buy.buyNow a {
-  color: var(--color-global);
-  display: block;
-}
-.product-detail .btn-buy.buyNow:hover {
-  background: var(--color-global);
-}
-.product-detail .btn-buy.buyNow:hover a {
-  color: #fff;
-}
-.product-detail .btn-buy a {
+  border: 1px solid #FFFFFF;
   text-transform: capitalize;
   line-height: 50px;
   font-size: 16px;
   font-weight: 600;
   color: #fff;
 }
+.regis-product {
+  margin-right: 0;
+  background: #fff;
+  color: var(--color-global);
+  border: 1px solid var(--color-global);
+  width: 50%;
+  height: 50px;
+  font-size: 16px;
+}
+.regis-product{
+  color: var(--color-global);
+  display: block;
+}
+.regis-product:hover {
+  background: var(--color-global);
+  color: #fff;
+}
 .product-detail .btn-buy:hover {
   background: #fff;
   border: 1px solid var(--color-global);
 }
-.product-detail .btn-buy:hover a {
+.product-detail .btn-buy:hover{
   color: var(--color-global);
 }
 .product-detail .box-desciption .title {
@@ -2581,7 +2580,7 @@ table tr:nth-child(2n) {
   color: #8d94ac;
 }
 .page-cart .item-cart .name-price {
-  width: calc(100% - 88px);
+  width: 30%;
 }
 .page-cart .item-cart .name-price .name {
   font-size: 16px;
