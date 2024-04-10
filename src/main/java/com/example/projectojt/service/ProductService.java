@@ -57,7 +57,7 @@ public class ProductService {
     }
 
     public List<Product> getInitialProducts() {
-        return repo.findAll(PageRequest.of(0, 4)).getContent();
+        return repo.findAll(PageRequest.of(0, 5)).getContent();
     }
 
     public List<Product> getMoreProducts(int page, int size) {
@@ -67,7 +67,7 @@ public class ProductService {
     public List<Product> searchProduct(String keyword) {
         // Perform the search using pagination
         Page<Product> searchPage = repo.searchProducts(keyword,
-                PageRequest.of(0, 4));
+                PageRequest.of(0, 5));
 
         // Retrieve the content of the first page
 

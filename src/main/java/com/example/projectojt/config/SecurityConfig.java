@@ -53,7 +53,7 @@ public class SecurityConfig {
                                 "/EcommerceStore/register_form", "/EcommerceStore/register",
                                 "/EcommerceStore/otp_verify","/EcommerceStore/search","/EcommerceStore/productFilter/**"
                                 ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**",
-                                "/EcommerceStore/products/more","/asset/**","/styles.css","/admin/**").permitAll()
+                                "/EcommerceStore/products/more","/asset/default/**","/styles.css","/admin/**", "/media/banner/**", "/media/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(formLogin ->
