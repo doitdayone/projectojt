@@ -90,5 +90,9 @@ public class TestController {
     public  String getod(){
         return "order1";
     }
+    @GetMapping("/ca")
+    public  String getca(){
+        return "cart";
+    }
 
 }
