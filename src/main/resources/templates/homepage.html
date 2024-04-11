@@ -7,7 +7,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="/asset/default/script/library.css?v=1.00111" />
   <link href="/asset/default/script/style_2023.css?2024-03-25.22.08.47" rel="stylesheet" />
-
+  <style>
+    .gold-star {
+      color: gold;
+    }
+  </style>
   <title>Home</title>
   <!--Start of Fchat.vn--><script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=6600d2e2a779e9485a38ddad" async="async"></script><!--End of Fchat.vn-->
 </head>
@@ -79,13 +83,7 @@
 
             </div>
           </form>
-          <div class="autocomplete-suggestions" id="js-show-search">
-            <div class="content-suggestions" id="js-seach-holder"></div>
-            <a href="/" class="more-all" id="click_search"
-            ><span class="hover-txt"
-            >Xem tất cả <span id="total-pro"></span> sản phẩm</span
-            ></a
-            >
+          <div class="autocomplete-suggestions" >
           </div>
         </div>
         <div class="header-mid-right d-flex align-items">
@@ -1135,7 +1133,7 @@
           <a href="/gaming-pc.html" class="item">
             <span class="txt" alt="PC Gaming">PC gaming</span>
           </a>
-          <a href="/man-hinh-gaming.html" class="item">
+          <a href="/EcommerceStore/productFilter?productType=Screen" class="item">
             <span class="txt" alt="Màn hình Gaming">Màn hình gaming</span>
           </a>
           <a href="/gaming-laptop.html" class="item">
@@ -1435,7 +1433,7 @@
         <h2 class="title-left">
           PC Gaming nổi bật
         </h2>
-        <a href="/gaming-pc.html" class="more-all">
+        <a href="/EcommerceStore/productFilter" class="more-all">
                 <span class="hover-txt">
                   Xem tất cả
                 </span>
@@ -1467,11 +1465,11 @@
                          class="product-name line-clamp-2"></a>
                       <div class="info-review d-flex align-items">
                         <div class="hot-product-item-review-star">
-                          <i class="fa-regular fa-star"></i>
-                          <i class="fa-regular fa-star"></i>
-                          <i class="fa-regular fa-star"></i>
-                          <i class="fa-regular fa-star"></i>
-                          <i class="fa-regular fa-star"></i>
+                          <i class="fa-regular fa-star" th:classappend="${product.rating >= 1} ? 'fa-solid fa-star gold-star' : ''"></i>
+                          <i class="fa-regular fa-star" th:classappend="${product.rating >= 2} ? 'fa-solid fa-star gold-star' : ''"></i>
+                          <i class="fa-regular fa-star" th:classappend="${product.rating >= 3} ? 'fa-solid fa-star gold-star' : ''"></i>
+                          <i class="fa-regular fa-star" th:classappend="${product.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
+                          <i class="fa-regular fa-star" th:classappend="${product.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
                         </div>
                         <span>
                           0 đánh giá
@@ -1497,52 +1495,17 @@
                     <span class="boder-left">
                           </span>
                   </div>
+
+
+
+              </div>
+                  </div>
                 </tr>
               </div>
             </div>
           </div>
-          <div id="product-container" class="hot-product-main row-grid">
-            <div class="hot-product-main-category">
-
-            </div>
-            <div class="hot-product-main-items row-grid">
-              <tr th:each="product : ${productListMore}">
-                <div class="hot-product-main-item">
-                  <img
-                          width="100%"
-                          th:src="${product.images}"
-                  />
-                  <div class="hot-product-main-item-content">
-                    <h1>
-                      <a th:text="${product.name}"
-                         th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productID})}"></a>
-                    </h1>
-
-                  </div>
-                  <div class="hot-product-item-review">
-                    <div class="hot-product-item-review-star">
-                      <i class="fa-regular fa-star"></i>
-                      <i class="fa-regular fa-star"></i>
-                      <i class="fa-regular fa-star"></i>
-                      <i class="fa-regular fa-star"></i>
-                      <i class="fa-regular fa-star"></i>
-                    </div>
-                    <p><span> 0 </span>Danh gia</p>
-                    <div class="hot-product-item-price">
-                      <div class="price" th:text="${product.price}"></div>
-                      <div class="sellprice" th:text="${product.price} ">22.990.000 d
-                        <span>-19%</span></div>
-                    </div>
-                  </div>
-                </div>
-              </tr>
-            </div>
-          </div>
         </div>
 
-      </div>
-      <button type="button" id="show-more-btn">Show More</button>
-    </div>
   </div>
 </div>
 
@@ -1672,7 +1635,6 @@
     </div>
   </div>
 </div>
-
 </body>
 
 

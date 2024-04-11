@@ -155,13 +155,30 @@ public class ProductController {
   }
 
   @GetMapping("/productFilter")
-  public String findProductByPrice(@RequestParam("start_price") int start_price,
-      @RequestParam("end_price") int end_price, @RequestParam("productType") String productType,
+  public String findProductByPrice(@RequestParam(value = "start_price" , defaultValue = "0") int start_price,
+      @RequestParam(value = "end_price", defaultValue = "0") int end_price, @RequestParam(value = "productType", defaultValue = "0") String productType,
       Model model) {
+    if (start_price==0&&end_price==0&&productType.equals("0")){
+      model.addAttribute("productList", productService.getMoreProducts(0,10));
+      model.addAttribute("productType",productType);
+      return "productFilter";
+    }
+
+    if (end_price!=0&&productType.equals("0")){
+      model.addAttribute("productList", productRepository.findProductsByPriceBetween(start_price,end_price));
+      model.addAttribute("productType",productType);
+      return "productFilter";
+    }
+
+    if (start_price==0&&end_price==0&&!productType.equals("0")){
+      model.addAttribute("productList", productRepository.findProductsByType(productType));
+      model.addAttribute("productType",productType);
+      return "productFilter";
+    }
     List<Product> listProduct = productRepository.findProductsByPriceBetweenAndType(
         start_price,
         end_price, productType);
-    model.addAttribute("listProduct", listProduct);
+    model.addAttribute("productList", listProduct);
     model.addAttribute("productType", productType);
     return "productFilter";
   }
@@ -176,7 +193,7 @@ public class ProductController {
     model.addAttribute("productList", productList);
     model.addAttribute("productListMore", pList);
     model.addAttribute("keyword", keyword);
-    return "homepage";
+    return "productFilter";
   }
 
 }
