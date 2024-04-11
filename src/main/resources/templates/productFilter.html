@@ -542,7 +542,7 @@
 
 
           </div>
-          <a class="show-more-product" th:href="'/EcommerceStore/productFilter?more='+${more}" onclick="">
+          <a class="show-more-product" th:if="${more!=null}" th:href="'/EcommerceStore/productFilter?more='+${more}" onclick="">
             Xem thêm <i class="fa fa-angle-down"></i>
           </a>
 
