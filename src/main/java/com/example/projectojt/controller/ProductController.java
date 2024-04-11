@@ -160,11 +160,13 @@ public class ProductController {
       Model model) {
     if (start_price==0&&end_price==0&&productType.equals("0")){
       model.addAttribute("productList", productService.getMoreProducts(0,10));
+      model.addAttribute("productType",productType);
       return "productFilter";
     }
 
     if (end_price!=0&&productType.equals("0")){
       model.addAttribute("productList", productRepository.findProductsByPriceBetween(start_price,end_price));
+      model.addAttribute("productType",productType);
       return "productFilter";
     }
 
