@@ -148,26 +148,14 @@
                     </div>
                 </div>
                 <div class="header-mid-right d-flex align-items">
-                    <a class="item account d-flex align-items" href="/taikhoan">
-                        <i class="icon_2023 account"></i>
-                        <span
-                                class="hover-txt line-clamp-1"
-                                style="width: 74px; white-space: normal"
-                        >thanh hải</span
-                        >
+                    <a th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}"
+                       style="color: #FFFFFF; text-align: center">
+                        <i class="fa-solid fa-user"></i> <p th:text="${user_email}"></p>
                     </a>
-
-                    <a
-                            href="javascript:void(0)"
-                            class="item box-cart"
-                            id="js-header-cart"
-                    >
-                        <i class="icon_2023 cart"></i>
-                        <span class="counter-cart js-cart-counter">0</span>
-
-                        <div class="header-cart-hover" id="js-header-cart-holder">
-                            <!-- cart hover -->
-                        </div>
+                    <a th:if="${userRepository != null and userRepository.findByEmail(user_email) != null}"
+                       th:href="@{/EcommerceStore/cart/{user_id}(user_id=${userRepository.findByEmail(user_email).userID})}"
+                       style="color: #FFFFFF; text-align: center">
+                        <i class="fa-solid fa-cart-shopping"></i> <span>0</span>
                     </a>
                 </div>
                 <div class="global-login">
