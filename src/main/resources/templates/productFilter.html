@@ -1,312 +1,690 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ProductList</title>
-  <link rel="stylesheet" th:href="@{/css/productlist.css}"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1"
+  />
+  <meta name="google-site-verification" content="EOEwXTWB17ajswn1Z2Q0g-6UH9mHD4f4OF125eZRWM4"
+  />
+  <title>
+    sos
+  </title>
+  <link rel="icon" type="image/png" href="../static/asset/default/images/logo-white.png"
+  />
   <link rel="stylesheet"
-        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css}"/>
-  <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css}"/>
-  <script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
+        th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css}"
+  />
+  <link rel="stylesheet" href="/asset/default/script/style_2023.css">
+  <link rel="stylesheet" href="/asset/default/script/library.css">
+  <style>
+    .gold-star {
+      color: gold;
+    }
+  </style>
 </head>
 <body>
-<section class="page-top">
-  <div class="container">
-    <div class="row row-grid">
-      <div class="page-top-contact">
-        <ul class="row-flex">
-          <li>
-            <i class="fa-solid fa-phone-volume"> </i
-            ><a href="tel: 0935708235"> 0935.708.235</a>
-          </li>
-          <li>
-            <i class="fa-solid fa-envelope"></i>
-            <a href="contact"> thai06314@gmail.com</a>
-          </li>
-        </ul>
+
+<div class="header">
+  <div class="header-top">
+    <div class="container">
+      <div class="right d-flex align-items">
+        <a href="tel:0868302123" class="item d-flex align-items">
+          <i class="icon_2023 phone">
+          </i>
+          <span class="hover-txt">
+              0123456789
+            </span>
+        </a>
+        <a href="mailto:cskh@tncstore.vn" class="item d-flex align-items">
+          <i class="icon_2023 email">
+          </i>
+          <span class="hover-txt">
+              abczxc@gmail.vn
+            </span>
+        </a>
+      </div>
+      <div class="clearfix">
       </div>
     </div>
   </div>
-</section>
-<header>
-  <div class="header-top">
+  <div class="header-mid">
     <div class="container">
-      <div class="row row-grid">
-        <div class="header-top-logo">
-          <img
-              width="90px"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/FPT_logo_2010.svg/800px-FPT_logo_2010.svg.png"
-              alt=""
-          />
-        </div>
-        <div class="header-top-search row-grid">
-          <input type="text" placeholder="Nhập sản phẩm cần tìm..."/>
-          <button>
-            <a href="">
-              Tìm kiếm <i class="fa-solid fa-magnifying-glass"></i
-            ></a>
-          </button>
-        </div>
-        <div class="header-top-user_cart">
-          <ul class="row-flex">
-            <li>
-              <a th:href="@{/EcommerceStore/profile/{user_email}(user_email=${user_email})}">
-                ><i class="fa-solid fa-user"></i>Tai Khoan</a
-              >
-            </li>
+      <div class="content-header-mid d-flex align-items">
+        <a href="../static/asset/default/images/logo-white.png" class="logo">
+          <img src="" alt="logo" width="160px" height="45px"/>
+        </a>
+        <div class="form__input">
+          <form
+                  class="clearfix search-form bg-white"  th:action="@{/EcommerceStore/search}" method="get"
+          >
+            <div class="searh-form-container">
+              <div class="box-select">
+                <a
+                        type="hidden"
+                        id="js-search-catId"
+                        value="0"
+                ></a>
+                <a
+                        class="title-select"
+                        id="js-search-title"
+                >
+                  Tất cả danh mục
+                </a>
+                <div class="content-select" id="js-list-option-search">
+                  <a>Tất cả danh mục</a>
 
-            <li>
-              <i class="fa-solid fa-cart-shopping"></i> <span>0</span>
-              <ul>
-                <p>Co 0 san pham trong gio hang</p>
-              </ul>
-            </li>
-          </ul>
+                </div>
+              </div>
+
+              <input
+                      type="text" name="keyword"
+                      id="keyword"
+                      class="text_search"
+                      placeholder="Nhập sản phẩm cần tìm..."
+                      autocomplete="off"
+                      th:value="${keyword}"
+              />
+              <input type="hidden" name="page" id="page" th:value="${10}"/>
+              <input type="hidden" name="size" id="size" value="4"/>
+              <button type="submit" class="submit-search">
+                <span>Tìm kiếm</span>
+                <i class="icon_2023 search"></i>
+              </button>
+
+            </div>
+          </form>
+          <div class="autocomplete-suggestions" id="js-show-search">
+            <div class="content-suggestions" id="js-seach-holder">
+            </div>
+            <a href="/" class="more-all" id="click_search">
+                <span class="hover-txt">
+                  Xem tất cả
+                  <span id="total-pro">
+                  </span>
+                  sản phẩm
+                </span>
+            </a>
+          </div>
+        </div>
+        <div class="header-mid-right d-flex align-items">
+          <a class="item account d-flex align-items" href=""
+          >
+            <i class="icon_2023 account "></i>
+            <span class="hover-txt ">Tài khoản</span>
+          </a>
+          <a
+                  href=" "
+                  class="item box-cart "
+                  id="js-header-cart "
+          >
+            <i class="icon_2023 cart "></i>
+            <span class="counter-cart js-cart-counter ">0</span>
+            <div class="header-cart-hover " id="js-header-cart-holder ">
+              <!-- cart hover -->
+            </div>
+          </a>
+        </div>
+        <div class="global-login ">
+          <a
+                  href=" "
+                  class="close-login">
+            <i class="fa fa-times">
+            </i>
+          </a>
+          <div class="content-form-login padding-24" id="js-form-holder">
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="header-bottom">
     <div class="container">
-      <div class="row row-grid">
-        <div class="header-bottom-menubar">
-              <span
-              ><i class="fa-solid fa-bars"></i> Danh Muc San Pham
-                <i class="fa-solid fa-arrow-down"></i
-                ></span>
+      <div class="header-bottom-content d-flex">
+        <div class="header-menu">
+          <div class="title">
+            <i class="fa fa-bars">
+            </i>
+            <span class="hover-txt">
+                Danh mục sản phẩm
+              </span>
+            <i class="fa fa-angle-down">
+            </i>
+          </div>
+          <div class="height-hover">
+          </div>
+          <div class="menu_holder">
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  Xây dựng cấu hình PC
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  PC Gaming
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  PC Đồ Họa
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  PC Văn Phòng
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  Màn Hình Máy Tính
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  VGA - Card màn hình
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  Linh kiện máy tính
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  Gaming Gears
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  Laptop - Máy Tính Xách Tay
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+            <div class="item">
+              <a href="" class="item-cate d-flex align-items">
+                <p class="cat-title">
+                  Phụ Kiện - Tản Nhiệt PC
+                </p>
+                <span class="box-right">
+                    <i class="fa fa-angle-right">
+                    </i>
+                  </span>
+              </a>
+            </div>
+          </div>
         </div>
-        <div class="header-bottom-menulist">
-          <ul class="row-flex">
-            <li><a th:href="@{/EcommerceStore/productFilter/PC}">Pc Gaming</a></li>
-            <li><a th:href="@{/EcommerceStore/productFilter/Man Hinh}">Man Hinh</a></li>
-            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop</a></li>
-            <li><a th:href="@{/EcommerceStore/productFilter/Laptop}">Laptop Van Phong</a></li>
-            <li>
-              <a href="">Khuyen Mai<i class="fa-solid fa-fire"></i></a>
-            </li>
-            <li><a th:href="@{/EcommerceStore/productBrandFilter/MSI}">Laptop MSI</a></li>
-            <li><a href="">Gioi thieu</a></li>
-          </ul>
+        <!---header menu --->
+        <div class="header-bottom-right d-flex align-items">
+          <a  class="item" th:href="@{/EcommerceStore/build-pc}">
+              <span class="txt" alt="Build PC Gaming">
+                Xây dựng cấu hình PC
+              </span>
+          </a>
+          <a th:href="@{/EcommerceStore/productFilter/PC}" class="item">
+              <span class="txt" alt="PC Gaming">
+                PC gaming
+              </span>
+          </a>
+          <a th:href="@{/EcommerceStore/productFilter/Man Hinh}" class="item">
+              <span class="txt" alt="Màn hình Gaming">
+                Màn hình gaming
+              </span>
+          </a>
+          <a th:href="@{/EcommerceStore/productFilter/Laptop}" class="item">
+              <span class="txt" alt="Laptop Gaming">
+                Laptop
+              </span>
+          </a>
+          <a href="" class="item">
+              <span class="txt">
+                PS5 Slim
+                <img border="0" src="/media/lib/07-12-2023/hotsale2.png" width="20" height="20"
+                />
+              </span>
+          </a>
+          <a th:href="@{/EcommerceStore/clean-booking/booking}" class="item">
+              <span class="txt">
+               Đặt lịch vệ sinh
+              </span>
+          </a>
+          <a href="/media/marketing/khuyenmai/khuyen-mai-8-3.html" class="item">
+              <span class="txt">
+                Khuyến mãi
+              </span>
+          </a>
+          <a href="" class="item">
+              <span class="txt">
+                RTX 4070 Super
+              </span>
+          </a>
+          <a href="" class="item">
+              <span class="txt">
+                RTX 4080 Super
+              </span>
+          </a>
+          <a href="" class="item">
+              <span class="txt">
+                Giới thiệu
+              </span>
+          </a>
         </div>
       </div>
     </div>
   </div>
-</header>
+</div>
 
-<div class="container">
-  <div class="slide-show"></div>
-  <div class="content-category">
-    <div class="left">
-      <div class="background-white">
-        <h2 class="title-filter">Bo Loc San Pham</h2>
-        <h2 th:text="${productType}"></h2>
-        <div class="box-filter">
-          <div class="item-filter hidden">
-            <div class="title-filter d-flex align-items space-between">
-              <span>Khoảng giá (VNĐ)</span>
-              <i class="fa fa-angle-down"></i>
+<div class="product-category">
+  <div class="container">
+
+    <div class="breadcrumb">
+      <ol itemscope="" itemtype="http://schema.org/BreadcrumbList" class="ul clearfix">
+        <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+          <a href="/" itemprop="item" class="nopad-l">
+            <span itemprop="name">Trang chủ</span>
+          </a> <i class="fa fa-angle-right"></i>
+          <meta itemprop="position" content="1">
+        </li>
+
+        <li itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+          <a href="/gaming-pc.html" itemprop="item">
+              <span itemprop="name">
+                PC Gaming
+              </span> <i class="fa fa-angle-right"></i>
+          </a>
+          <meta itemprop="position" content="2">
+        </li>
+      </ol>
+    </div>
+    <div class="clearfix"></div>
+    <div class="content-category d-flex">
+      <div class="left">
+        <div class="background-white">
+          <h2 class="title">Bộ lọc sản phẩm</h2>
+
+          <div class="box-filter">
+
+            <!---end hãng sản xuất -->
+            <div class="item-filter">
+              <div class="title-filter d-flex align-items space-between">
+                <span>Khoảng giá (VNĐ)</span>
+                <i class="fa fa-angle-down"></i>
+              </div>
+              <div class="content-filter">
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=0&end_price=8000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>Dưới 8 triệu</span>
+                    <span class="total-attr">(4)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check " onclick="">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=8000000&end_price=11000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>8 triệu - 11 triệu</span>
+                    <span class="total-attr">(2)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=11000000&end_price=15000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>11 triệu - 15 triệu</span>
+                    <span class="total-attr">(7)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=15000000&end_price=20000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>15 triệu - 20 triệu</span>
+                    <span class="total-attr">(5)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=20000000&end_price=25000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>20 triệu - 25 triệu</span>
+                    <span class="total-attr">(4)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=25000000&end_price=30000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>25 triệu - 30 triệu</span>
+                    <span class="total-attr">(7)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=30000000&end_price=50000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>30 triệu - 50 triệu</span>
+                    <span class="total-attr">(14)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=50000000&end_price=70000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>50 triệu - 70 triệu</span>
+                    <span class="total-attr">(8)</span>
+                  </a>
+                </div>
+
+                <div class="item-attr d-flex align-items">
+
+                  <div class="icon-check ">
+
+                  </div>
+                  <a th:href="'/EcommerceStore/productFilter?start_price=70000000&end_price=80000000&productType='+${productType}" class="filter-right d-flex align-items space-between">
+                    <span>70 triệu - 80 triệu</span>
+                    <span class="total-attr">(3)</span>
+                  </a>
+                </div>
+
+              </div>
+
             </div>
-            <div class="content-filter">
 
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=0&amp;end_price=8000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=0,
-                end_price=8000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>Dưới 8 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=8000000&amp;end_price=11000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=8000000, end_price=11000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>8 triệu - 11 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=11000000&amp;end_price=15000000\'|'"></div>
-
-                <a th:href="@{/EcommerceStore/productFilter(start_price=11000000,
-                end_price=15000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>11 triệu - 15 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=15000000&amp;end_price=20000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=15000000,
-                end_price=20000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>15 triệu - 20 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-              <div class="item-attr d-flex align-items">
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=20000000&amp;end_price=25000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=20000000,
-                end_price=25000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>20 triệu - 25 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=25000000&amp;end_price=30000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=25000000,
-                end_price=30000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>25 triệu - 30 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=30000000&amp;end_price=50000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=30000000,
-                end_price=50000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>30 triệu - 50 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=50000000&amp;end_price=70000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=50000000,
-                 end_price=70000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>50 triệu - 70 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=70000000&amp;end_price=85000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=70000000,
-                end_price=85000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>70 triệu - 80 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-              <div class="item-attr d-flex align-items">
-
-                <div class="icon-check"
-                     th:attr="onclick='|location.href=\'/EcommerceStore/productFilter?start_price=80000000&amp;end_price=10000000000000000\'|'"></div>
-                <a th:href="@{/EcommerceStore/productFilter(start_price=80000000,
-                end_price=10000000000000000000000000, productType=${productType})}"
-                   class="filter-right d-flex align-items space-between">
-                  <span>Trên 80 triệu</span>
-                  <span class="total-attr"></span>
-                </a>
-              </div>
-
-
-            </div>
+            <!-----end gia ban --->
 
           </div>
         </div>
       </div>
-    </div>
-    <div class="right">
-      <div class="background-white">
-        <div class="gear-product-main-items row-grid">
-          <tr th:each="product : ${listProduct}">
-            <div class="gear-product-main-item">
-              <img
-                  width="100%"
-                  src="https://www.tncstore.vn/media/product/250-8741-sniper-i3060---wh---01-2000000.jpg"
-                  alt=""
-              />
-              <div class="gear-product-main-item-content">
-                <h1 th:text="${product.name}"></h1>
+      <!---end  left --->
+      <div class="right">
+        <div class="background-white">
+          <div class="main-title d-flex space-between align-items">
+            <h1>PC Gaming</h1>
+            <div class="right-sort d-flex align-items">
+
+            </div>
+          </div>
+
+          <div class="filter-results">
+            <div class="content-results d-flex align-items">
+              <p>Lọc theo:</p>
+              <div class="list-results d-flex align-items" id="js-check-results">
               </div>
-              <div class="gear-product-item-review">
-                <div class="gear-product-item-review-star">
-                  <i class="fa-regular fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
-                  <i class="fa-regular fa-star"></i>
+              <a href="" class="remove-filter">
+                Xóa tất cả
+              </a>
+            </div>
+          </div>
+
+          <div class="product-list d-flex flex-wrap"  id="js-product-list">
+
+            <div class="product-item" style="width: 20%" th:each="product : ${productList}">
+              <a th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productID})}" class="product-image">
+                <img th:src="@{'/images/' + ${product.images}}" width="100%"
+                     height="100%" alt="PC Gaming - Glacier I3060 - WH">
+                <span class="box-sale hot">
+                              Best Choice
+                            </span>
+              </a>
+              <div class="product-info">
+                <a th:text="${product.name}"
+                   th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productID})}"
+                   class="product-name line-clamp-2"></a>
+                <div class="info-review d-flex align-items">
+                  <div class="hot-product-item-review-star">
+                    <i class="fa-regular fa-star" th:classappend="${product.rating >= 1} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${product.rating >= 2} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${product.rating >= 3} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${product.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${product.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
+                  </div>
+                  </div>
+                  <span>
+                          0 đánh giá
+                        </span>
                 </div>
-                <p><span th:text="${product.rating}">  </span></p>
-                <div class="gear-product-item-price">
-                  <div class="price"><span th:text="${product.price} " d></span></div>
-                  <div class="sellprice"><span th:text="${product.price} " d>-19%</span>
+                <div class="main-price">
+                  <del class="old-price" th:text="${product.price}">
+                  </del>
+                  <div class="d-flex align-items">
+                    <b class="price" th:text="${product.price}-${product.sale}*${product.price}/100">
+                    </b>
+                    <div class="price-saleoff" th:text="'-'+${product.sale} + '%'">
+                    </div>
                   </div>
                 </div>
               </div>
+              <span class="boder-top">
+                          </span>
+              <span class="boder-right">
+                          </span>
+              <span class="boder-bottom">
+                          </span>
+              <span class="boder-left">
+                          </span>
             </div>
-          </tr>
 
+
+
+          </div>
+          <a class="show-more-product" th:if="${more!=null}" th:href="'/EcommerceStore/productFilter?more='+${more}" onclick="">
+            Xem thêm <i class="fa fa-angle-down"></i>
+          </a>
 
         </div>
       </div>
     </div>
-
   </div>
 </div>
-</div>
-</body>
-<footer>
-  <div class="footer-container">
-    <div class="footer-row">
-      <div class="footer-column">
-        <h3>Liên Hệ</h3>
-        <ul>
-          <li><i class="fa-solid fa-phone-volume"></i> <a href="tel:0935708235">0935.708.235</a>
-          </li>
-          <li><i class="fa-solid fa-envelope"></i> <a href="contact">thai06314@gmail.com</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Đường Dẫn Nhanh</h3>
-        <ul>
-          <li><a href="#">Trang Chủ</a></li>
-          <li><a href="#">Sản Phẩm</a></li>
-          <li><a href="#">Dịch Vụ</a></li>
-          <li><a href="#">Liên Hệ</a></li>
-        </ul>
-      </div>
-      <div class="footer-column">
-        <h3>Theo Dõi Chúng Tôi</h3>
-        <ul class="social-icons">
-          <li><a href="#"><i class="fab fa-facebook"></i></a></li>
-          <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-          <li><a href="#"><i class="fab fa-instagram"></i></a></li>
-        </ul>
+<div class="footer">
+  <div class="form-info-sale">
+    <div class="container">
+      <div class="d-flex space-between align-items">
+        <div class="social-left">
+          <h3>
+            Theo dõi chúng tôi tại
+          </h3>
+          <div class="list-social d-flex align-items">
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 facebook">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 instagram">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 youtobe">
+              </i>
+            </a>
+            <a href="" target="_blank" class="item">
+              <i class="icon_2023 shopee">
+              </i>
+            </a>
+          </div>
+        </div>
+        <div class="form-sale">
+          <h3>
+            Đăng ký email để nhận tin khuyến mãi
+          </h3>
+          <div id="newsletter" class="d-flex">
+            <input type="text" id="email-newsletter" placeholder="Nhập email của bạn"
+            />
+            <a href="" class="send-newsletter">
+              Đăng ký
+            </a>
+          </div>
+          <div class="note-error">
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</footer>
+  <div class="footer-main">
+    <div class="container">
+      <div class="content-footer d-flex">
+        <div class="item">
+          <h3 class="title">
+            Danh Mục Sản Phẩm
+          </h3>
+          <div class="cnt">
+            <a href="">
+              PC Gaming
+            </a>
+            <a href="">
+              Laptop Gaming
+            </a>
+            <a href="">
+              VGA NVidia Rtx 4070
+            </a>
+            <a href="">
+              Ps5 Rẻ nhất Việt Nam
+            </a>
+            <a href="">
+              VGA NVidia Rtx 4060
+            </a>
+          </div>
+        </div>
+        <div class="item">
+          <h3 class="title">
+            Thông Tin Chung
+          </h3>
+          <div class="cnt">
+            <a href="/gioi-thieu">
+              Giới Thiệu
+            </a>
+            <a href="#">
+              Tuyển Dụng
+            </a>
+            <a href="/tin-tuc">
+              Tin Tức
+            </a>
+            <a href="#">
+              Ý Kiến Khách Hàng
+            </a>
+            <a href="/lien-he">
+              Liên Hệ Hợp Tác
+            </a>
+          </div>
+        </div>
+        <div class="item">
+          <h3 class="title">
+            Chính Sách
+          </h3>
+          <div class="cnt">
+            <a href="#">
+              Quy Định Chung
+            </a>
+            <a href="/chinh-sach-van-chuyen-tnc-store">
+              Chính Sách Vận Chuyển
+            </a>
+            <a href="/chinh-sach-va-quy-dinh-bao-hanh-tai-tnc-store">
+              Chính Sách Bảo Hành
+            </a>
+            <a href="/chinh-sach-doi-tra-lai-hang">
+              Chính Sách Đổi, Trả Hàng
+            </a>
+            <a href="/chinh-sach-cho-doanh-nghiep">
+              Chính Sách Cho Doanh Nghiệp
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="info-pay">
+        <h3>
+          Hình thức thanh toán
+        </h3>
+        <a href="#">
+          <div class="icon_2023 pay">
+            <img src="https://hoanghapc.vn/media/lib/hinh-thuc-thanh-toan.png" width="190px" alt="">
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script rel="stylesheet" src="/asset/default/js/library.js"></script>
+<script rel="stylesheet" src="/asset/default/js/main.js"></script>
+<script
+        th:src="@{https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js}"></script>
+
+</body>
+
 
 </html>
