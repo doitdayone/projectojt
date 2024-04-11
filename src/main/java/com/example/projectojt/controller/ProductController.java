@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -157,9 +158,24 @@ public class ProductController {
   @GetMapping("/productFilter")
   public String findProductByPrice(@RequestParam(value = "start_price" , defaultValue = "0") int start_price,
       @RequestParam(value = "end_price", defaultValue = "0") int end_price, @RequestParam(value = "productType", defaultValue = "0") String productType,
+      @RequestParam(value = "more", defaultValue = "0") int more,
       Model model) {
     if (start_price==0&&end_price==0&&productType.equals("0")){
-      model.addAttribute("productList", productService.getMoreProducts(0,10));
+      if(more==0){
+        model.addAttribute("productList", productService.getMoreProducts(0,10));
+        model.addAttribute("more",2);
+        model.addAttribute("productType",productType);
+        return "productFilter";
+      }
+
+      List<Product> list = new ArrayList<>() ;
+      list.addAll(productService.getMoreProducts(0,10));
+      for (int i=2; i<= more;i++){
+        list.addAll(productService.getMoreProducts(i,5));
+      }
+      more = (more==productService.getTotalPage()-1) ? more: ++more;
+      model.addAttribute("productList",list);
+      model.addAttribute("more",more);
       model.addAttribute("productType",productType);
       return "productFilter";
     }

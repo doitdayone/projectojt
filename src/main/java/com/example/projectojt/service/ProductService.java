@@ -59,6 +59,9 @@ public class ProductService {
     public List<Product> getInitialProducts() {
         return repo.findAll(PageRequest.of(0, 5)).getContent();
     }
+    public int getTotalPage(){
+        return repo.findAll(PageRequest.of(0, 5)).getTotalPages();
+    }
 
     public List<Product> getMoreProducts(int page, int size) {
         return repo.findAll(PageRequest.of(page, size)).getContent();
