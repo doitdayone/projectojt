@@ -219,8 +219,10 @@ public class ProductController {
   public String searchProduct(@RequestParam String keyword,
       @RequestParam int page, @RequestParam int size,
       Model model, HttpSession session) {
-    model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
-    model.addAttribute("userRepository", userRepository);
+    if (session.getAttribute("user_id")!=null){
+      model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
+      model.addAttribute("userRepository", userRepository);
+    }
     List<Product> productList = productService.searchProduct(keyword);
     List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
     model.addAttribute("productList", productList);
