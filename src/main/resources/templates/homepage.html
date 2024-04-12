@@ -1471,8 +1471,8 @@
                           <i class="fa-regular fa-star" th:classappend="${product.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
                           <i class="fa-regular fa-star" th:classappend="${product.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
                         </div>
-                        <span>
-                          0 đánh giá
+                        <span th:text="${product.getFeedbacks().size()} + ' đánh giá'">
+
                         </span>
                       </div>
                       <div class="main-price">
