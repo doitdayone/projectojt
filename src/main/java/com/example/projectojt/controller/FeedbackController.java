@@ -1,8 +1,10 @@
 package com.example.projectojt.controller;
 
 import com.example.projectojt.model.Feedback;
+import com.example.projectojt.model.Product;
 import com.example.projectojt.model.User;
 import com.example.projectojt.repository.FeedbackRepository;
+import com.example.projectojt.repository.OrderRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.service.ProductService;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -34,6 +38,8 @@ public class FeedbackController {
     private UserRepository userRepository;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private OrderRepository orderRepository;
 
     @GetMapping("/do-feedback")
     public String reviewProducts(Model model, Authentication authentication,
@@ -71,6 +77,7 @@ public class FeedbackController {
                 return "error";
             }
         }
+        List<Product> products =  productRepository.findProductsToFeedbackByUser((int) session.getAttribute("user_id"));
         model.addAttribute("user_email", userRepository.findByUserID((int) session.getAttribute("user_id")).getEmail());
         model.addAttribute("products", productRepository.findProductsToFeedbackByUser((int) session.getAttribute("user_id")));
         return "feedback";
