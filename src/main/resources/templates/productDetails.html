@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="/asset/default/script/library.css?v=1.00111" />
   <link href="/asset/default/script/style_2023.css?2024-03-25.22.08.47" rel="stylesheet" />
+  <style>
+    .gold-star {
+      color: gold;
+    }
+  </style>
 </head>
 <body>
 <div class="header">
@@ -1278,6 +1283,15 @@
             <div class="info-sku d-flex align-items">
               <span class="sku" th:text="'Product ID: ' + ${product.productID}"></span>
               <div class="review d-flex align-items" id="js-scroll-review" th:text="'Product rating: ' + ${product.rating}"> <i class="icon-star star5"></i>
+              </div>
+            </div>
+            <div class="info-review d-flex align-items">
+              <div class="hot-product-item-review-star">
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 1} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 2} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 3} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
               </div>
             </div>
             <a href="/buildpc?id_product=8880&category_id=68" class="add-buildpc">
