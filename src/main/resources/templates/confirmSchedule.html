@@ -156,10 +156,11 @@
                     <th>ID</th>
                     <th>Name Booking</th>
                     <th>Phone</th>
-                    <th>Shift</th>
+                    <th style="color: #ee2d24">Shift</th>
                     <th>Status</th>
-                    <th>Time</th>
+                    <th style="color: #ee2d24">Time</th>
                     <th>Address</th>
+                    <th style="color: #ee2d24">Staff</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -167,10 +168,11 @@
                     <td th:text="${sches.ID}"></td>
                     <td th:text="${sches.name}"></td>
                     <td th:text="@{${sches.phone}}"></td>
-                    <td th:text="@{${sches.shift}}"></td>
+                    <td style="color: #ee2d24" th:text="@{${sches.shift}}"></td>
                     <td th:text="${sches.status}"></td>
-                    <td th:text="${sches.time}"></td>
+                    <td style="color: #ee2d24" th:text="${sches.time}"></td>
                     <td th:text="${sches.address}"></td>
+                    <td style="color: #ee2d24" th:text="${sches.getStaff().name}"></td>
                 </tr>
                 </tbody>
             </table>

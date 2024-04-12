@@ -131,7 +131,7 @@ public class ProductController {
     if (optionalProduct.isPresent()) {
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("product", optionalProduct.get());
-      model.addAttribute("feedbackList", optionalProduct.get().getFeedbacks());
+      model.addAttribute("feedbackList", feedbackRepository.findAllByProductId(optionalProduct.get().getProductID()));
       return "productDetails";
     }
 
@@ -207,7 +207,6 @@ public class ProductController {
     List<Product> productList = productService.searchProduct(keyword);
     List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
     model.addAttribute("productList", productList);
-    model.addAttribute("productListMore", pList);
     model.addAttribute("keyword", keyword);
     return "productFilter";
   }

@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="/asset/default/script/library.css?v=1.00111" />
   <link href="/asset/default/script/style_2023.css?2024-03-25.22.08.47" rel="stylesheet" />
+  <style>
+    .gold-star {
+      color: gold;
+    }
+  </style>
 </head>
 <body>
 <div class="header">
@@ -1280,6 +1285,15 @@
               <div class="review d-flex align-items" id="js-scroll-review" th:text="'Product rating: ' + ${product.rating}"> <i class="icon-star star5"></i>
               </div>
             </div>
+            <div class="info-review d-flex align-items">
+              <div class="hot-product-item-review-star">
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 1} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 2} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 3} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
+                <i class="fa-regular fa-star" th:classappend="${product.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
+              </div>
+            </div>
             <a href="/buildpc?id_product=8880&category_id=68" class="add-buildpc">
               <span>Build PC với sản phẩm này</span>
               <i class="fa-solid fa-gear"></i>
@@ -1356,6 +1370,39 @@
           </div>
           <!-- end product main right -->
         </div>
+        <div class="account-right">
+          <h2>Phản hồi từ khách hàng</h2>
+          <div class="box-right">
+            <table>
+              <tr th:each="feedback : ${feedbackList}">
+                <td>
+                  <div class="hot-product-item-review-star">
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 1} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 2} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 3} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
+                  </div>
+                </td>
+                <td>
+                  <p th:text="${feedback.description}"></p>
+                  <span th:text="${feedback.getUser().userName}"></span>
+                </td>
+                <td>
+                    <p th:text="${feedback.response}" ></p>
+                    <p th:if="${feedback.response}!=null">Tech Shop</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
+
+
+
+
+            </div>
+          </div>
+
+        </div>
       </form>
       <form action="/EcommerceStore/register-product" method="post">
         <div th:if="${productRepository.getProductByProductID(productId).getQuantity() == 0}"
@@ -1367,10 +1414,7 @@
         </div>
       </form>
     </div>
-    <h2>Feedbacks:</h2>
-    <div th:each="feedback : ${feedbackList}">
-      <p th:text="${feedback.description}"></p>
-    </div>
+
     <!--  end main product detail -->
   </div>
 </div>
