@@ -207,7 +207,6 @@ public class ProductController {
     List<Product> productList = productService.searchProduct(keyword);
     List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
     model.addAttribute("productList", productList);
-    model.addAttribute("productListMore", pList);
     model.addAttribute("keyword", keyword);
     return "productFilter";
   }
