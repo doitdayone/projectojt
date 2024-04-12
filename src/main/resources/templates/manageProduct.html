@@ -235,7 +235,7 @@
             <tr  th:each="product : ${listProducts}" class="product-row">
                 <td th:text="${product.productID}"></td>
                 <td th:text="${product.name}"></td>
-                <td th:text="@{${product.price} + ' VND'}"></td>
+                <td th:text="@{${product.price}}" class="cost"></td>
                 <td th:text="@{${product.sale}+'%'}"></td>
                 <td th:text="${product.brand}"></td>
                 <td th:text="${product.type}" class="type"></td>
@@ -288,6 +288,18 @@
                 row.style.display = 'none';
             }
         });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var costCells = document.querySelectorAll(".cost");
+        costCells.forEach(function(cell) {
+            var cost = parseFloat(cell.textContent);
+            cell.textContent = formatCurrency(cost) + " ₫";
+        });
+    });
+
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 </script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>

@@ -1202,7 +1202,7 @@
                     <div class="name-price">
                       <a th:text="${cartItem.cartID.getProduct().name}" class="name line-clamp-2">
                       </a>
-                      <div class="price js-total-item-price" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
+                      <div class="price js-total-item-price cost1" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
                     </div>
                     <div class="quantity-remove" style="width: 25%">
                       <div class="update-qnt-cart d-flex justify-content-around align-items-center" style="border: solid 1px #000000; padding: 5px; border-radius: 4px">
@@ -1254,7 +1254,7 @@
               <div class="info">
                 <a href="/" class="name line-clamp-2" th:text="${cartItem.cartID.getProduct().name}">
                 </a>
-                <div class="price" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
+                <div class="price cost1" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
               </div>
             </div>
           </tr>
@@ -1263,7 +1263,7 @@
           <div class="total-price">
             <div class="d-flex align-items item space-between">
               <b>Tổng chi phí</b>
-              <div class="js-total-cart-price" th:text="${total}"></div>
+              <div class="js-total-cart-price cost1" th:text="${total}"></div>
             </div>
           </div>
           <form class="btn" th:action="@{/EcommerceStore/order}" method="get">
@@ -1301,6 +1301,18 @@
     </div>
   </div>
 </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var costCells = document.querySelectorAll(".cost1");
+    costCells.forEach(function(cell) {
+      var cost = parseFloat(cell.textContent);
+      cell.textContent = formatCurrency(cost) + " ₫";
+    });
+  });
 
+  function formatCurrency(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+</script>
 </body>
 </html>

@@ -21,6 +21,10 @@ public class OrderService {
         return searchPage.getContent();
     }
 
+    public List<Order> listAll() {
+        return orderRepository.findAll(PageRequest.of(0, 6)).getContent();
+    }
+
     public List<Order> getMoreOrder(String status, int user_id, int page, int size) {
         // Perform the search using pagination
         Page<Order> searchPage = getOrders(orderRepository.findOrdersByUserIdAndStatus(user_id,status),page,size);
@@ -38,5 +42,18 @@ public class OrderService {
     }
     private Pageable createPageRequestUsing(int page, int size) {
         return PageRequest.of(page, size);
+    }
+
+    public long countOrders(){
+        return orderRepository.count();
+    }
+
+    public double getTotalAmount() {
+        Iterable<Order> orders = orderRepository.findAll();
+        double totalAmount = 0;
+        for (Order order : orders) {
+            totalAmount += order.getCost(); // Giả sử có một trường 'amount' trong đơn hàng đại diện cho số tiền của mỗi đơn hàng
+        }
+        return totalAmount;
     }
 }
