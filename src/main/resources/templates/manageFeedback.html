@@ -213,6 +213,7 @@
                     <th>Product</th>
                     <th>User</th>
                     <th>Response</th>
+                    <th>Edit Response</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -222,14 +223,16 @@
                     <td th:text="@{${feedback.rating}}"></td>
                     <td th:text="@{${feedback.product.name}}"></td>
                     <td th:text="${feedback.user.userName}"></td>
+                    <th th:text="${feedback.response}==null? 'Chưa phản hồi' : ${feedback.response}"></th>
                     <td>
-                        <button class="edit button" onclick="openResponsePopup('Response')">Response Feedback</button>
+                        <button class="edit button" th:onclick="'openResponsePopup(\'Response-' + ${feedback.feedbackID} + '\')'">Response Feedback</button>
+
                     </td>
-                    <div id="Response" class="popup2">
+                    <div th:id="'Response-'+${feedback.feedbackID}" class="popup2">
                         <div class="popup-content">
                             <p class="popup-content-text">Response Feedback</p>
-                            <form> <!-- Add action attribute -->
-                                <textarea class="response-Text" cols="20" rows="10"></textarea> <!-- Thêm thuộc tính name -->
+                            <form th:action="'/admin/manageFeedback/response/'+${feedback.getFeedbackID()}" method="post"> <!-- Add action attribute -->
+                                <textarea name="response" class="response-Text" cols="20" rows="10"></textarea> <!-- Thêm thuộc tính name -->
                                 <button type="submit" class="btn-response">Response</button>
                             </form>
                         </div>
@@ -249,6 +252,7 @@
             popup.style.display = "block";
         }
     }
+
     let list = document.querySelectorAll(".navigation li");
 
     function activeLink() {
