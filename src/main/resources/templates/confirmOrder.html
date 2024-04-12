@@ -35,6 +35,9 @@
             color: #8493a5;
             font-size: 15px;
         }
+        thead th:first-child{
+            width: 6%;
+        }
         th,td{
             border-bottom: 1px solid #dddddd;
             padding: 10px 20px;
@@ -193,7 +196,7 @@
                 <tbody>
                 <tr  th:each="order : ${listOrders}">
                     <td th:text="${order.orderID}"></td>
-                    <td th:text="${order.cost}"></td>
+                    <td th:text="${order.cost}" class="cost"></td>
                     <td th:text="@{${order.order_date}}"></td>
                     <td th:text="@{${order.getPStatus()}}"></td>
                     <td th:text="${order.status}"></td>
@@ -242,6 +245,18 @@
         navigation.classList.toggle("active");
         main.classList.toggle("active");
     };
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var costCells = document.querySelectorAll(".cost");
+        costCells.forEach(function(cell) {
+            var cost = parseFloat(cell.textContent);
+            cell.textContent = formatCurrency(cost) + " ₫";
+        });
+    });
+
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

@@ -62,8 +62,12 @@ body {
 }
 
 .navigation ul li:nth-child(1) {
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     pointer-events: none;
+}
+
+.navigation ul li:last-child {
+    margin-top: 10px;
 }
 
 .navigation ul li a {
@@ -234,7 +238,7 @@ body {
 .cardBox .card .numbers {
     position: relative;
     font-weight: 500;
-    font-size: 2.5rem;
+    font-size: 1.5rem;
     color: var(--blue);
 }
 
@@ -272,7 +276,7 @@ body {
 .details .recentOrders {
     position: relative;
     display: grid;
-    min-height: 500px;
+    height: 400px;
     background: var(--white);
     padding: 20px;
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
@@ -364,7 +368,7 @@ body {
 .recentCustomers {
     position: relative;
     display: grid;
-    min-height: 500px;
+    height: 400px;
     padding: 20px;
     background: var(--white);
     box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);

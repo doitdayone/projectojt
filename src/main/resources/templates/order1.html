@@ -1295,6 +1295,7 @@
                             <div class="info">
                                 <a href="/" class="name line-clamp-2" th:text="${cartItem.cartID.getProduct().name}">
                                 </a>
+                                <div class="price cost1" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
                                 <div class="price" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
                                 <a th:text="'Số lượng x '+${cartItem.quantity}"></a>
                             </div>
@@ -1305,7 +1306,7 @@
                     <div class="total-price">
                         <div class="d-flex align-items item space-between">
                             <b>Tổng chi phí</b>
-                            <div class="js-total-cart-price" th:text="${total}"></div>
+                            <div class="js-total-cart-price cost1" th:text="${total}"></div>
                         </div>
                     </div>
                     <form class="btn" th:action="@{/EcommerceStore/order}" method="get">
@@ -1534,5 +1535,17 @@
             address2.checked = true;
         }
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var costCells = document.querySelectorAll(".cost1");
+        costCells.forEach(function(cell) {
+            var cost = parseFloat(cell.textContent);
+            cell.textContent = formatCurrency(cost) + " ₫";
+        });
+    });
+
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
 </html>

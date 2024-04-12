@@ -59,8 +59,8 @@ public class OrderController {
                 User user = userRepository.findByEmail(email);
                 model.addAttribute("userRepository", userRepository);
                 int userid = user.getUserID();
-                model.addAttribute("user_id", userid);
-                session.setAttribute("user_id", userRepository.findByEmail(email).getUserID());
+                model.addAttribute("userid", userid);
+                session.setAttribute("userid", userRepository.findByEmail(email).getUserID());
                 if (user.getRoles().equals("ADMIN"))
                     return "redirect:/admin";
             } else if (principal instanceof OAuth2User oAuth2User) {
