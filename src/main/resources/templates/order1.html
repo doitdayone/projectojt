@@ -1296,7 +1296,6 @@
                                 <a href="/" class="name line-clamp-2" th:text="${cartItem.cartID.getProduct().name}">
                                 </a>
                                 <div class="price cost1" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
-                                <div class="price" th:text="${cartItem.cartID.getProduct().price} - (${cartItem.cartID.getProduct().price} * (${cartItem.cartID.getProduct().sale}/100))"></div>
                                 <a th:text="'Số lượng x '+${cartItem.quantity}"></a>
                             </div>
                         </div>
