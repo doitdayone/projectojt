@@ -1,11 +1,7 @@
 package com.example.projectojt.controller;
 import com.example.projectojt.dto.ProductDTO;
-import com.example.projectojt.model.Order;
-import com.example.projectojt.model.OrderDetail;
-import com.example.projectojt.model.Product;
-import com.example.projectojt.repository.OrderDetailRepository;
-import com.example.projectojt.repository.OrderRepository;
-import com.example.projectojt.repository.ProductRepository;
+import com.example.projectojt.model.*;
+import com.example.projectojt.repository.*;
 import com.example.projectojt.service.ProductService;
 import com.example.projectojt.service.UserNotFoundException;
 import jakarta.servlet.http.HttpSession;
@@ -34,6 +30,8 @@ public class AdminProductController {
     @Autowired private ProductRepository repo;
     @Autowired private OrderRepository repoOrder;
     @Autowired private OrderDetailRepository repoOrderDetail;
+    @Autowired private ScheduleRepository repoSche;
+    @Autowired private AddressRepository repoAddress;
 
     @GetMapping("/manageProduct")
     public String showProductList(Model model, HttpSession session){
@@ -96,6 +94,18 @@ public class AdminProductController {
         Model.addAttribute("orderDetail", orderDetail);
         return "OrderDetail";
     }
+
+    @GetMapping("/confirmSchedule")
+    public String showConfirmSchedule(Model model, HttpSession session) {
+        if ((boolean) session.getAttribute("admin") != true)
+            return "error";
+
+        List<Schedule> listSchedules = repoSche.findAll(); // Fetch all orders
+        model.addAttribute("listSchedules", listSchedules);
+
+        return "confirmSchedule";
+    }
+
 
     @PostMapping("/create/add")
     public String addProduct(@Valid @ModelAttribute ProductDTO productDto, BindingResult result, HttpSession session){

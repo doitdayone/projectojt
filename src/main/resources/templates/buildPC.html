@@ -2272,6 +2272,13 @@
         }
     }
 
+    function closePopup(popupId) {
+        var popup = document.getElementById(popupId + 'Popup');
+        if (popup) {
+            popup.style.display = "none";
+        }
+    }
+
     function openConfirmPopup(popupId) {
         var popup = document.getElementById('ConfirmPopup' + popupId);
         if (popup) {
@@ -2280,56 +2287,50 @@
     }
 
     // Hàm đóng popup
-    function closePopup(popupId) {
-        var popup = document.getElementById(popupId + 'Popup');
-        if (popup) {
-            popup.style.display = "none";
-        }
-    }
     function closeConfirmPopup(popupId) {
         var popup = document.getElementById('ConfirmPopup' + popupId);
         if (popup) {
             popup.style.display = "none";
         }
     }
-    function stepper(btn) {
-        const input = btn.parentNode.querySelector("input");
-        const id = btn.getAttribute("id");
-        const min = parseInt(input.getAttribute("min"));
-        const max = parseInt(input.getAttribute("max"));
-        const step = parseInt(input.getAttribute("step"));
-        let val = parseInt(input.value);
-        let newValue;
-
-        if (id === "increment") {
-            newValue = val + step;
-        } else {
-            newValue = val - step;
-        }
-
-        if (newValue >= min && newValue <= max) {
-            input.value = newValue;
-            calculateTotalPrice(btn.parentNode.parentNode);
-        }
-    }
-
-    function confirmPopup() {
-        // Hiển thị popup
-        document.getElementById("confirmPopup").style.display = "block";
-    }
-
-    function confirmAction() {
-        // Xử lý hành động khi xác nhận
-        alert("Hành động đã được xác nhận!");
-        // Đóng popup
-        document.getElementById("confirmPopup").style.display = "none";
-    }
-
-    function cancelAction() {
-        // Xử lý hành động khi hủy bỏ
-        // Đóng popup
-        document.getElementById("confirmPopup").style.display = "none";
-    }
+    // function stepper(btn) {
+    //     const input = btn.parentNode.querySelector("input");
+    //     const id = btn.getAttribute("id");
+    //     const min = parseInt(input.getAttribute("min"));
+    //     const max = parseInt(input.getAttribute("max"));
+    //     const step = parseInt(input.getAttribute("step"));
+    //     let val = parseInt(input.value);
+    //     let newValue;
+    //
+    //     if (id === "increment") {
+    //         newValue = val + step;
+    //     } else {
+    //         newValue = val - step;
+    //     }
+    //
+    //     if (newValue >= min && newValue <= max) {
+    //         input.value = newValue;
+    //         calculateTotalPrice(btn.parentNode.parentNode);
+    //     }
+    // }
+    //
+    // function confirmPopup() {
+    //     // Hiển thị popup
+    //     document.getElementById("confirmPopup").style.display = "block";
+    // }
+    //
+    // function confirmAction() {
+    //     // Xử lý hành động khi xác nhận
+    //     alert("Hành động đã được xác nhận!");
+    //     // Đóng popup
+    //     document.getElementById("confirmPopup").style.display = "none";
+    // }
+    //
+    // function cancelAction() {
+    //     // Xử lý hành động khi hủy bỏ
+    //     // Đóng popup
+    //     document.getElementById("confirmPopup").style.display = "none";
+    // }
 
     function updatePrice(element) {
         var cardBody = element.closest('.card-body');

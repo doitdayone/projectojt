@@ -1,13 +1,16 @@
-<!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>[[${PageTittle}]]</title>
-
+    <title><!doctype html>
+        <html lang="en" xmlns="http://www.w3.org/1999/html">
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Admin Home</title>
     <script src="https://kit.fontawesome.com/b9cbf649a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="/styles.css">
     <style>
@@ -17,65 +20,56 @@
             align-items: center;
         }
         .main-content{
-            width: 35%;
-            display: flex;
-            flex-direction: column;
-            border: 5px solid #dddddd;
-            border-radius: 15px;
-            padding: 10px;
-            & h2{
-                text-align: center;
-                padding-bottom: 20px;
-            }
+            overflow: auto;
         }
-        .content{
+        h1{
+            text-align: center;
+            padding-bottom: 30px;
+        }
+        table{
             width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0 10px 0;
-            align-items: center;
+            table-layout: fixed;
+            min-width: 100px;
+            border-collapse: collapse;
+        }
+        thead th{
+            position: sticky;
+            top: 0;
+            background: #f6f9fc;
+            color: #8493a5;
+            font-size: 15px;
+        }
+        th,td{
             border-bottom: 1px solid #dddddd;
-        }
-        .content label{
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .content input{
-            width: 250px;
-            height: 30px;
+            padding: 10px 20px;
+            word-break: break-all;
             text-align: center;
         }
-        .action{
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding-top: 10px;
+        td img{
+            height: 80px;
+            width: 80px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 5px solid #ced0d2;
         }
-        .update button{
-            border-radius: 5px;
+        .button{
+            outline: none;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            padding: 10px;
+            color: #ffffff;
+        }
+        .edit{
             background-color: #0298cf;
-            color: #f6f9fc;
-            border: none;
-            height: 40px;
-            width: 100px;
-            font-size: 15px;
-            font-weight: bold;
         }
-        .cancel{
-            border-radius: 5px;
+        .delete{
             background-color: #f80000;
-            border: none;
-            height: 40px;
-            width: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .cancel a{
-            color: #f6f9fc;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: bold;
+        tr:hover td{
+            color: #0298cf;
+            cursor: pointer;
+            background-color: #f6f9fc;
         }
     </style>
 </head>
@@ -157,43 +151,27 @@
             </div>
         </div>
         <div class="main-content">
-            <h2>Add Staff</h2>
-            <form th:action="@{/admin/add/new}" th:object="${staff}" method="post">
-                <input type="hidden" th:field="*{ID}" />
-                <div class="content">
-                    <label>Name:</label>
-                    <input type="text" th:field="*{name}">
-                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-                </div>
-                <div class="content">
-                    <label>Address:</label>
-                    <input type="text" th:field="*{address}">
-                    <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
-                </div>
-                <div class="content">
-                    <label>Phone:</label>
-                    <input type="text" th:field="*{phone}">
-                    <span th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
-                </div>
-                <div class="content">
-                    <label>Birthday:</label>
-                    <input type="date" th:field="*{birthday}">
-                    <span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></span>
-                </div>
-                <div class="content">
-                    <label>Password:</label>
-                    <input type="password" th:field="*{password}">
-                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-                </div>
-                <div class="action">
-                    <div class="update">
-                        <button type="submit">Add</button>
-                    </div>
-                    <div class="cancel">
-                        <a href="/admin" role="button">Cancel</a>
-                    </div>
-                </div>
-            </form>
+            <h2>Confirm Order</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>City</th>
+                    <th>Commute</th>
+                    <th>District</th>
+                    <th>Detail</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  th:each="addressDetail : ${addressDetail}">
+                    <td th:text="${addressDetail.addressID}"></td>
+                    <td th:text="${addressDetail.city}"></td>
+                    <td th:text="@{${addressDetail.commute}}"></td>
+                    <td th:text="@{${addressDetail.district}}"></td>
+                    <td th:text="@{${addressDetail.detail}}"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
@@ -222,5 +200,10 @@
 </script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html></title>
+</head>
+<body>
+
 </body>
 </html>
