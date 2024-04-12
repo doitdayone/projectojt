@@ -40,6 +40,8 @@ public class FeedbackController {
     public String submitFeedback(@RequestParam("productId") int productId,
                                  @RequestParam("description") String description,
                                  @RequestParam("rate") int rate, HttpSession session) {
+        if (description.equals(""))
+            return "redirect:/EcommerceStore/do-feedback";
 
         Feedback feedback = new Feedback();
         feedback.setProduct(productRepository.getProductByProductID(productId));
