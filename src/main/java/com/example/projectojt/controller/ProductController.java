@@ -53,6 +53,7 @@ public class ProductController {
         int user_id = user.getUserID();
         model.addAttribute("user_id", user_id);
         session.setAttribute("user_id", userRepository.findByEmail(email).getUserID());
+
         if (user.getRoles().equals("ADMIN"))
           return "redirect:/admin";
       } else if (principal instanceof OAuth2User oAuth2User) {
@@ -116,7 +117,6 @@ public class ProductController {
             attributes.get("email"));
         model.addAttribute("userRepository", userRepository);
 
-
       } else {
         return "error";
       }
@@ -139,7 +139,10 @@ public class ProductController {
   }
 
   @GetMapping("/productFilter/{product_type}")
-  public String productFilter(@PathVariable("product_type") String product_type, Model model) {
+  public String productFilter(@PathVariable("product_type") String product_type, Model model, HttpSession session) {
+
+    model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
+    model.addAttribute("userRepository", userRepository);
     List<Product> listProduct = productRepository.findProductsByType(product_type);
     model.addAttribute("listProduct", listProduct);
     model.addAttribute("productType", product_type);
@@ -148,7 +151,9 @@ public class ProductController {
 
   @GetMapping("/productBrandFilter/{product_brand}")
   public String findByProductBrand(@PathVariable("product_brand") String product_brand,
-      Model model) {
+      Model model, HttpSession session) {
+    model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
+    model.addAttribute("userRepository", userRepository);
     List<Product> listProduct = productRepository.findProductsByBrand(product_brand);
     model.addAttribute("listProduct", listProduct);
     model.addAttribute("productType", "Laptop");
@@ -159,7 +164,9 @@ public class ProductController {
   public String findProductByPrice(@RequestParam(value = "start_price" , defaultValue = "0") int start_price,
       @RequestParam(value = "end_price", defaultValue = "0") int end_price, @RequestParam(value = "productType", defaultValue = "0") String productType,
       @RequestParam(value = "more", defaultValue = "0") int more,
-      Model model) {
+      Model model, HttpSession session) {
+    model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
+    model.addAttribute("userRepository", userRepository);
     if (start_price==0&&end_price==0&&productType.equals("0")){
       if(more==0){
         model.addAttribute("productList", productService.getMoreProducts(0,10));
@@ -202,8 +209,9 @@ public class ProductController {
   @GetMapping("/search")
   public String searchProduct(@RequestParam String keyword,
       @RequestParam int page, @RequestParam int size,
-      Model model) {
-
+      Model model, HttpSession session) {
+    model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
+    model.addAttribute("userRepository", userRepository);
     List<Product> productList = productService.searchProduct(keyword);
     List<Product> pList = productService.getMoreSearchProduct(keyword, page, size);
     model.addAttribute("productList", productList);

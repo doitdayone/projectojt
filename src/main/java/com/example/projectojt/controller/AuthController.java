@@ -32,7 +32,7 @@ public class AuthController {
     boolean registerResponse = userService.register(registerRequest);
   if(!registerResponse)
   {
-    model.addAttribute("error","Email is already used!");
+    model.addAttribute("error","Email may be already used! Or Passwords are not same");
     return "register_form";
   } else
   {
@@ -42,14 +42,80 @@ public class AuthController {
   }
 
   @PostMapping("/verify")
-  public String verifyUser(@RequestParam String email, @RequestParam String otp, Model model) {
-    try {
-      userService.verify(email, otp);
+  public String verifyUser1(@RequestParam String email, @RequestParam String otp, Model model) {
+      boolean verify = userService.verify(email, otp);
       userRepository.findByEmail(email).setVerified(true);
-      return "product";
-    } catch (RuntimeException e) {
-      model.addAttribute("error", e.getMessage());
-      return "error";
+      if (verify)
+      return "redirect:/EcommerceStore/product";
+
+      model.addAttribute("error", "OTP does not match!");
+      return "otp_verify";
+  }
+
+  @PostMapping("/verifyOTP")
+  public String verifyUser(@RequestParam("email") String email,
+                           @RequestParam("otp") String otp, Model model) {
+
+    if(userService.verify(email, otp))
+    {
+      return "redirect:/EcommerceStore/login";
+    } else
+    {
+      model.addAttribute("error","OTP does not match!");
+      return "otp_verify";
+    }
+
+
+  }
+
+  @PostMapping("/sendOTP")
+  public String re_sentOTP(@RequestParam("email")String email, Model model)
+  {
+    model.addAttribute("user_email",email);
+    userService.send(email);
+    return "otp_verify";
+  }
+  // forgot password
+  @GetMapping("/forgot_password")
+  public String forgotPassword()
+  {
+    return "forgot_password";
+  }
+  // verify otp for change pass
+  @PostMapping("/forgot_pass_verify")
+  public String verifyChanePass(@RequestParam("email") String email,
+                                @RequestParam("otp") String otp, Model model)
+  {
+    if(userService.verifyForgotPass(email,otp))
+    {
+      model.addAttribute("user_email", email);
+      return "change_new_pass";
+    } else
+    {
+      model.addAttribute("user_email",email);
+      model.addAttribute("error","OTP does not match!");
+      return "forgot_password_otp";
+    }
+  }
+  @PostMapping("/send_otp_new_pass")
+  public String sendOtp(@RequestParam("email")String email, Model model)
+  {
+    model.addAttribute("user_email",email);
+    userService.send(email);
+    return "forgot_password_otp";
+  }
+  @PostMapping("/change_new_pass")
+  public String changeNewPass(@RequestParam("email") String email,@RequestParam("new_pass") String newPass,
+                              @RequestParam("confirm_new_pass") String confirmNewPass, Model model)
+  {
+    if(userService.changeNewPass(email,newPass,confirmNewPass))
+    {
+      return "redirect:/EcommerceStore/loginpage";
+    } else
+    {
+      model.addAttribute("user_email", email);
+      model.addAttribute("error_change_pass","Password does not match");
+      return "change_new_pass";
     }
   }
 }

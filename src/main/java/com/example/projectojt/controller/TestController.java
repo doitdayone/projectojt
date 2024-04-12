@@ -25,7 +25,7 @@ public class TestController {
     }
     @GetMapping("/ca")
     public  String getca(){
-        return "cart";
+        return "forgot_password";
     }
 
 }

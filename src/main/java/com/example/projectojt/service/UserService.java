@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -24,7 +25,9 @@ public class UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
   public boolean register(RegisterRequest registerRequest) {
-    User existingUser = userRepository.findByEmail(registerRequest.getEmail());
+      if (registerRequest.getPassword().equals(registerRequest.getRe_password()))
+          return false;
+      User existingUser = userRepository.findByEmail(registerRequest.getEmail());
     if (existingUser != null) {
       if (existingUser.isVerified()) {
         return false;
@@ -34,8 +37,6 @@ public class UserService {
       }
 
     } else {
-
-
       User users = User.builder()
           .userName("")
           .email(registerRequest.getEmail())
@@ -51,24 +52,77 @@ public class UserService {
       User savedUser = userRepository.save(users);
       sendVerificationEmail(savedUser.getEmail(), otp);
     }
-
-
     return true;
   }
-  public void verify(String email, String otp) {
+
+    //resend otp for verify
+    public void send(String email) {
+        User user = userRepository.findByEmail(email);
+
+        String otp = generateOTP();
+        user.setOtp(otp);
+        userRepository.save(user);
+        sendVerificationEmail(email, otp);
+    }
+
+  public boolean verify(String email, String otp) {
     User users = userRepository.findByEmail(email);
     if (users == null){
-      throw new RuntimeException("User not found");
+      return false;
     } else if (users.isVerified()) {
-      throw new RuntimeException("User is already verified");
+      return false;
     } else if (otp.equals(users.getOtp())) {
       users.setVerified(true);
       userRepository.save(users);
+      return true;
     }else {
-      throw new RuntimeException("Internal Server error");
+      return false;
     }
   }
 
+    public boolean verifyForgotPass(String email, String otp) {
+        User user = userRepository.findByEmail(email);
+        String lowerCaseEmail = email.toLowerCase();
+        if (otp.trim().equals(user.getOtp().trim()) && lowerCaseEmail.equals(
+                user.getEmail().toLowerCase())) {
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void changePass(String current_password, String new_password, String re_new_password,
+                           int user_id, Model model, String message_err1, String message_err2) {
+        User user = userRepository.findByUserID(user_id);
+        if (passwordEncoder.matches(current_password.trim(), user.getPassword().trim())) {
+
+            if (new_password.trim().equalsIgnoreCase(re_new_password.trim())) {
+                user.setPassword(passwordEncoder.encode(new_password));
+                userRepository.save(user);
+            } else {
+                model.addAttribute("re_new_pass_error", message_err1);
+            }
+        } else {
+            System.out.println(current_password);
+            System.out.println(passwordEncoder.encode(current_password));
+            System.out.println(user.getPassword());
+            model.addAttribute("cur_pass_error", message_err2);
+        }
+    }
+
+    // change new password
+    public boolean changeNewPass(String email, String new_pass, String confirm_new_pass) {
+        User user = userRepository.findByEmail(email);
+        if (new_pass.trim().equalsIgnoreCase(confirm_new_pass.trim())) {
+
+            user.setPassword(passwordEncoder.encode(new_pass));
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
   private String generateOTP(){
     Random random = new Random();

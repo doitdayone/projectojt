@@ -53,7 +53,11 @@ public class SecurityConfig {
                                 "/EcommerceStore/register_form", "/EcommerceStore/register",
                                 "/EcommerceStore/otp_verify","/EcommerceStore/search","/EcommerceStore/productFilter/**"
                                 ,"/EcommerceStore/productBrandFilter/**","/EcommerceStore/productDetails/**",
-                                "/EcommerceStore/products/more","/asset/default/**","/styles.css","/admin/**", "/media/banner/**", "/media/**").permitAll()
+                                "/EcommerceStore/products/more","/asset/default/**","/styles.css","/admin/**", "/media/banner/**", "/media/**", "/EcommerceStore/verifyOTP",
+                                "/EcommerceStore/forgot_password","/EcommerceStore/send_otp_new_pass"
+                                , "/EcommerceStore/change_new_pass",
+                                "/EcommerceStore/forgot_pass_verify")
+                        .permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())
                 .formLogin(formLogin ->
