@@ -131,7 +131,7 @@ public class ProductController {
     if (optionalProduct.isPresent()) {
       model.addAttribute("productRepository", productRepository);
       model.addAttribute("product", optionalProduct.get());
-      model.addAttribute("feedbackList", optionalProduct.get().getFeedbacks());
+      model.addAttribute("feedbackList", feedbackRepository.findAllByProductId(optionalProduct.get().getProductID()));
       return "productDetails";
     }
 
