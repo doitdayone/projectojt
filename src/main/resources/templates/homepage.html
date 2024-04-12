@@ -1487,6 +1487,73 @@
   </div>
 </div>
 
+<div class="box-group-category">
+  <div class="container">
+    <div class="group-category-home background-white js-product-load js-product-82"
+         data-id="82">
+      <div class="group-title d-flex align-items space-between">
+        <h2 class="title-left">
+          PC
+        </h2>
+        <a href="/EcommerceStore/productFilter" class="more-all">
+                <span class="hover-txt">
+                  Xem tất cả
+                </span>
+          <i class="fa fa-arrow-right">
+          </i>
+        </a>
+      </div>
+      <div class="content-product-category d-flex">
+        <a href="/gaming-pc.html" class="banner-sale-cate">
+          <img src="/media/category/cat_big_82_1697613958.jpg" width="100%" height="100%"
+               alt="PC Gaming">
+        </a>
+        <div class="product-list">
+          <div class="owl-carousel owl-theme custom-nav owl-loaded owl-drag">
+            <div class="owl-stage-outer">
+              <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1160px;display: flex;">
+                <tr class="owl-item active" th:each="buildedPC : ${buildedPCList}">
+                  <div class="product-item" style="width: 20%">
+                    <a  class="product-image">
+                      <img th:src="@{'/images/' + ${buildedPC.image}}" width="100%"
+                           height="100%" alt="PC Gaming - Glacier I3060 - WH">
+                      <span class="box-sale hot">
+                              Best Choice
+                            </span>
+                    </a>
+                    <div class="product-info">
+                      <a th:text="${buildedPC.name}"
+                         class="product-name line-clamp-2"></a>
+                      <div class="main-price">
+                        <div class="d-flex align-items">
+                          <b class="price" th:text="${buildedPC.price}">
+                          </b>
+                        </div>
+                      </div>
+                    </div>
+                    <span class="boder-top">
+                          </span>
+                    <span class="boder-right">
+                          </span>
+                    <span class="boder-bottom">
+                          </span>
+                    <span class="boder-left">
+                          </span>
+                  </div>
+
+
+
+              </div>
+            </div>
+            </tr>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div class="footer">
   <div class="form-info-sale">
     <div class="container">

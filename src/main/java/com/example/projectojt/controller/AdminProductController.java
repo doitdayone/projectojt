@@ -1,4 +1,5 @@
 package com.example.projectojt.controller;
+import com.example.projectojt.dto.BuildedPCDTO;
 import com.example.projectojt.dto.ProductDTO;
 import com.example.projectojt.model.*;
 import com.example.projectojt.repository.*;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 import java.util.Date;
@@ -32,6 +34,7 @@ public class AdminProductController {
     @Autowired private OrderDetailRepository repoOrderDetail;
     @Autowired private ScheduleRepository repoSche;
     @Autowired private FeedbackRepository repoFeed;
+    @Autowired private BuildedPCRepository repoBuilded;
 
     @GetMapping("/manageProduct")
     public String showProductList(Model model, HttpSession session){
@@ -285,5 +288,174 @@ public class AdminProductController {
         }
 
         return "redirect:/admin/manageProduct";
+    }
+
+    @GetMapping("/manageBuildedPC")
+    public String showBuildedPCList(Model model, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
+        List<BuildedPC> listBuildeds = repoBuilded.findAll();
+        model.addAttribute("listBuildeds", listBuildeds);
+
+        return "manageBuildedPC";
+    }
+
+    @GetMapping("/addBuildedPC")
+    public String showAddBuildedPC(Model Model, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
+        Model.addAttribute("buildedPCDto", new BuildedPCDTO());
+        return "addBuildedPC";
+    }
+
+    @PostMapping("/addBuildedPC/add")
+    public String addBuildedPC(@Valid @ModelAttribute BuildedPCDTO buildedPCDTO, BindingResult result, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
+
+        if (buildedPCDTO.getImages().isEmpty()){
+            result.addError(new FieldError("buildedPCDTO", "images", "The image file is required"));
+        }
+
+        if (result.hasErrors()){
+            return "createProduct";
+        }
+
+        MultipartFile image = buildedPCDTO.getImages();
+        Date createAt = new Date();
+        String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
+        try {
+            String uploadDir = "public/images/";
+            Path uploadPath = Paths.get(uploadDir);
+
+            if (!Files.exists(uploadPath)){
+                Files.createDirectories(uploadPath);
+            }
+
+            try(InputStream inputStream = image.getInputStream()){
+                Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+            }
+        }
+        catch (Exception ex){
+            System.out.println("Exception" + ex.getMessage());
+        }
+
+        BuildedPC buildedPC = new BuildedPC();
+        buildedPC.setName(buildedPCDTO.getName());
+        buildedPC.setDescription(buildedPCDTO.getDescription());
+        buildedPC.setProductIds(buildedPCDTO.getProductIds());
+        buildedPC.setPrice(buildedPCDTO.getPrice());
+        buildedPC.setImage(storageFileName);
+
+        repoBuilded.save(buildedPC);
+
+
+        return "redirect:/admin/manageBuildedPC";
+    }
+
+    @GetMapping("/editBuildedPC")
+    public String showEditBuildedPC(Model Model, @RequestParam int id, HttpSession session){
+        if ((boolean) session.getAttribute("admin")!=true)
+            return "error";
+
+        try {
+            BuildedPC buildedPC = repoBuilded.findById(id);
+            Model.addAttribute("buildedPC", buildedPC);
+
+            BuildedPCDTO buildedPCDTO = new BuildedPCDTO();
+            buildedPCDTO.setName(buildedPC.getName());
+            buildedPCDTO.setDescription(buildedPC.getDescription());
+            buildedPCDTO.setPrice(buildedPC.getPrice());
+            buildedPCDTO.setProductIds(buildedPC.getProductIds());
+
+            Model.addAttribute("buildedPCDTO", buildedPCDTO);
+        }
+        catch (Exception ex){
+            System.out.println("Exception: " + ex.getMessage());
+            return "redirect:/admin/manageBuildedPC";
+        }
+
+        return "editBuildedPC";
+    }
+
+    @PostMapping("/editBuildedPC")
+    public String updateBuildedPC(
+            Model Model,
+            @RequestParam int id,
+            @Valid @ModelAttribute BuildedPCDTO buildedPCDTO,
+            BindingResult result
+            , HttpSession session) {
+        if ((boolean) session.getAttribute("admin") != true)
+            return "error";
+        try {
+            BuildedPC buildedPC = repoBuilded.findById(id);
+            Model.addAttribute("buildedPC", buildedPC);
+
+            if (result.hasErrors()) {
+                return "editProduct";
+            }
+
+            if (!buildedPCDTO.getImages().isEmpty()) {
+                String uploadDir = "public/images/";
+                Path oldImagePath = Paths.get(uploadDir + buildedPC.getImage());
+
+                try {
+                    Files.delete(oldImagePath);
+                } catch (Exception ex) {
+                    System.out.println("Exception: " + ex.getMessage());
+                }
+
+                MultipartFile image = buildedPCDTO.getImages();
+                Date createAt = new Date();
+                String storageFileName = createAt.getTime() + "_" + image.getOriginalFilename();
+                try (InputStream inputStream = image.getInputStream()) {
+                    Files.copy(inputStream, Paths.get(uploadDir + storageFileName), StandardCopyOption.REPLACE_EXISTING);
+                }
+                buildedPC.setImage(storageFileName);
+            }
+
+            buildedPC.setName(buildedPCDTO.getName());
+            buildedPC.setProductIds(buildedPCDTO.getProductIds());
+            buildedPC.setDescription(buildedPCDTO.getDescription());
+            buildedPC.setPrice(buildedPCDTO.getPrice());
+            System.err.println("XXXXXXXXX");
+            repoBuilded.save(buildedPC);
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+        }
+        return "redirect:/admin/manageBuildedPC";
+    }
+
+    @Transactional
+    @GetMapping("/deleteBuildedPC")
+    public String deleteBuildedPC(
+            @RequestParam int id,
+            HttpSession session
+    ) {
+        Boolean isAdmin = (Boolean) session.getAttribute("admin");
+        if (isAdmin == null || !isAdmin) {
+            return "error";
+        }
+
+        BuildedPC buildedPC = repoBuilded.findById(id);
+
+        if (buildedPC == null) {
+            // Handle case where the builded PC does not exist
+            return "error";
+        }
+
+        Path imagePath = Paths.get("public/images/", buildedPC.getImage());
+
+        try {
+            Files.delete(imagePath);
+        } catch (IOException ex) {
+            // Log the exception or handle it appropriately
+            ex.printStackTrace();
+            return "error";
+        }
+
+        repoBuilded.deleteBuildedPCById(id);
+
+        return "redirect:/admin/manageBuildedPC";
     }
 }

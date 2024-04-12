@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BuildedPCRepository extends JpaRepository<BuildedPC,Integer> {
     public BuildedPC findById(int id);
+
+    void deleteBuildedPCById(int id);
 }

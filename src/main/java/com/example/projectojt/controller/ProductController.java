@@ -1,13 +1,16 @@
 package com.example.projectojt.controller;
 
+import com.example.projectojt.model.BuildedPC;
 import com.example.projectojt.model.Product;
 import com.example.projectojt.model.User;
+import com.example.projectojt.repository.BuildedPCRepository;
 import com.example.projectojt.repository.FeedbackRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -37,6 +40,7 @@ public class ProductController {
   private ProductService productService;
   @Autowired
   private FeedbackRepository feedbackRepository;
+  @Autowired private BuildedPCRepository repoBuilded;
 
   @GetMapping("/product")
   public String getProduct(Authentication authentication, Model model,
@@ -79,6 +83,9 @@ public class ProductController {
 
     List<Product> productList = productService.getInitialProducts();
     model.addAttribute("productList", productList);
+
+    List<BuildedPC> buildedPCList = repoBuilded.findAll();
+    model.addAttribute("buildedPCList", buildedPCList);
 
     List<Product> listPhone = productRepository.findProductsByType("Phone");
     model.addAttribute("listPhone", listPhone);
