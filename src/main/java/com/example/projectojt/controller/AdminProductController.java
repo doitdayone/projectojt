@@ -117,13 +117,17 @@ public class AdminProductController {
         return "manageFeedback";
     }
 
-//    @PostMapping("/manageFeedback/response/{feedbackID}")
-//    public String updateFeedback(@PathVariable("feedbackID") int feedbackID, @ModelAttribute("updatedFeedback") Feedback updatedFeedback) {
-//        Feedback feedback = repoFeed.getFeedbackByFeedbackID(feedbackID);
-//        feedback.setResponse(updatedFeedback.getResponse());
-//        repoFeed.save(feedback); // Lưu phản hồi cập nhật vào cơ sở dữ liệu
-//        return "redirect:/manageFeedback"; // Chuyển hướng sau khi cập nhật
-//    }
+    @PostMapping("/manageFeedback/response/{feedbackID}")
+    public String updateFeedback(@PathVariable("feedbackID") int feedbackID,  @RequestParam("response") String response, HttpSession session) {
+
+        if ((boolean) session.getAttribute("admin") != true)
+            return "error";
+
+        Feedback feedback = repoFeed.getFeedbackByFeedbackID(feedbackID);
+        feedback.setResponse(response);
+        repoFeed.save(feedback); // Lưu phản hồi cập nhật vào cơ sở dữ liệu
+        return "redirect:/admin/manageFeedback"; // Chuyển hướng sau khi cập nhật
+    }
 
 
     @PostMapping("/create/add")
