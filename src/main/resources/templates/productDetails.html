@@ -1211,10 +1211,7 @@
                 <i class="fa-regular fa-star" th:classappend="${product.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
               </div>
             </div>
-            <a href="/buildpc?id_product=8880&category_id=68" class="add-buildpc">
-              <span>Build PC với sản phẩm này</span>
-              <i class="fa-solid fa-gear"></i>
-            </a>
+
           </div>
           <div class="product-main-right">
             <div class="info-specialOffer">
@@ -1242,18 +1239,7 @@
             </div>
             <!-- end price -->
             <div class="group-add-product">
-              <div class="choose-quantity d-flex align-items">
-                <span>Số lượng</span>
-                <div class="unit-detail-amount-control d-flex">
-                  <a href="javascript:;" data-value="-1">
-                    <i class="fa fa-minus"></i>
-                  </a>
-                  <input type="text" size="3" data-total="1" value="1" id="js-buy-quantity">
-                  <a href="javascript:;" data-value="1">
-                    <i class="fa fa-plus"></i>
-                  </a>
-                </div>
-              </div>
+
               <div class="all-btn-add-product d-flex align-items">
                 <button type="submit" class="btn-buy" th:if="${productRepository.getProductByProductID(productId).getQuantity() >0}">
                   Thêm vào giỏ hàng
@@ -1317,7 +1303,7 @@
 
             </div>
           </div>
-
+      </form>
         </div>
       </form>
       <form action="/EcommerceStore/register-product" method="post">
