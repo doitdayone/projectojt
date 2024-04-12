@@ -67,156 +67,206 @@
       cursor: pointer;
       background-color: #f6f9fc;
     }
+    .filter-dropdown select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 8px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        outline: none;
+    }
+
+    .filter-dropdown select:hover {
+        border-color: #999;
+    }
+
+    .filter-dropdown select:focus {
+        border-color: #333;
+    }
   </style>
 </head>
 <body>
 <div class="container">
   <div class="navigation">
-    <ul>
-      <li>
-        <a href="#">
+      <ul>
+          <li>
+              <a href="#">
                         <span class="icon">
                             <ion-icon name="person-circle-outline"></ion-icon>
                         </span>
-          <span class="title">Admin</span>
-        </a>
-      </li>
+                  <span class="title">Admin</span>
+              </a>
+          </li>
 
-      <li>
-        <a href="/admin">
+          <li>
+              <a href="/admin">
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
-          <span class="title">Dashboard</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/manageProduct">
+                  <span class="title">Dashboard</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/manageProduct">
                         <span class="icon">
                             <ion-icon class="fa-brands fa-product-hunt"></ion-icon>
                         </span>
-          <span class="title">Manage Product</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/create">
+                  <span class="title">Manage Product</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/create">
                         <span class="icon">
                             <ion-icon name="add-outline"></ion-icon>
                         </span>
-          <span class="title">Create Product</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/staff">
+                  <span class="title">Create Product</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/staff">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
                         </span>
-          <span class="title">Manage Staff</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/add">
+                  <span class="title">Manage Staff</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/add">
                         <span class="icon">
                             <ion-icon name="person-add-outline"></ion-icon>
                         </span>
-          <span class="title">Add Staff</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/confirm">
+                  <span class="title">Add Staff</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/confirm">
                         <span class="icon">
-                            <ion-icon name="person-add-outline"></ion-icon>
+                            <ion-icon name="cart"></ion-icon>
                         </span>
-          <span class="title">Confirm Order</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/confirmSchedule">
+                  <span class="title">Confirm Order</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/confirmSchedule">
                         <span class="icon">
-                            <ion-icon name="person-add-outline"></ion-icon>
+                            <ion-icon name="calendar"></ion-icon>
                         </span>
-          <span class="title">Confirm Schedule</span>
-        </a>
-      </li>
-      <li>
-        <a href="/admin/manageFeedback">
+                  <span class="title">Confirm Schedule</span>
+              </a>
+          </li>
+          <li>
+              <a href="/admin/manageFeedback">
                         <span class="icon">
-                            <ion-icon name="person-add-outline"></ion-icon>
+                            <ion-icon name="chatbubbles"></ion-icon>
                         </span>
-          <span class="title">Manage Feedback</span>
-        </a>
-      </li>
-    </ul>
+                  <span class="title">Manage Feedback</span>
+              </a>
+          </li>
+      </ul>
   </div>
   <div class="main">
     <div class="topbar">
       <div class="toggle">
         <i class="fa-solid fa-bars"></i>
       </div>
+        <div class="filter-dropdown" style="display: flex; align-items: center; gap: 10px">
+            <p>Filter Product: </p>
+            <select onchange="filterByType(this.value)">
+                <option value="all">All</option>
+                <option value="CPU">CPU</option>
+                <option value="Mainboard">Mainboard</option>
+                <option value="RAM">RAM</option>
+                <option value="HDD">HDD</option>
+                <option value="SSD">SSD</option>
+                <option value="VGA">VGA</option>
+                <option value="PowerSupply">Power Supply</option>
+                <option value="Case">Case</option>
+                <option value="Fan">Cooling Fan</option>
+                <option value="Mouse">Mouse</option>
+                <option value="Screen">Screen</option>
+                <option value="Keyboard">Keyboard</option>
+            </select>
+        </div>
     </div>
     <div class="main-content">
       <h1>List Product</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Sale</th>
-            <th>Brand</th>
-            <th>Type</th>
-            <th>Quantity</th>
-            <th>Image</th>
-            <th>Detail</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr  th:each="product : ${listProducts}">
-            <td th:text="${product.productID}"></td>
-            <td th:text="${product.name}"></td>
-            <td th:text="@{${product.price} + ' VND'}"></td>
-            <td th:text="@{${product.sale}+'%'}"></td>
-            <td th:text="${product.brand}"></td>
-            <td th:text="${product.type}"></td>
-            <td th:text="${product.quantity}"></td>
-            <td>
-              <img th:src="@{'/images/' + ${product.images}}"
-                alt="..." >
-            </td>
-            <td th:text="${product.detail}"></td>
-            <td>
-              <a class="edit button" th:href="@{/admin/edit(id=${product.productID})}"><ion-icon name="create-outline"></ion-icon></a>
-              <a class="delete button" th:href="@{/admin/delete(id=${product.productID})}" onclick="return confirm('Are you sure')"><ion-icon name="trash-outline"></ion-icon></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Sale</th>
+                <th>Brand</th>
+                <th>Type</th>
+                <th>Quantity</th>
+                <th>Image</th>
+                <th>Detail</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr  th:each="product : ${listProducts}" class="product-row">
+                <td th:text="${product.productID}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="@{${product.price} + ' VND'}"></td>
+                <td th:text="@{${product.sale}+'%'}"></td>
+                <td th:text="${product.brand}"></td>
+                <td th:text="${product.type}" class="type"></td>
+                <td th:text="${product.quantity}"></td>
+                <td>
+                    <img th:src="@{'/images/' + ${product.images}}"
+                         alt="..." >
+                </td>
+                <td th:text="${product.detail}"></td>
+                <td>
+                    <a class="edit button" th:href="@{/admin/edit(id=${product.productID})}"><ion-icon name="create-outline"></ion-icon></a>
+                    <a class="delete button" th:href="@{/admin/delete(id=${product.productID})}" onclick="return confirm('Are you sure')"><ion-icon name="trash-outline"></ion-icon></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
   </div>
 </div>
 
 <script>
-  let list = document.querySelectorAll(".navigation li");
+    let list = document.querySelectorAll(".navigation li");
 
-  function activeLink() {
-    list.forEach((item) => {
-      item.classList.remove("hovered");
-    });
-    this.classList.add("hovered");
-  }
+    function activeLink() {
+        list.forEach((item) => {
+            item.classList.remove("hovered");
+        });
+        this.classList.add("hovered");
+    }
 
-  list.forEach((item) => item.addEventListener("mouseover", activeLink));
+    list.forEach((item) => item.addEventListener("mouseover", activeLink));
 
-  // Menu Toggle
-  let toggle = document.querySelector(".toggle");
-  let navigation = document.querySelector(".navigation");
-  let main = document.querySelector(".main");
+    // Menu Toggle
+    let toggle = document.querySelector(".toggle");
+    let navigation = document.querySelector(".navigation");
+    let main = document.querySelector(".main");
 
-  toggle.onclick = function () {
-    navigation.classList.toggle("active");
-    main.classList.toggle("active");
-  };
+    toggle.onclick = function () {
+        navigation.classList.toggle("active");
+        main.classList.toggle("active");
+    };
+
+    function filterByType(type) {
+        var rows = document.querySelectorAll('.product-row');
+        rows.forEach(function (row) {
+            var typeCell = row.querySelector('.type');
+            if (type === 'all' || typeCell.textContent === type) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 </script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
