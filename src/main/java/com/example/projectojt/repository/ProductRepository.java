@@ -25,6 +25,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByBrand(String brand);
 
     Product getProductByProductID(int id);
-    @Query("SELECT DISTINCT p FROM Product p JOIN p.orderDetailList od JOIN od.order o JOIN o.address.user u WHERE u.userID = :userId AND p NOT IN (SELECT DISTINCT f.product FROM Feedback f WHERE f.user.userID = :userId)")
+    @Query("SELECT DISTINCT p FROM Product p JOIN p.orderDetailList od JOIN od.order o JOIN o.address.user u WHERE u.userID = :userId " +
+            "AND p NOT IN (SELECT DISTINCT f.product FROM Feedback f WHERE f.user.userID = :userId)" +
+            "AND o.pStatus ='PAID' AND o.status ='CONFIRM'"
+    )
     List<Product> findProductsToFeedbackByUser(@Param("userId") int userId);
 }
