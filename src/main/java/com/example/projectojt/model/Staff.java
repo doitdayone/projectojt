@@ -21,7 +21,6 @@ public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int ID;
-
     @NotEmpty(message = "Name is required")
     private String name;
     @NotEmpty(message = "Address is required")
@@ -33,7 +32,6 @@ public class Staff {
     private Date birthday;
     @NotEmpty(message = "Password is required")
     private String password;
-
     @JsonManagedReference(value = "staff_schedule")
     @OneToMany(mappedBy = "staff", cascade = CascadeType.REMOVE)
     private List<Schedule> schedules;
