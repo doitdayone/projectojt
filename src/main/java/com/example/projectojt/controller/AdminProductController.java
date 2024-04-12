@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -344,13 +345,28 @@ public class AdminProductController {
         buildedPC.setName(buildedPCDTO.getName());
         buildedPC.setDescription(buildedPCDTO.getDescription());
         buildedPC.setProductIds(buildedPCDTO.getProductIds());
-        buildedPC.setPrice(buildedPCDTO.getPrice());
+        buildedPC.setPrice(countPriceBPC(buildedPCDTO.getProductIds()));
         buildedPC.setImage(storageFileName);
 
         repoBuilded.save(buildedPC);
 
 
         return "redirect:/admin/manageBuildedPC";
+    }
+
+    private int countPriceBPC(String ids){
+        int price = 0;
+        String[] productIdArray = ids.split(" ");
+        List<Product> products = new ArrayList<>();
+        for (String id: productIdArray
+        ) {
+            products.add(repo.getProductByProductID(Integer.parseInt(id)));
+        }
+        for (Product p:products
+             ) {
+            price+=p.getPrice();
+        }
+        return price;
     }
 
     @GetMapping("/editBuildedPC")
@@ -444,15 +460,18 @@ public class AdminProductController {
             return "error";
         }
 
-        Path imagePath = Paths.get("public/images/", buildedPC.getImage());
+        if(buildedPC.getImage()!=null){
+            Path imagePath = Paths.get("public/images/", buildedPC.getImage());
 
-        try {
-            Files.delete(imagePath);
-        } catch (IOException ex) {
-            // Log the exception or handle it appropriately
-            ex.printStackTrace();
-            return "error";
+            try {
+                Files.delete(imagePath);
+            } catch (IOException ex) {
+                // Log the exception or handle it appropriately
+                ex.printStackTrace();
+                return "error";
+            }
         }
+
 
         repoBuilded.deleteBuildedPCById(id);
 

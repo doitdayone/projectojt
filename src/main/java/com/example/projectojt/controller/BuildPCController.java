@@ -338,10 +338,10 @@ public class BuildPCController {
         return "BuildPC1";
     }
     @GetMapping("/build-pc-view")
-    public String view(HttpServletRequest request, Model model, HttpSession session)
+    public String view(@RequestParam("pc_id") int pc_id, Model model, HttpSession session)
     {
+
         User user = userRepository.findByUserID((int) session.getAttribute("user_id"));
-        int pc_id = Integer.parseInt(request.getParameter("pc_id"));
         BuildedPC bPC = pcRepository.findById(pc_id);
         String[] productIdArray = bPC.getProductIds().split(" ");
         List<Product> products = new ArrayList<>();
@@ -372,10 +372,14 @@ public class BuildPCController {
                     CoolingFan = new Cart(new CartID(user,p),1); break;
             }
         }
+
+        total = 0;
+        discount = 0;
+
         for (Product p:products
              ) {
             total+=p.getPrice();
-            discount += p.getPrice()*(100-p.getSale())/100;
+            discount += p.getPrice()-p.getPrice()*p.getPrice()/100;
         }
         addList(model);
         return "BuildPC1";
