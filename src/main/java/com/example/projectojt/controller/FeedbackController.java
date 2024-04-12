@@ -31,6 +31,7 @@ public class FeedbackController {
 
     @GetMapping("/do-feedback")
     public String reviewProducts(Model model, HttpSession session) {
+        model.addAttribute("user_email", userRepository.findByUserID((int) session.getAttribute("user_id")).getEmail());
         model.addAttribute("products", productRepository.findProductsToFeedbackByUser((int) session.getAttribute("user_id")));
         return "feedback";
     }
