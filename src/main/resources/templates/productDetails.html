@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1" />
   <meta name="google-site-verification" content="EOEwXTWB17ajswn1Z2Q0g-6UH9mHD4f4OF125eZRWM4" />
-  <title> sos </title>
+  <title>Detail</title>
   <link rel="icon" type="image/png" href="/asset/default/images/logo-white.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="/asset/default/script/library.css?v=1.00111" />
@@ -1211,10 +1211,7 @@
                 <i class="fa-regular fa-star" th:classappend="${product.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
               </div>
             </div>
-            <a href="/buildpc?id_product=8880&category_id=68" class="add-buildpc">
-              <span>Build PC với sản phẩm này</span>
-              <i class="fa-solid fa-gear"></i>
-            </a>
+
           </div>
           <div class="product-main-right">
             <div class="info-specialOffer">
@@ -1242,18 +1239,7 @@
             </div>
             <!-- end price -->
             <div class="group-add-product">
-              <div class="choose-quantity d-flex align-items">
-                <span>Số lượng</span>
-                <div class="unit-detail-amount-control d-flex">
-                  <a href="javascript:;" data-value="-1">
-                    <i class="fa fa-minus"></i>
-                  </a>
-                  <input type="text" size="3" data-total="1" value="1" id="js-buy-quantity">
-                  <a href="javascript:;" data-value="1">
-                    <i class="fa fa-plus"></i>
-                  </a>
-                </div>
-              </div>
+
               <div class="all-btn-add-product d-flex align-items">
                 <button type="submit" class="btn-buy" th:if="${productRepository.getProductByProductID(productId).getQuantity() >0}">
                   Thêm vào giỏ hàng
@@ -1317,9 +1303,9 @@
 
             </div>
           </div>
-
-        </div>
       </form>
+        </div>
+
       <form action="/EcommerceStore/register-product" method="post">
         <div th:if="${productRepository.getProductByProductID(productId).getQuantity() == 0}"
              style="display: flex; flex-direction: column; width: 100%; align-items: center">
