@@ -1,6 +1,7 @@
 package com.example.projectojt.repository;
 
 import com.example.projectojt.model.Feedback;
+import com.example.projectojt.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,4 +16,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback,Long> {
 
     @Query("SELECT SUM(f.rating) FROM Feedback f WHERE f.product.productID = :productId")
     Integer sumRatingByProductId(int productId);
+
+    Feedback getFeedbackByFeedbackID(int id);
 }

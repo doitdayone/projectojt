@@ -31,7 +31,7 @@ public class AdminProductController {
     @Autowired private OrderRepository repoOrder;
     @Autowired private OrderDetailRepository repoOrderDetail;
     @Autowired private ScheduleRepository repoSche;
-    @Autowired private AddressRepository repoAddress;
+    @Autowired private FeedbackRepository repoFeed;
 
     @GetMapping("/manageProduct")
     public String showProductList(Model model, HttpSession session){
@@ -105,6 +105,25 @@ public class AdminProductController {
 
         return "confirmSchedule";
     }
+
+    @GetMapping("/manageFeedback")
+    public String showManageFeedback(Model model, HttpSession session) {
+        if ((boolean) session.getAttribute("admin") != true)
+            return "error";
+
+        List<Feedback> listFeedbacks = repoFeed.findAll(); // Fetch all orders
+        model.addAttribute("listFeedbacks", listFeedbacks);
+
+        return "manageFeedback";
+    }
+
+//    @PostMapping("/manageFeedback/response/{feedbackID}")
+//    public String updateFeedback(@PathVariable("feedbackID") int feedbackID, @ModelAttribute("updatedFeedback") Feedback updatedFeedback) {
+//        Feedback feedback = repoFeed.getFeedbackByFeedbackID(feedbackID);
+//        feedback.setResponse(updatedFeedback.getResponse());
+//        repoFeed.save(feedback); // Lưu phản hồi cập nhật vào cơ sở dữ liệu
+//        return "redirect:/manageFeedback"; // Chuyển hướng sau khi cập nhật
+//    }
 
 
     @PostMapping("/create/add")
