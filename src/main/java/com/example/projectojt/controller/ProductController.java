@@ -172,8 +172,10 @@ public class ProductController {
       @RequestParam(value = "end_price", defaultValue = "0") int end_price, @RequestParam(value = "productType", defaultValue = "0") String productType,
       @RequestParam(value = "more", defaultValue = "0") int more,
       Model model, HttpSession session) {
-    model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
-    model.addAttribute("userRepository", userRepository);
+    if (session.getAttribute("user_id")!=null){
+      model.addAttribute("user_email",userRepository.findByUserID((int)session.getAttribute("user_id")).getEmail());
+      model.addAttribute("userRepository", userRepository);
+    }
     if (start_price==0&&end_price==0&&productType.equals("0")){
       if(more==0){
         model.addAttribute("productList", productService.getMoreProducts(0,10));
