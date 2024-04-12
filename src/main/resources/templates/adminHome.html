@@ -20,12 +20,6 @@
                         </span>
                     <span class="title">Admin</span>
                 </a>
-                <a href="/logout">
-                        <span class="icon">
-                            <ion-icon name="log-out"></ion-icon>
-                        </span>
-                    <span class="title">Log out</span>
-                </a>
             </li>
 
             <li>
@@ -108,6 +102,14 @@
                     <span class="title">Add Builded PC</span>
                 </a>
             </li>
+            <li>
+                <a href="/logout">
+                        <span class="icon">
+                            <ion-icon name="log-out"></ion-icon>
+                        </span>
+                    <span class="title">Log out</span>
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -122,8 +124,8 @@
         <div class="cardBox">
             <div class="card">
                 <div>
-                    <div class="numbers">1,504</div>
-                    <div class="cardName">Daily Views</div>
+                    <div class="numbers" th:text="${countOrders}"></div>
+                    <div class="cardName">Orders</div>
                 </div>
 
                 <div class="iconBx">
@@ -133,8 +135,8 @@
 
             <div class="card">
                 <div>
-                    <div class="numbers">80</div>
-                    <div class="cardName">Sales</div>
+                    <div class="numbers" th:text="${countStaffs}"></div>
+                    <div class="cardName">Staffs</div>
                 </div>
 
                 <div class="iconBx">
@@ -144,7 +146,7 @@
 
             <div class="card">
                 <div>
-                    <div class="numbers">284</div>
+                    <div class="numbers" th:text="${countFeedbacks}"></div>
                     <div class="cardName">Comments</div>
                 </div>
 
@@ -155,7 +157,7 @@
 
             <div class="card">
                 <div>
-                    <div class="numbers">$7,842</div>
+                    <div class="numbers cost" th:text="${totalAmount}" ></div>
                     <div class="cardName">Earning</div>
                 </div>
 
@@ -170,75 +172,26 @@
             <div class="recentOrders">
                 <div class="cardHeader">
                     <h2>Recent Orders</h2>
-                    <a href="#" class="btn">View All</a>
+                    <a href="/admin/confirm" class="btn">View All</a>
                 </div>
 
                 <table>
                     <thead>
                     <tr>
-                        <td>Name</td>
+                        <td>ID</td>
                         <td>Price</td>
                         <td>Payment</td>
                         <td>Status</td>
                     </tr>
                     </thead>
-
                     <tbody>
-                    <tr>
-                        <td>Star Refrigerator</td>
-                        <td>$1200</td>
-                        <td>Paid</td>
-                        <td><span class="status delivered">Delivered</span></td>
+                    <tr th:each="order : ${orderList}">
+                        <td th:text="${order.orderID}"></td>
+                        <td th:text="${order.cost}" class="cost"></td>
+                        <td th:text="${order.PStatus}"></td>
+                        <td th:text="${order.status}"></td>
                     </tr>
 
-                    <tr>
-                        <td>Dell Laptop</td>
-                        <td>$110</td>
-                        <td>Due</td>
-                        <td><span class="status pending">Pending</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Apple Watch</td>
-                        <td>$1200</td>
-                        <td>Paid</td>
-                        <td><span class="status return">Return</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Addidas Shoes</td>
-                        <td>$620</td>
-                        <td>Due</td>
-                        <td><span class="status inProgress">In Progress</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Star Refrigerator</td>
-                        <td>$1200</td>
-                        <td>Paid</td>
-                        <td><span class="status delivered">Delivered</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Dell Laptop</td>
-                        <td>$110</td>
-                        <td>Due</td>
-                        <td><span class="status pending">Pending</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Apple Watch</td>
-                        <td>$1200</td>
-                        <td>Paid</td>
-                        <td><span class="status return">Return</span></td>
-                    </tr>
-
-                    <tr>
-                        <td>Addidas Shoes</td>
-                        <td>$620</td>
-                        <td>Due</td>
-                        <td><span class="status inProgress">In Progress</span></td>
-                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -250,75 +203,12 @@
                 </div>
 
                 <table>
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
+                    <tr th:each="user : ${userList}">
+                        <td>
+                            <h4 th:text="${user.userID}"></h4>
                         </td>
                         <td>
-                            <h4>David <br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>Amit <br> <span>India</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>David <br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>Amit <br> <span>India</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>David <br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>Amit <br> <span>India</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>David <br> <span>Italy</span></h4>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td width="60px">
-                            <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                        </td>
-                        <td>
-                            <h4>Amit <br> <span>India</span></h4>
+                            <h4 th:text="${user.userName}"></h4>
                         </td>
                     </tr>
                 </table>
@@ -348,6 +238,17 @@
         main.classList.toggle("active");
     };
 
+    document.addEventListener("DOMContentLoaded", function() {
+        var costCells = document.querySelectorAll(".cost");
+        costCells.forEach(function(cell) {
+            var cost = parseFloat(cell.textContent);
+            cell.textContent = formatCurrency(cost) + " ₫";
+        });
+    });
+
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

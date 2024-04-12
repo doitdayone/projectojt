@@ -45,7 +45,7 @@
             background-color: #ffffff;
             border-radius: 45px;
             box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
-
+            width: 15%;
         }
 
         .input-quantity input[type="number"] {
@@ -55,7 +55,11 @@
             border: none;
             background-color: #ffffff;
             color: #202030;
-            width: 20px;
+            width: 40%;
+        }
+
+        .input-quantity form{
+            width: 30%;
         }
 
         .input-quantity input::-webkit-outer-spin-button,
@@ -1339,7 +1343,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${CPU != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${CPU.cartID.product.name}"
@@ -1361,10 +1365,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${CPU.cartID.product.price}-${CPU.cartID.product.sale}*${CPU.cartID.product.price}/100)*${CPU.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${CPU.cartID.product.price}-${CPU.cartID.product.sale}*${CPU.cartID.product.price}/100)*${CPU.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                                    <span class="cost"
+                                                                    <span class="cost cost1"
                                                                           th:text="${CPU.cartID.product.price}*${CPU.quantity} + ' VND'">
                                                                         <span>VND</span>
                                                                     </span>
@@ -1404,7 +1408,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${Mainboard != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${Mainboard.cartID.product.name}"
@@ -1426,10 +1430,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${Mainboard.cartID.product.price}-${Mainboard.cartID.product.sale}*${Mainboard.cartID.product.price}/100)*${Mainboard.getQuantity()} + ' VND'"></span>
+                                <span class="cost1" th:text="(${Mainboard.cartID.product.price}-${Mainboard.cartID.product.sale}*${Mainboard.cartID.product.price}/100)*${Mainboard.getQuantity()} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${Mainboard.cartID.product.price}*${Mainboard.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1469,7 +1473,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${RAM != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${RAM.cartID.product.name}"
@@ -1491,10 +1495,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${RAM.cartID.product.price}-${RAM.cartID.product.sale}*${RAM.cartID.product.price}/100)*${RAM.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${RAM.cartID.product.price}-${RAM.cartID.product.sale}*${RAM.cartID.product.price}/100)*${RAM.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${RAM.cartID.product.price}*${RAM.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1534,7 +1538,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${HDD != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${HDD.cartID.product.name}"
@@ -1556,10 +1560,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${HDD.cartID.product.price}-${HDD.cartID.product.sale}*${HDD.cartID.product.price}/100)*${HDD.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${HDD.cartID.product.price}-${HDD.cartID.product.sale}*${HDD.cartID.product.price}/100)*${HDD.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${HDD.cartID.product.price}*${HDD.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1599,7 +1603,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${SSD != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${SSD.cartID.product.name}"
@@ -1621,10 +1625,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${SSD.cartID.product.price}-${SSD.cartID.product.sale}*${SSD.cartID.product.price}/100)*${SSD.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${SSD.cartID.product.price}-${SSD.cartID.product.sale}*${SSD.cartID.product.price}/100)*${SSD.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${SSD.cartID.product.price}*${SSD.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1664,7 +1668,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${VGA != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${VGA.cartID.product.name}"
@@ -1686,10 +1690,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${VGA.cartID.product.price}-${VGA.cartID.product.sale}*${VGA.cartID.product.price}/100)*${VGA.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${VGA.cartID.product.price}-${VGA.cartID.product.sale}*${VGA.cartID.product.price}/100)*${VGA.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${VGA.cartID.product.price}*${VGA.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1729,7 +1733,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${PowerSupply != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${PowerSupply.cartID.product.name}"
@@ -1751,10 +1755,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${PowerSupply.cartID.product.price}-${PowerSupply.cartID.product.sale}*${PowerSupply.cartID.product.price}/100)*${PowerSupply.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${PowerSupply.cartID.product.price}-${PowerSupply.cartID.product.sale}*${PowerSupply.cartID.product.price}/100)*${PowerSupply.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${PowerSupply.cartID.product.price}*${PowerSupply.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1794,7 +1798,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${Case != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${Case.cartID.product.name}"
@@ -1816,10 +1820,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${Case.cartID.product.price}-${Case.cartID.product.sale}*${Case.cartID.product.price}/100)*${Case.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${Case.cartID.product.price}-${Case.cartID.product.sale}*${Case.cartID.product.price}/100)*${Case.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${Case.cartID.product.price}*${Case.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1859,7 +1863,7 @@
                         Vui lòng chọn linh kiện
                     </div>
                     <div th:if="${CoolingFan != null}"
-                         style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+                         style="width: 100%; display: flex; align-items: center; gap: 20px; justify-content: space-around">
                         <a class="choose-product-body-product-card-name-link">
                             <div class="choose-product-body-product-card-name-text">
                                 <a th:text="${CoolingFan.cartID.product.name}"
@@ -1881,10 +1885,10 @@
                         <p>x</p>
                         <div class="choose-product-body-product-card-price-space">
                             <div class="choose-product-body-product-card-price-sale">
-                                <span th:text="(${CoolingFan.cartID.product.price}-${CoolingFan.cartID.product.sale}*${CoolingFan.cartID.product.price}/100)*${CoolingFan.quantity} + ' VND'"></span>
+                                <span class="cost1" th:text="(${CoolingFan.cartID.product.price}-${CoolingFan.cartID.product.sale}*${CoolingFan.cartID.product.price}/100)*${CoolingFan.quantity} + ' VND'"></span>
                             </div>
                             <div class="choose-product-body-product-card-price-real">
-                                                            <span class="cost"
+                                                            <span class="cost cost1"
                                                                   th:text="${CoolingFan.cartID.product.price}*${CoolingFan.quantity} + ' VND'">
                                                                 <span>VND</span>
                                                             </span>
@@ -1945,13 +1949,13 @@
                             <div class="content-total-buildpc">
                                 <div class="item d-flex align-items space-between">
                                     <b>Chi phí dự tính</b>
-                                    <b class="price js-config-summary" th:text="${total}+'đ'"></b>
+                                    <b class="price js-config-summary cost1" th:text="${total}+'đ'"></b>
                                 </div>
                                 <div class="item d-flex align-items space-between" id="total-sale-promotion"><b>Giảm
-                                    tiền mặt</b><b th:text="'-'+(${total}-${discount})+'đ'" class="price"> </b></div>
+                                    tiền mặt</b><b th:text="'-'+(${total}-${discount})+'đ'" class="price cost1"> </b></div>
                                 <div class="item total d-flex align-items space-between">
                                     <b>Tổng chi phí</b>
-                                    <b class="total-price-config js-config-summary js-total-price-final"
+                                    <b class="total-price-config js-config-summary js-total-price-final cost1"
                                        th:text="${discount} +'đ'"></b>
                                 </div>
                                 <div class="item">
@@ -2270,10 +2274,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${CPU.price}-${CPU.sale}*${CPU.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${CPU.price}-${CPU.sale}*${CPU.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${CPU.price} + ' VND'">
+                                                                <span class="cost cost1" th:text="${CPU.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
                                                             <span class="sale"
@@ -2427,10 +2431,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${Mainboard.price}-${Mainboard.sale}*${Mainboard.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${Mainboard.price}-${Mainboard.sale}*${Mainboard.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost"
+                                                                <span class="cost cost1"
                                                                       th:text="${Mainboard.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
@@ -2586,10 +2590,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${RAM.price}-${RAM.sale}*${RAM.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${RAM.price}-${RAM.sale}*${RAM.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${RAM.price} + ' VND'">
+                                                                <span class="cost cost1" th:text="${RAM.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
                                                             <span class="sale"
@@ -2744,10 +2748,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${HDD.price}-${HDD.sale}*${HDD.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${HDD.price}-${HDD.sale}*${HDD.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${HDD.price} + ' VND'">
+                                                                <span class="cost cost1" th:text="${HDD.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
                                                             <span class="sale"
@@ -2902,10 +2906,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${SSD.price}-${SSD.sale}*${SSD.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${SSD.price}-${SSD.sale}*${SSD.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${SSD.price} + ' VND'">
+                                                                <span class="cost cost1" th:text="${SSD.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
                                                             <span class="sale"
@@ -3060,10 +3064,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${VGA.price}-${VGA.sale}*${VGA.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${VGA.price}-${VGA.sale}*${VGA.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${VGA.price} + ' VND'">
+                                                                <span class="cost cost1" th:text="${VGA.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
                                                             <span class="sale"
@@ -3218,10 +3222,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${PowerSupply.price}-${PowerSupply.sale}*${PowerSupply.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${PowerSupply.price}-${PowerSupply.sale}*${PowerSupply.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost"
+                                                                <span class="cost cost1"
                                                                       th:text="${PowerSupply.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
@@ -3377,10 +3381,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${Case.price}-${Case.sale}*${Case.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${Case.price}-${Case.sale}*${Case.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost" th:text="${Case.price} + ' VND'">
+                                                                <span class="cost cost1" th:text="${Case.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
                                                             <span class="sale"
@@ -3535,10 +3539,10 @@
                                                 <div class="choose-product-body-product-card-price-text">
                                                     <div class="choose-product-body-product-card-price-space">
                                                         <div class="choose-product-body-product-card-price-sale">
-                                                            <span th:text="${CoolingFan.price}-${CoolingFan.sale}*${CoolingFan.price}/100 + ' VND'"></span>
+                                                            <span class="cost1" th:text="${CoolingFan.price}-${CoolingFan.sale}*${CoolingFan.price}/100 + ' VND'"></span>
                                                         </div>
                                                         <div class="choose-product-body-product-card-price-real">
-                                                                <span class="cost"
+                                                                <span class="cost cost1"
                                                                       th:text="${CoolingFan.price} + ' VND'">
                                                                     <span>VND</span>
                                                                 </span>
@@ -3814,6 +3818,18 @@
             updatePrice(this);
         });
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var costCells = document.querySelectorAll(".cost1");
+        costCells.forEach(function(cell) {
+            var cost = parseFloat(cell.textContent);
+            cell.textContent = formatCurrency(cost) + " ₫";
+        });
+    });
+
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
 
     // const openModalButtons = document.querySelectorAll('[data-modal-target]')

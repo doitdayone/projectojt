@@ -1,17 +1,20 @@
 package com.example.projectojt.service;
 
 
+import com.example.projectojt.model.Order;
 import com.example.projectojt.model.User;
 import com.example.projectojt.repository.UserRepository;
 import com.example.projectojt.request.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -140,4 +143,8 @@ public class UserService {
     String body ="Sản phẩm "+productName+ " đã có hàng.";
     emailService.sendEmail(email,subject,body);
   }
+
+    public List<User> listAll() {
+        return userRepository.findAll(PageRequest.of(0, 6)).getContent();
+    }
 }

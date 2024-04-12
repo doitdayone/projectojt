@@ -37,4 +37,8 @@ public class StaffService {
         }
         throw new UserNotFoundException("Could not find any staff with ID" + id);
     }
+
+    public long countStaffs(){
+        return repository.count();
+    }
 }
