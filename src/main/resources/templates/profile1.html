@@ -35,7 +35,7 @@
     <div class="header-mid">
         <div class="container">
             <div class="content-header-mid d-flex align-items">
-                <a href="/" class="logo">
+                <a href="/EcommerceStore/product" class="logo">
                     <img
                             src="/asset/default/images/logo-no-background.png"
                             alt="logo"
@@ -45,106 +45,45 @@
                 </a>
                 <div class="form__input">
                     <form
-                            method="get"
-                            action="/tim"
-                            enctype="multipart/form-data"
-                            class="clearfix search-form bg-white"
+                            class="clearfix search-form bg-white"  th:action="@{/EcommerceStore/search}" method="get"
                     >
                         <div class="searh-form-container">
-                            <div class="box-select" onclick="_show_option_search();">
-                                <input
+                            <div class="box-select">
+                                <a
                                         type="hidden"
-                                        name="category"
                                         id="js-search-catId"
                                         value="0"
-                                />
+                                ></a>
                                 <a
-                                        href="javascript:void(0)"
                                         class="title-select"
                                         id="js-search-title"
                                 >
                                     Tất cả danh mục
                                 </a>
                                 <div class="content-select" id="js-list-option-search">
-                                    <a href="javascript:void(0)">Tất cả danh mục</a>
+                                    <a>Tất cả danh mục</a>
 
-                                    <a href="javascript:void(0)" data-id="76"
-                                    >Xây dựng cấu hình PC</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="82">PC Gaming</a>
-
-                                    <a href="javascript:void(0)" data-id="210">PC Đồ Họa</a>
-
-                                    <a href="javascript:void(0)" data-id="182"
-                                    >PC Văn Phòng</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="217"
-                                    >Máy chơi game - Console</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="68"
-                                    >Màn Hình Máy Tính</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="65"
-                                    >VGA - Card màn hình</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="60"
-                                    >Linh kiện máy tính</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="78">Gaming Gears</a>
-
-                                    <a href="javascript:void(0)" data-id="79"
-                                    >Laptop - Máy Tính Xách Tay</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="103"
-                                    >Phụ Kiện - Tản Nhiệt PC</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="191">Apple</a>
-
-                                    <a href="javascript:void(0)" data-id="159">AUDIO</a>
-
-                                    <a href="javascript:void(0)" data-id="197"
-                                    >Hàng Cũ - Giá Tốt</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="75"
-                                    >Thiết bị văn phòng</a
-                                    >
-
-                                    <a href="javascript:void(0)" data-id="74"
-                                    >Thiết bị mạng</a
-                                    >
                                 </div>
                             </div>
+
                             <input
-                                    type="text"
-                                    id="js-global-seach"
+                                    type="text" name="keyword"
+                                    id="keyword"
                                     class="text_search"
-                                    name="q"
                                     placeholder="Nhập sản phẩm cần tìm..."
                                     autocomplete="off"
-                                    value=""
+                                    th:value="${keyword}"
                             />
+                            <input type="hidden" name="page" id="page" th:value="${10}"/>
+                            <input type="hidden" name="size" id="size" value="4"/>
                             <button type="submit" class="submit-search">
                                 <span>Tìm kiếm</span>
                                 <i class="icon_2023 search"></i>
                             </button>
+
                         </div>
                     </form>
-                    <div class="autocomplete-suggestions" id="js-show-search">
-                        <div class="content-suggestions" id="js-seach-holder"></div>
-                        <a href="/" class="more-all" id="click_search"
-                        ><span class="hover-txt"
-                        >Xem tất cả <span id="total-pro"></span> sản phẩm</span
-                        ></a
-                        >
+                    <div class="autocomplete-suggestions" >
                     </div>
                 </div>
                 <div class="header-mid-right d-flex align-items">
@@ -157,19 +96,6 @@
                        style="color: #FFFFFF; text-align: center">
                         <i class="fa-solid fa-cart-shopping"></i> <span>0</span>
                     </a>
-                </div>
-                <div class="global-login">
-                    <a
-                            href="javascript:void(0)"
-                            class="close-login"
-                            onclick="close_login();"
-                    >
-                        <i class="fa fa-times"></i>
-                    </a>
-                    <div
-                            class="content-form-login padding-24"
-                            id="js-form-holder"
-                    ></div>
                 </div>
             </div>
         </div>
@@ -187,13 +113,13 @@
                     <div class="menu_holder">
                         <div class="item">
                             <a
-                                    href="/xay-dung-cau-hinh-pc.html"
+                                    href="/EcommerceStore/buildPC"
                                     class="item-cate d-flex align-items"
                             >
                                 <p class="cat-title">Xây dựng cấu hình PC</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -238,8 +164,8 @@
                             >
                                 <p class="cat-title">PC Gaming</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
                         </div>
 
@@ -250,8 +176,8 @@
                             >
                                 <p class="cat-title">PC Đồ Họa</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
                         </div>
 
@@ -262,8 +188,8 @@
                             >
                                 <p class="cat-title">PC Văn Phòng</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -320,8 +246,8 @@
                             >
                                 <p class="cat-title">Máy chơi game - Console</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -371,8 +297,8 @@
                             <a href="/monitor.html" class="item-cate d-flex align-items">
                                 <p class="cat-title">Màn Hình Máy Tính</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -461,8 +387,8 @@
                             >
                                 <p class="cat-title">VGA - Card màn hình</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -514,8 +440,8 @@
                             >
                                 <p class="cat-title">Linh kiện máy tính</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -782,8 +708,8 @@
                             >
                                 <p class="cat-title">Gaming Gears</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -865,8 +791,8 @@
                             <a href="/lap-top.html" class="item-cate d-flex align-items">
                                 <p class="cat-title">Laptop - Máy Tính Xách Tay</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -953,8 +879,8 @@
                             >
                                 <p class="cat-title">Phụ Kiện - Tản Nhiệt PC</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -1014,8 +940,8 @@
                             <a href="/apple.html" class="item-cate d-flex align-items">
                                 <p class="cat-title">Apple</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -1047,8 +973,8 @@
                             <a href="/audio.html" class="item-cate d-flex align-items">
                                 <p class="cat-title">AUDIO</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -1083,8 +1009,8 @@
                             >
                                 <p class="cat-title">Hàng Cũ - Giá Tốt</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -1105,8 +1031,8 @@
                             >
                                 <p class="cat-title">Thiết bị văn phòng</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -1163,8 +1089,8 @@
                             >
                                 <p class="cat-title">Thiết bị mạng</p>
                                 <span class="box-right">
-                    <i class="fa fa-angle-right"></i>
-                  </span>
+                        <i class="fa fa-angle-right"></i>
+                      </span>
                             </a>
 
                             <div class="menu-hover">
@@ -1199,15 +1125,15 @@
                 </div>
                 <!---header menu --->
                 <div class="header-bottom-right d-flex align-items">
-                    <a href="/buildpc" class="item">
-              <span class="txt" alt="Build PC Gaming"
-              >Xây dựng cấu hình PC</span
-              >
+                    <a href="/EcommerceStore/buildPC" class="item">
+                  <span class="txt" alt="Build PC Gaming"
+                  >Xây dựng cấu hình PC</span
+                  >
                     </a>
                     <a href="/gaming-pc.html" class="item">
                         <span class="txt" alt="PC Gaming">PC gaming</span>
                     </a>
-                    <a href="/man-hinh-gaming.html" class="item">
+                    <a href="/EcommerceStore/productFilter?productType=Screen" class="item">
                         <span class="txt" alt="Màn hình Gaming">Màn hình gaming</span>
                     </a>
                     <a href="/gaming-laptop.html" class="item">
@@ -1217,20 +1143,20 @@
                             href="/may-choi-game-sony-playstation-5-slim-digital-edition-nk-japan.html"
                             class="item"
                     >
-              <span class="txt"
-              >PS5 Slim
-                <img
-                        border="0"
-                        src="/media/lib/07-12-2023/hotsale2.png"
-                        width="20"
-                        height="20"
-                /></span>
+                  <span class="txt"
+                  >PS5 Slim
+                    <img
+                            border="0"
+                            src="/media/lib/07-12-2023/hotsale2.png"
+                            width="20"
+                            height="20"
+                    /></span>
                     </a>
                     <a href="/pc-van-phong.html" class="item">
                         <span class="txt">PC Văn phòng</span>
                     </a>
                     <a
-                            href="/media/marketing/khuyenmai/khuyen-mai-8-3.html"
+                            href="/"
                             class="item"
                     >
                         <span class="txt"> Khuyến mãi </span>
