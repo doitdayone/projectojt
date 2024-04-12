@@ -1370,20 +1370,38 @@
           </div>
           <!-- end product main right -->
         </div>
-        <div class="background-white">
+        <div class="account-right">
           <h2>Phản hồi từ khách hàng</h2>
-          <div style="background-color: #f0f0f0;padding: 10px;" th:each="feedback : ${feedbackList}">
+          <div class="box-right">
+            <table>
+              <tr th:each="feedback : ${feedbackList}">
+                <td>
+                  <div class="hot-product-item-review-star">
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 1} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 2} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 3} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
+                    <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
+                  </div>
+                </td>
+                <td>
+                  <p th:text="${feedback.description}"></p>
+                  <span th:text="${feedback.getUser().userName}"></span>
+                </td>
+                <td>
+                    <p th:text="${feedback.response}" ></p>
+                    <p th:if="${feedback.response}!=null">Tech Shop</p>
+                  </div>
+                </td>
+              </tr>
+            </table>
 
-            <div class="hot-product-item-review-star">
-              <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 1} ? 'fa-solid fa-star gold-star' : ''"></i>
-              <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 2} ? 'fa-solid fa-star gold-star' : ''"></i>
-              <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 3} ? 'fa-solid fa-star gold-star' : ''"></i>
-              <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 4} ? 'fa-solid fa-star gold-star' : ''"></i>
-              <i class="fa-regular fa-star" th:classappend="${feedback.rating >= 5} ? 'fa-solid fa-star gold-star' : ''"></i>
+
+
+
             </div>
-            <p th:text="${feedback.description}"></p>
-            <span th:text="${feedback.getUser().userName}"></span>
           </div>
+
         </div>
       </form>
       <form action="/EcommerceStore/register-product" method="post">
