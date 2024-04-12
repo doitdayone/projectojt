@@ -67,53 +67,25 @@
             cursor: pointer;
             background-color: #f6f9fc;
         }
-        .popup2 {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 300px;
-            background-color: #FFFFFF;
-            padding: 20px;
+        .filter-dropdown select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #fff;
             border: 1px solid #ccc;
-            border-radius: 10px;
-            z-index: 9999;
+            padding: 8px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            outline: none;
         }
-        .popup2 .popup-content{
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            width: 100%;
-            height: 100%;
-            font-size: 20px;
-        }
-        .popup2 .popup-content form{
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-        }
-        .response-Text{
-            width: 100%;
-            border: solid 2px #007bff;
-            border-radius: 5px;
-            margin-top: 20px;
 
+        .filter-dropdown select:hover {
+            border-color: #999;
         }
-        .btn-response{
-            width: 50%;
-            height: 50px;
-            background-color: #0d95e8;
-            color: #FFFFFF;
-            border-radius: 5px;
-            border: none;
-            font-size: 20px;
-            left: 50%;
-            margin-top: 20px;
+
+        .filter-dropdown select:focus {
+            border-color: #333;
         }
     </style>
 </head>
@@ -230,36 +202,27 @@
                 <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Name</th>
                     <th>Description</th>
-                    <th>Rating</th>
-                    <th>Product</th>
-                    <th>User</th>
-                    <th>Response</th>
-                    <th>Edit Response</th>
+                    <th>Product IDs</th>
+                    <th>Image</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr  th:each="feedback : ${listFeedbacks}">
-                    <td th:text="${feedback.feedbackID}"></td>
-                    <td th:text="${feedback.description}"></td>
-                    <td th:text="@{${feedback.rating}}"></td>
-                    <td th:text="@{${feedback.product.name}}"></td>
-                    <td th:text="${feedback.user.userName}"></td>
-                    <th th:text="${feedback.response}==null? 'Chưa phản hồi' : ${feedback.response}"></th>
+                <tr  th:each="builded : ${listBuildeds}" class="product-row">
+                    <td th:text="${builded.id}"></td>
+                    <td th:text="${builded.name}"></td>
+                    <td th:text="@{${builded.description}+'%'}"></td>
+                    <td th:text="${builded.productIds}"></td>
                     <td>
-                        <button class="edit button" th:onclick="'openResponsePopup(\'Response-' + ${feedback.feedbackID} + '\')'">Response Feedback</button>
-
+                        <img th:src="@{'/images/' + ${builded.image}}"
+                             alt="..." >
                     </td>
-                    <div th:id="'Response-'+${feedback.feedbackID}" class="popup2">
-                        <div class="popup-content">
-                            <p class="popup-content-text">Response Feedback</p>
-                            <form th:action="'/admin/manageFeedback/response/'+${feedback.getFeedbackID()}" method="post"> <!-- Add action attribute -->
-                                <textarea name="response" class="response-Text" cols="20" rows="10"></textarea> <!-- Thêm thuộc tính name -->
-                                <button type="submit" class="btn-response">Response</button>
-                            </form>
-                        </div>
-                    </div>
-
+                    <td>
+                        <a class="edit button" th:href="@{/admin/editBuildedPC(id=${builded.id})}"><ion-icon name="create-outline"></ion-icon></a>
+                        <a class="delete button" th:href="@{/admin/deleteBuildedPC(id=${builded.id})}" onclick="return confirm('Are you sure')"><ion-icon name="trash-outline"></ion-icon></a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -268,13 +231,6 @@
 </div>
 
 <script>
-    function openResponsePopup(popupId) {
-        var popup = document.getElementById(popupId);
-        if (popup) {
-            popup.style.display = "block";
-        }
-    }
-
     let list = document.querySelectorAll(".navigation li");
 
     function activeLink() {
@@ -295,6 +251,18 @@
         navigation.classList.toggle("active");
         main.classList.toggle("active");
     };
+
+    function filterByType(type) {
+        var rows = document.querySelectorAll('.product-row');
+        rows.forEach(function (row) {
+            var typeCell = row.querySelector('.type');
+            if (type === 'all' || typeCell.textContent === type) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
 </script>
 <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
