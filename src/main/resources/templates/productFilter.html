@@ -1356,10 +1356,10 @@
                         </span>
                 </div>
                 <div class="main-price">
-                  <del class="old-price" th:text="${product.price}">
+                  <del class="old-price cost1" th:text="${product.price}">
                   </del>
                   <div class="d-flex align-items">
-                    <b class="price" th:text="${product.price}-${product.sale}*${product.price}/100">
+                    <b class="price cost1" th:text="${product.price}-${product.sale}*${product.price}/100">
                     </b>
                     <div class="price-saleoff" th:text="'-'+${product.sale} + '%'">
                     </div>
@@ -1520,7 +1520,19 @@
 <script rel="stylesheet" src="/asset/default/js/main.js"></script>
 <script
         th:src="@{https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js}"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var costCells = document.querySelectorAll(".cost1");
+    costCells.forEach(function(cell) {
+      var cost = parseFloat(cell.textContent);
+      cell.textContent = formatCurrency(cost) + " ₫";
+    });
+  });
 
+  function formatCurrency(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+</script>
 </body>
 
 

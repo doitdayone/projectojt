@@ -172,7 +172,7 @@ public class OrderController {
 
             session.removeAttribute("cart");
             session.removeAttribute("cartItemList");
-            return "redirect:/EcommerceStore/product";
+            return "success";
         } else {
 
             String status = "PAID";
