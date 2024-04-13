@@ -28,7 +28,7 @@ public class UserService {
   @Autowired
   PasswordEncoder passwordEncoder;
   public boolean register(RegisterRequest registerRequest) {
-      if (registerRequest.getPassword().equals(registerRequest.getRe_password()))
+      if (!registerRequest.getPassword().equals(registerRequest.getRe_password()))
           return false;
       User existingUser = userRepository.findByEmail(registerRequest.getEmail());
     if (existingUser != null) {
