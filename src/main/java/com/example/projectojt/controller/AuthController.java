@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,17 +29,20 @@ public class AuthController {
     return "register_form";
   }
   @PostMapping("/register")
-  public String register(RegisterRequest registerRequest, Model model) {
-    boolean registerResponse = userService.register(registerRequest);
-  if(!registerResponse)
-  {
-    model.addAttribute("error","Email may be already used! Or Passwords are not same");
-    return "register_form";
-  } else
-  {
-    model.addAttribute("email", registerRequest.getEmail());
-    return "otp_verify";
-  }
+  public String register(RegisterRequest registerRequest, BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+      model.addAttribute("error", "Email may be already used! Or Passwords are not same");
+      return "register_form";
+    } else {
+      boolean registerResponse = userService.register(registerRequest);
+      if (!registerResponse) {
+        model.addAttribute("error", "Email may be already used! Or Passwords are not same");
+        return "register_form";
+      } else {
+        model.addAttribute("email", registerRequest.getEmail());
+        return "otp_verify";
+      }
+    }
   }
 
   @PostMapping("/verify")
