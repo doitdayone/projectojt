@@ -130,6 +130,6 @@ public class ScheduleController {
         // Lưu lịch vào cơ sở dữ liệu
         scheduleRepository.save(schedule);
         // Chuyển hướng người dùng đến trang thành công hoặc trang khác
-        return "success"; // Trả về URL của trang thành công
+        return "booking-success"; // Trả về URL của trang thành công
     }
 }
