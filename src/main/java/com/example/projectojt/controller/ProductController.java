@@ -7,7 +7,9 @@ import com.example.projectojt.repository.BuildedPCRepository;
 import com.example.projectojt.repository.FeedbackRepository;
 import com.example.projectojt.repository.ProductRepository;
 import com.example.projectojt.repository.UserRepository;
+import com.example.projectojt.request.RegisterRequest;
 import com.example.projectojt.service.ProductService;
+import com.example.projectojt.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -41,6 +43,8 @@ public class ProductController {
   @Autowired
   private FeedbackRepository feedbackRepository;
   @Autowired private BuildedPCRepository repoBuilded;
+  @Autowired
+  private UserService userService;
 
   @GetMapping("/product")
   public String getProduct(Authentication authentication, Model model,
@@ -60,6 +64,13 @@ public class ProductController {
 
         if (user.getRoles().equals("ADMIN"))
           return "redirect:/admin";
+
+        if (!user.isVerified()) {
+          RegisterRequest registerRequest = RegisterRequest.builder().email(email).password("password").re_password("password").build();
+          userService.register(registerRequest);
+          model.addAttribute("email", registerRequest.getEmail());
+          return "otp_verify";
+        }
       } else if (principal instanceof OAuth2User oAuth2User) {
         // get user_email when sign in with google or facebook
         Map<String, Object> attributes = oAuth2User.getAttributes();
