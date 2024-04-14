@@ -36,6 +36,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
+        System.err.println("XXXXXXXXXXXXXXXXXx");
         Optional<User> user = userRepository.findByEmail2(username);
         if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
             // auth successful, redirect to the product page
