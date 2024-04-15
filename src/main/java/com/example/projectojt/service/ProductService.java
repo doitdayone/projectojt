@@ -57,10 +57,10 @@ public class ProductService {
     }
 
     public List<Product> getInitialProducts() {
-        return repo.findAll(PageRequest.of(0, 5)).getContent();
+        return repo.findAll(PageRequest.of(0, 4)).getContent();
     }
     public int getTotalPage(){
-        return repo.findAll(PageRequest.of(0, 5)).getTotalPages();
+        return repo.findAll(PageRequest.of(0, 4)).getTotalPages();
     }
 
     public List<Product> getMoreProducts(int page, int size) {
