@@ -1420,16 +1420,16 @@
         </a>
       </div>
       <div class="content-product-category d-flex">
-        <a href="/gaming-pc.html" class="banner-sale-cate">
-          <img src="/media/category/cat_big_82_1697613958.jpg" width="100%" height="100%"
+        <a href="/gaming-pc.html" class="banner-sale-cate" style="width: 20%">
+          <img src="/media/category/cat_big_182_1700037882.jpg" width="100%" height="100%"
                alt="PC Gaming">
         </a>
-        <div class="product-list" id="js-product-cate-82">
+        <div class="product-list" id="js-product-cate-82" style="width: 80%">
           <div class="owl-carousel owl-theme custom-nav owl-loaded owl-drag">
             <div class="owl-stage-outer">
               <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1160px;display: flex;">
                 <tr class="owl-item active" th:each="product : ${productList}">
-                  <div class="product-item" style="width: 20%">
+                  <div class="product-item" style="width: 232px">
                     <a th:href="@{/EcommerceStore/productDetails/{productId}(productId=${product.productID})}" class="product-image">
                       <img th:src="@{'/images/' + ${product.images}}" width="100%"
                            height="100%" alt="PC Gaming - Glacier I3060 - WH">
@@ -1504,11 +1504,11 @@
         </a>
       </div>
       <div class="content-product-category d-flex">
-        <a href="/gaming-pc.html" class="banner-sale-cate">
+        <a href="/gaming-pc.html" class="banner-sale-cate" style="width: 20%">
           <img src="/media/category/cat_big_82_1697613958.jpg" width="100%" height="100%"
                alt="PC Gaming">
         </a>
-        <div class="product-list">
+        <div class="product-list" style="width: 80%">
           <div class="owl-carousel owl-theme custom-nav owl-loaded owl-drag">
             <div class="owl-stage-outer">
               <div class="owl-stage" style="transform: translate3d(0px, 0px, 0px); transition: all 0s ease 0s; width: 1160px;display: flex;">
