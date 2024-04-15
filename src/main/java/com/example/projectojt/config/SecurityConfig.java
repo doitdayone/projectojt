@@ -56,7 +56,7 @@ public class SecurityConfig {
                                 "/EcommerceStore/products/more","/asset/default/**","/styles.css","/admin/**", "/media/banner/**", "/media/**", "/EcommerceStore/verifyOTP",
                                 "/EcommerceStore/forgot_password","/EcommerceStore/send_otp_new_pass"
                                 , "/EcommerceStore/change_new_pass",
-                                "/EcommerceStore/forgot_pass_verify")
+                                "/EcommerceStore/forgot_pass_verify", "/EcommerceStore/verify")
                         .permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(withDefaults())

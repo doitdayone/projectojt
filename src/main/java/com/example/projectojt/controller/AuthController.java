@@ -50,9 +50,10 @@ public class AuthController {
       boolean verify = userService.verify(email, otp);
       userRepository.findByEmail(email).setVerified(true);
       if (verify)
-      return "redirect:/EcommerceStore/product";
+      return "redirect:/EcommerceStore/login";
 
       model.addAttribute("error", "OTP does not match!");
+      model.addAttribute("email", email);
       return "otp_verify";
   }
 
@@ -66,6 +67,7 @@ public class AuthController {
     } else
     {
       model.addAttribute("error","OTP does not match!");
+      model.addAttribute("email", email);
       return "otp_verify";
     }
 
