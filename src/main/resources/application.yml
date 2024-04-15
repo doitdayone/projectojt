@@ -8,8 +8,8 @@ spring:
             client-secret: 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
             redirectUri: http://localhost:8080/login/oauth2/code/google
           facebook:
-            clientId: 905095891169185
-            clientSecret: 460cf3732102c6fcb86fadaa850ebeab
+            clientId: 2680580905440496
+            clientSecret: 4e54e0ac29c6d11985ef24bf451ebc45
             scope:
               - email
               - public_profile
