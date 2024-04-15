@@ -86,7 +86,7 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login/oauth2/authorization/facebook")
-                        .defaultSuccessUrl("/EcommerceStore/product", true)
+                        .defaultSuccessUrl("/EcommerceStore/signinfacebook", true)
                         .failureUrl("/EcommerceStore/loginpage?error=true")).logout(
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
